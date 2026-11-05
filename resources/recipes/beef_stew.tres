@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="RecipeData" load_steps=7 format=3 uid="uid://c0t70epigi827"]
+
+[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_t6sfq"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_rgahi"]
+[ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_2b4pd"]
+[ext_resource type="Resource" uid="uid://b2fjhg2qtydg3" path="res://resources/ingredients/beef.tres" id="3_xvk2m"]
+[ext_resource type="Resource" uid="uid://bd6kslpcpugp2" path="res://resources/ingredients/tomato.tres" id="4_naab2"]
+[ext_resource type="Resource" uid="uid://cdurolm1wvtm0" path="res://resources/ingredients/salt.tres" id="5_wb8o3"]
+
+[resource]
+script = ExtResource("3_2b4pd")
+recipe_id = "beef_stew"
+recipe_name = "Beef Stew"
+description = "Beef Stew"
+default_unlocked = false
+min_ingredient = 2
+max_ingredient = 5
+required_ingredients = Array[ExtResource("2_rgahi")]([ExtResource("3_xvk2m"), ExtResource("4_naab2"), ExtResource("5_wb8o3")])
+base_score = 40.0
+base_mult = 0.7
+bonus_score_per_level = 20.0
+bonus_mult_per_level = 0.1
+icon_texture = ExtResource("1_t6sfq")
+metadata/_custom_type_script = "uid://c46bs4c7sr6gd"

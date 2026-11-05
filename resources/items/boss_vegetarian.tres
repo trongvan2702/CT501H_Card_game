@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://bjgpj1veu03x2"]
+
+[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_ht34g"]
+[ext_resource type="Script" uid="uid://baslp1fmffd2i" path="res://scripts/items/boss_vegetarian.gd" id="2_aah4y"]
+[ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_how0l"]
+
+[resource]
+script = ExtResource("2_how0l")
+item_id = "boss_vegetarian"
+display_name = "Vegetrarian"
+description = "Vegetarian don't like meat"
+rarity = 1
+price = 5
+logic_script = ExtResource("2_aah4y")
+is_boss = true
+item_texture = ExtResource("1_ht34g")
+metadata/_custom_type_script = "uid://b7ouduwjuey1b"

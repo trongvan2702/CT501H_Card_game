@@ -1,0 +1,10 @@
+Vai trò cốt lõi:
+MatchManager đóng vai trò là "Bộ não điều phối" (Controller) vòng lặp lối chơi cốt lõi (Core Game Loop) trong một ván đấu. Nó là một Node hoạt động độc lập trong Cảnh (Scene) ván đấu, chịu trách nhiệm quản lý tài nguyên tạm thời, kiểm soát tiến trình thông qua State Machine (Máy trạng thái), và là cầu nối trung gian giữa Giao diện người dùng (UI), Hệ thống thẻ bài (HandManager, DeckManager), và Hệ thống tính điểm (ScoringSystem).   Các tính năng và luồng hoạt động chính:Kiểm soát Trạng thái (State Machine):
+	
+Sử dụng biến current_state (enum MatchState), hệ thống khóa và mở khóa các thao tác của người chơi một cách chặt chẽ. Các nút đánh bài (Play) và bỏ bài (Discard) chỉ có tác dụng khi game ở trạng thái WAIT_FOR_INPUT, ngăn chặn hoàn toàn các lỗi phát sinh do người chơi thao tác quá nhanh khi game đang tính điểm hoặc chiếu hoạt ảnh (PROCESSING, DRAWING).   Quản lý Tài nguyên trong ván:
+	
+Kiểm soát Số lượt đánh (plays_left), Số lượt bỏ bài (discards_left), và Điểm số hiện tại (current_score) đối chiếu với Mục tiêu màn chơi (stage_target_score). Hệ thống tự động kiểm tra điều kiện Thắng/Thua ngay sau mỗi lượt đánh bài.   Kiến trúc Xử lý Hiệu ứng Mở rộng (Callable Effect Hander):
+
+Không sử dụng các chuỗi if-else cứng nhắc để xử lý kỹ năng của thẻ Item, MatchManager sử dụng một từ điển Callable (effect_handlers). Bất cứ khi nào nhận được một gói hiệu ứng (như "add_money" hay "add_plays"), nó sẽ tự động nội suy và gọi đúng hàm thực thi tương ứng (_effect_add_money, _effect_add_plays). Thiết kế này giúp game dễ dàng thêm hàng trăm loại hiệu ứng mới mà không cần sửa đổi luồng code gốc.   Tách bạch Kinh tế (Economy Pipeline):
+	
+Cơ chế thu thập tiền tệ được chia làm hai luồng rõ rệt và xử lý tinh tế. "Tiền nóng" (sinh ra ngay lúc nấu ăn) được bóc tách và cộng tuần tự thông qua lệnh await để hỗ trợ hiển thị hoạt ảnh UI. "Tiền thưởng cuối màn" (sinh ra sau khi thắng ván đấu) được bóc tách riêng khỏi pipeline tự động thông qua thao tác .erase("add_money"), sau đó được cộng dồn với Tiền cơ bản và Lợi tức (Interest Gold) để chuẩn bị xuất ra Bảng Tổng Kết trước khi gửi lên két sắt tổng.   

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=3 format=3 uid="uid://bd6kslpcpugp2"]
+
+[ext_resource type="Texture2D" uid="uid://c3e8xnyfqare6" path="res://assets/Tomato.png" id="1_7ry4t"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_xoas7"]
+
+[resource]
+script = ExtResource("2_xoas7")
+ingredient_id = "tomato"
+display_name = "Tomato"
+description = "Tomato"
+base_score = 15
+rarity = 1
+icon_texture = ExtResource("1_7ry4t")
+metadata/_custom_type_script = "uid://ddx85i03riwww"

@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlfe11tsqjm7b"]
+
+[ext_resource type="Script" uid="uid://cwx2agomf5q1c" path="res://control.gd" id="1_08cpx"]
+[ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_o552d"]
+[ext_resource type="Script" uid="uid://bkftto0vdabx5" path="res://scripts/system/HandManager.gd" id="3_xpnd2"]
+[ext_resource type="Script" uid="uid://xtuumm8c3oq3" path="res://scripts/system/ScoringSystem.gd" id="4_1i805"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("deck_manager", "hand_manager", "scoring_system")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_08cpx")
+deck_manager = NodePath("DeckManager")
+hand_manager = NodePath("HandManager")
+scoring_system = NodePath("ScoringSystem")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -140.0
+offset_right = 400.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="DeckManager" type="Node" parent="."]
+script = ExtResource("2_o552d")
+
+[node name="HandManager" type="Node" parent="." node_paths=PackedStringArray("hand_ui_container")]
+script = ExtResource("3_xpnd2")
+hand_ui_container = NodePath("../HBoxContainer")
+
+[node name="playButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 36.0
+offset_right = 120.0
+offset_bottom = 67.0
+text = "Play"
+
+[node name="discardButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 135.0
+offset_top = 35.0
+offset_right = 210.0
+offset_bottom = 66.0
+text = "Discard"
+
+[node name="ScoringSystem" type="Node" parent="."]
+script = ExtResource("4_1i805")
+
+[connection signal="pressed" from="playButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="discardButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="discardButton" to="." method="_on_discard_button_pressed"]

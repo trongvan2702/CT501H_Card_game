@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="RecipeData" load_steps=8 format=3 uid="uid://hypkl0ca7jde"]
+
+[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_chxfc"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_5w8iu"]
+[ext_resource type="Resource" uid="uid://b2fjhg2qtydg3" path="res://resources/ingredients/beef.tres" id="3_8338y"]
+[ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_g3xo7"]
+[ext_resource type="Resource" uid="uid://d1l7p6jeqjo5l" path="res://resources/ingredients/chicken.tres" id="4_pqk0x"]
+[ext_resource type="Resource" uid="uid://d28la6ytwm8qc" path="res://resources/ingredients/cabbage.tres" id="5_62d60"]
+[ext_resource type="Resource" uid="uid://laidu1ia781x" path="res://resources/ingredients/rice.tres" id="6_3egrv"]
+
+[resource]
+script = ExtResource("3_g3xo7")
+recipe_id = "super_disk"
+recipe_name = "Super Disk"
+description = "Super Disk"
+default_unlocked = true
+min_ingredient = 2
+max_ingredient = 5
+required_ingredients = Array[ExtResource("2_5w8iu")]([ExtResource("3_8338y"), ExtResource("4_pqk0x"), ExtResource("5_62d60"), ExtResource("6_3egrv")])
+base_score = 55.0
+base_mult = 0.8
+bonus_score_per_level = 30.0
+bonus_mult_per_level = 0.2
+icon_texture = ExtResource("1_chxfc")
+metadata/_custom_type_script = "uid://c46bs4c7sr6gd"

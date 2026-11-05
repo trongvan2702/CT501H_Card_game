@@ -1,0 +1,33 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Self_study"
+run/main_scene="uid://cda0d2h04pus5"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+ItemDB="*res://scripts/autoloads/ItemDB.gd"
+IngredientDB="*res://scripts/autoloads/IngredientDB.gd"
+RecipeDB="*res://scripts/autoloads/RecipeDB.gd"
+GameManager="*res://scripts/autoloads/GameManager.gd"
+StageManager="*res://scripts/autoloads/StageManager.gd"
+
+[display]
+
+window/size/viewport_width=1900
+window/size/viewport_height=900
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

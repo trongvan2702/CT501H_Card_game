@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="RecipeData" load_steps=6 format=3 uid="uid://bm5myrr0oblhb"]
+
+[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_pf1b1"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_vrtlp"]
+[ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_kertd"]
+[ext_resource type="Resource" uid="uid://b2fjhg2qtydg3" path="res://resources/ingredients/beef.tres" id="3_vrtlp"]
+[ext_resource type="Resource" uid="uid://d1l7p6jeqjo5l" path="res://resources/ingredients/chicken.tres" id="4_kertd"]
+
+[resource]
+script = ExtResource("3_kertd")
+recipe_id = "meat_meat"
+recipe_name = "Meat Meat"
+description = "Meat Meat"
+default_unlocked = false
+min_ingredient = 2
+max_ingredient = 5
+required_ingredients = Array[ExtResource("2_vrtlp")]([ExtResource("3_vrtlp"), ExtResource("4_kertd")])
+base_score = 75.0
+base_mult = 0.5
+bonus_score_per_level = 10.0
+bonus_mult_per_level = 0.1
+icon_texture = ExtResource("1_pf1b1")
+metadata/_custom_type_script = "uid://c46bs4c7sr6gd"

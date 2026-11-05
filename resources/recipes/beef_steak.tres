@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="RecipeData" load_steps=6 format=3 uid="uid://dayvtypwr5va2"]
+
+[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_47qxs"]
+[ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="2_egmbp"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_ydmk6"]
+[ext_resource type="Resource" uid="uid://b2fjhg2qtydg3" path="res://resources/ingredients/beef.tres" id="3_q5axq"]
+[ext_resource type="Resource" uid="uid://c0o6gte05r1uw" path="res://resources/ingredients/pepper.tres" id="4_ch6lq"]
+
+[resource]
+script = ExtResource("2_egmbp")
+recipe_id = "beef_steak"
+recipe_name = "Beef Steak"
+description = "Beef Steak"
+default_unlocked = true
+min_ingredient = 2
+max_ingredient = 5
+required_ingredients = Array[ExtResource("2_ydmk6")]([ExtResource("3_q5axq"), ExtResource("4_ch6lq")])
+base_score = 25.0
+base_mult = 0.5
+bonus_score_per_level = 15.0
+bonus_mult_per_level = 0.1
+icon_texture = ExtResource("1_47qxs")
+metadata/_custom_type_script = "uid://c46bs4c7sr6gd"
