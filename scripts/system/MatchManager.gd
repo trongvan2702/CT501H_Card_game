@@ -58,7 +58,9 @@ func start_new_stage() -> void:
 	
 	current_score = 0.0
 	plays_left = 4
+	$PlayButton.text = "Play (%d)" % [plays_left]
 	discards_left = 3
+	$DiscardButton.text = "Discard (%d)" % [discards_left]
 	
 	scoring_system.equipped_items = GameManager.active_items
 	
@@ -143,6 +145,7 @@ func _on_play_button_pressed() -> void:
 	_on_state_changed(MatchState.PROCESSING)
 	
 	plays_left -= 1
+	$PlayButton.text = "Play (%d)" % [plays_left]
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
 	
@@ -178,6 +181,7 @@ func _on_discard_button_pressed() -> void:
 	
 	_on_state_changed(MatchState.PROCESSING)
 	discards_left -= 1
+	$DiscardButton.text = "Discard (%d)" % [discards_left]
 	
 	_on_state_changed(MatchState.DRAWING)
 	draw_cards_to_full()

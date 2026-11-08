@@ -51,15 +51,15 @@ text = "Discard"
 [node name="Total_Score" type="RichTextLabel" parent="."]
 offset_left = 1686.0
 offset_top = 60.0
-offset_right = 1803.0
+offset_right = 1899.0
 offset_bottom = 83.0
-text = "0"
+text = "Curent score: 0"
 
 [node name="Current_Stage" type="RichTextLabel" parent="."]
-offset_left = 1688.0
-offset_top = 11.0
-offset_right = 1875.0
-offset_bottom = 34.0
+offset_left = 1685.0
+offset_top = 12.0
+offset_right = 1872.0
+offset_bottom = 35.0
 text = "Curent stage: 1"
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
