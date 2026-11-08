@@ -33,5 +33,10 @@ func start_new_run() -> void:
 	active_items.clear()
 	player_deck.clear()
 	_build_starter_deck()
+	_debug_create_item()
 	print("Từ GameManager: Bắt đầu run")
 	StageManager.start_new_run()
+
+
+func _debug_create_item() -> void:
+	active_items.append(ItemDB.create_item_instance("goldtest3"))

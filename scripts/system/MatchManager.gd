@@ -25,10 +25,26 @@ var max_interest_gold: int = 5
 var equipped_items: Array = []
 const MAX_EQUIPPED_ITEMS: int = 5
 
+@onready var owned_items_tray = $Item
 
 func _ready() -> void:
 	start_new_stage()
-	
+	_render_owned_items()
+
+func _render_owned_items() -> void:
+	# 1. Dọn sạch khay cũ
+	for child in owned_items_tray.get_children():
+		child.queue_free()
+		
+	# 2. Lấy đồ từ GameManager đúc thành thẻ và nhét vào khay
+	for item_instance in GameManager.active_items:
+		var card = ItemCard.create_from_instance(item_instance)
+		owned_items_tray.add_child(card)
+		
+	# 3. Vẽ thêm Boss (nếu có) để người chơi biết đang đánh với ai
+	if StageManager.current_boss != null:
+		var boss_card = ItemCard.create_from_instance(StageManager.current_boss)
+		owned_items_tray.add_child(boss_card)
 
 func _on_state_changed(new_state: MatchState) -> void:
 	current_state = new_state

@@ -3,7 +3,7 @@ class_name VegetarianBoss
 
 func _init(i_data: ItemData = null) -> void:
 	super(i_data)
-	is_boss_modifier = true # Đánh dấu là Boss
+	is_boss_modifier = true
 
 func on_ingredient_scored(ingredient: IngredientInstance) -> TriggerResult:
 	var id = ingredient.ingredient_data.ingredient_id

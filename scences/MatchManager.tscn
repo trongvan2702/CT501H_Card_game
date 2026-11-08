@@ -18,7 +18,7 @@ offset_right = 1882.0
 offset_bottom = 57.0
 text = "Target score: 0"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Hand" type="HBoxContainer" parent="."]
 offset_left = 203.0
 offset_top = 565.0
 offset_right = 1037.0
@@ -29,7 +29,7 @@ script = ExtResource("2_3u2ot")
 
 [node name="HandManager" type="Node" parent="." node_paths=PackedStringArray("hand_ui_container")]
 script = ExtResource("3_wiycg")
-hand_ui_container = NodePath("../HBoxContainer")
+hand_ui_container = NodePath("../Hand")
 
 [node name="ScoringSystem" type="Node" parent="."]
 script = ExtResource("4_paqi8")
@@ -61,6 +61,12 @@ offset_top = 12.0
 offset_right = 1872.0
 offset_bottom = 35.0
 text = "Curent stage: 1"
+
+[node name="Item" type="HBoxContainer" parent="."]
+offset_left = 414.0
+offset_top = 4.0
+offset_right = 1589.0
+offset_bottom = 154.0
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="DiscardButton" to="." method="_on_discard_button_pressed"]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://b5p3v1aqd30o6"]
+
+[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_58s37"]
+[ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_qyd2d"]
+
+[resource]
+script = ExtResource("2_qyd2d")
+item_id = ""
+display_name = ""
+description = ""
+rarity = 1
+price = 5
+is_boss = false
+item_texture = ExtResource("1_58s37")
+metadata/_custom_type_script = "uid://b7ouduwjuey1b"

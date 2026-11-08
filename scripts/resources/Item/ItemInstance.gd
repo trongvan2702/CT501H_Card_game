@@ -42,3 +42,9 @@ func after_match() -> TriggerResult:
 
 func on_stage_start() -> TriggerResult:
 	return TriggerResult.new()
+
+# Dùng cho các Item có chức năng tăng tiến vô hạn trong trận đấu, cần thay đổi description
+func get_dynamic_description() -> String:
+	if item_data != null:
+		return item_data.description
+	return ""

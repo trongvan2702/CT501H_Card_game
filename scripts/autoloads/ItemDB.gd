@@ -60,7 +60,7 @@ func _get_rarity_weight(rarity: int) -> int:
 func get_random_items(count: int, exclude_ids: Array) -> Array:
 	var result: Array = []
 	var available_items: Array = []
-	
+	 
 	for id in items.keys():
 		if not id in exclude_ids and !items.get(id).is_boss:
 			available_items.append(items[id])
