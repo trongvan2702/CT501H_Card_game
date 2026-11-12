@@ -26,6 +26,8 @@ var equipped_items: Array = []
 const MAX_EQUIPPED_ITEMS: int = 5
 
 @onready var owned_items_tray = $Item
+@onready var _play_button = $HBoxContainer/PlayButton
+@onready var _discard_button = $HBoxContainer/DiscardButton
 
 func _ready() -> void:
 	start_new_stage()
@@ -81,9 +83,9 @@ func start_new_stage() -> void:
 	
 	current_score = 0.0
 	plays_left = 4
-	$PlayButton.text = "Play (%d)" % [plays_left]
+	_play_button.text = "Play (%d)" % [plays_left]
 	discards_left = 3
-	$DiscardButton.text = "Discard (%d)" % [discards_left]
+	_discard_button.text = "Discard (%d)" % [discards_left]
 	
 	_sync_equipped_items()
 	
@@ -165,7 +167,7 @@ func _on_play_button_pressed() -> void:
 	_on_state_changed(MatchState.PROCESSING)
 	
 	plays_left -= 1
-	$PlayButton.text = "Play (%d)" % [plays_left]
+	_update_display()
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
 	
@@ -201,7 +203,7 @@ func _on_discard_button_pressed() -> void:
 	
 	_on_state_changed(MatchState.PROCESSING)
 	discards_left -= 1
-	$DiscardButton.text = "Discard (%d)" % [discards_left]
+	_update_display()
 	
 	_on_state_changed(MatchState.DRAWING)
 	draw_cards_to_full()
@@ -243,6 +245,13 @@ func _lose_stage() -> void:
 	_on_state_changed(MatchState.GAME_OVER)
 	print("RUN OVER - DEFEAT!")
 	# Hiện màn hình Game Over
+
+# =======================================================
+# UI
+# =======================================================
+func _update_display() -> void:
+	_discard_button.text = "Discard (%d)" % [discards_left]
+	_play_button.text = "Play (%d)" % [plays_left]
 
 # =======================================================
 # Debug

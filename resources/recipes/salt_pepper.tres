@@ -12,6 +12,7 @@ recipe_id = "salt_pepper"
 recipe_name = "Salt Pepper"
 description = "Salt Pepper"
 default_unlocked = true
+rarity = 1
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_3017s")]([ExtResource("3_lewwb"), ExtResource("4_nw8u1")])

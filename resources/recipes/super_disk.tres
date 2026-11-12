@@ -14,6 +14,7 @@ recipe_id = "super_disk"
 recipe_name = "Super Disk"
 description = "Super Disk"
 default_unlocked = true
+rarity = 3
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_5w8iu")]([ExtResource("3_8338y"), ExtResource("4_pqk0x"), ExtResource("5_62d60"), ExtResource("6_3egrv")])

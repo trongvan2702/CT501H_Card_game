@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://vfgreamoesxe"]
 
 [ext_resource type="Script" uid="uid://c8461b64b7ml7" path="res://scripts/resources/Item/ItemCard.gd" id="1_kij46"]
-[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="2_iwtqy"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wavvb"]
+load_path = "res://.godot/imported/Apple Green.png-7b60be4ffce52fa665bfc8b27ce85be2.ctex"
 
 [node name="ItemCard" type="Control"]
 custom_minimum_size = Vector2(160, 160)
@@ -22,7 +24,7 @@ offset_left = -1.0
 offset_top = -6.0
 offset_right = 159.0
 offset_bottom = 154.0
-texture = ExtResource("2_iwtqy")
+texture = SubResource("CompressedTexture2D_wavvb")
 expand_mode = 1
 stretch_mode = 5
 

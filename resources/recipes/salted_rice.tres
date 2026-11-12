@@ -12,6 +12,7 @@ recipe_id = "salted_rice"
 recipe_name = "Salted Rice"
 description = "Salted Rice"
 default_unlocked = true
+rarity = 1
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_77q2j")]([ExtResource("3_puvw5"), ExtResource("4_vfck6")])

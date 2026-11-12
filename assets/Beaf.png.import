@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vpkfk8ixx3o6"
-path="res://.godot/imported/Beef.png-08672fd58f5a942dda841b82e8324201.ctex"
+uid="uid://bptp8w6j0x8io"
+path="res://.godot/imported/Beaf.png-68106a7bd6b585c39bd3c7e516e4528d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Beef.png"
-dest_files=["res://.godot/imported/Beef.png-08672fd58f5a942dda841b82e8324201.ctex"]
+source_file="res://assets/Beaf.png"
+dest_files=["res://.godot/imported/Beaf.png-68106a7bd6b585c39bd3c7e516e4528d.ctex"]
 
 [params]
 

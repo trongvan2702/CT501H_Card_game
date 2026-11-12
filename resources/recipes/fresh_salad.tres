@@ -12,6 +12,7 @@ recipe_id = "fresh_salad"
 recipe_name = "Fresh Salad"
 description = "Fresh Salad"
 default_unlocked = true
+rarity = 1
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_hrkss")]([ExtResource("3_1s1xw"), ExtResource("4_ji3b6")])

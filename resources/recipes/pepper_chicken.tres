@@ -12,6 +12,7 @@ recipe_id = "chicken_pepper"
 recipe_name = "Chicken Pepper"
 description = "Chicken Pepper"
 default_unlocked = false
+rarity = 2
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_d2dqt")]([ExtResource("3_2vq8x"), ExtResource("4_rxsr0")])

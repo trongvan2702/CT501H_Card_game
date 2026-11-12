@@ -12,6 +12,7 @@ recipe_id = "meat_meat"
 recipe_name = "Meat Meat"
 description = "Meat Meat"
 default_unlocked = false
+rarity = 3
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_vrtlp")]([ExtResource("3_vrtlp"), ExtResource("4_kertd")])

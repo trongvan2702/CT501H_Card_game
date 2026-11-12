@@ -41,6 +41,8 @@ func generate_shop_inventory() -> void:
 	for item in GameManager.active_items:
 		exclude_ids.append(item.item_data.item_id)
 	
+	# Lấy item từ pool item có trong game, loại bỏ những item hiện đang sở hữu
+	# Tùy vào độ hiếm thì item sẽ có tỉ lệ xuất hiện khác nhau. Cần mở rộng số lượng item trong tương lai
 	current_shop_items = ItemDB.get_random_items(3, exclude_ids)
 	
 	emit_signal("shop_updated")
@@ -82,8 +84,10 @@ func buy_recipe_pack() -> void:
 	
 	if GameManager.currency >= recipe_pack_cost:
 		GameManager.currency -= recipe_pack_cost
-		can_buy_recipe_pack = false
+		#can_buy_recipe_pack = false
 		
+#		Hiện tại đang lấy ngẫu nhiên 3 recipe trong pool toàn bộ recipe có trong game
+#		có thể nó hoạt động không tốt nhưng giờ không biết sửa như thế nào
 		current_draft_choices = RecipeDB.get_random_recipes(3)
 		current_state = ShopState.DRAFTING_RECIPE
 		
@@ -102,8 +106,10 @@ func buy_ingredient_pack() -> void:
 	
 	if GameManager.currency >= ingredient_pack_cost:
 		GameManager.currency -= ingredient_pack_cost
-		can_buy_ingredient_pack = false
+		#can_buy_ingredient_pack = false
 		
+		# Tương tự như recipe, lựa chọn ra 3 ingreident ngẫu nhiên trong pool gồm 8 ingredient gốc
+		# Trong tương lai có thể sẽ mở rộng thêm thuộc tính trong IngredientInstance thì hàm random cần thay đổi
 		current_draft_choices = IngredientDB.get_random_ingredients(3)
 		print(current_draft_choices)
 		

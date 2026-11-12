@@ -47,6 +47,7 @@ static func create_from_instance(data: IngredientInstance) -> IngredientCard:
 func _ready() -> void:
 	custom_minimum_size = card_size
 	size = card_size
+	pivot_offset = size / 2.0
 	_update_display()
 	pass
 

@@ -12,6 +12,7 @@ recipe_id = "kimchi"
 recipe_name = "Kimchi"
 description = "Kimchi"
 default_unlocked = true
+rarity = 1
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_lw53b")]([ExtResource("3_87ukx"), ExtResource("4_jwopl")])

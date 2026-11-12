@@ -1,0 +1,184 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4r7x2laqdvn1"]
+
+[ext_resource type="Script" uid="uid://c85f7yc053to0" path="res://scripts/resources/Recipe/RecipeCard.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://llearlr20hmu" path="res://assets/CardBackground.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://dgau251i7x4gk" path="res://assets/Apple Green.png" id="3_icon"]
+
+[sub_resource type="StyleBoxFlat" id="SB_card"]
+bg_color = Color(0.129412, 0.0980392, 0.121569, 0.941176)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.494118, 0.427451, 0.376471, 0.784314)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="SB_score_chip"]
+bg_color = Color(0.101961, 0.278431, 0.168627, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.317647, 0.647059, 0.396078, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="SB_mult_chip"]
+bg_color = Color(0.203922, 0.156863, 0.180392, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.545098, 0.478431, 0.784314)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="RecipeCard" type="Control"]
+custom_minimum_size = Vector2(220, 320)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 220.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="CardPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("SB_card")
+
+[node name="Background" type="TextureRect" parent="CardPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Margin" type="MarginContainer" parent="CardPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Body" type="VBoxContainer" parent="CardPanel/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="HBoxContainer" parent="CardPanel/Margin/Body"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="RarityLabel" type="Label" parent="CardPanel/Margin/Body/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.78, 0.74, 0.66, 1)
+theme_override_font_sizes/font_size = 13
+text = "COMMON"
+vertical_alignment = 1
+
+[node name="Badge" type="PanelContainer" parent="CardPanel/Margin/Body/Header"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BadgeLabel" type="Label" parent="CardPanel/Margin/Body/Header/Badge"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "NEW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="CardPanel/Margin/Body"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("3_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="CardPanel/Margin/Body"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.909804, 0.87451, 1)
+theme_override_font_sizes/font_size = 20
+text = "Recipe Name"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Ingredients" type="HBoxContainer" parent="CardPanel/Margin/Body"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Separator" type="HSeparator" parent="CardPanel/Margin/Body"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Chips" type="HBoxContainer" parent="CardPanel/Margin/Body"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ScoreChip" type="PanelContainer" parent="CardPanel/Margin/Body/Chips"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SB_score_chip")
+
+[node name="ScoreLabel" type="Label" parent="CardPanel/Margin/Body/Chips/ScoreChip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.933333, 0.678431, 1)
+theme_override_font_sizes/font_size = 14
+text = "+0 CRL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MultChip" type="PanelContainer" parent="CardPanel/Margin/Body/Chips"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SB_mult_chip")
+
+[node name="MultLabel" type="Label" parent="CardPanel/Margin/Body/Chips/MultChip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.909804, 0.87451, 1)
+theme_override_font_sizes/font_size = 14
+text = "×1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

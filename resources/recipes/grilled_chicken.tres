@@ -12,6 +12,7 @@ recipe_id = "grilled_chicken"
 recipe_name = "Grilled Chicken"
 description = ""
 default_unlocked = true
+rarity = 1
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_6s3dt")]([ExtResource("3_u7kbc"), ExtResource("4_wdy3y")])

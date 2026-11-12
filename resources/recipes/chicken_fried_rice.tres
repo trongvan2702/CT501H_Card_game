@@ -13,6 +13,7 @@ recipe_id = "chicken_fried_rice"
 recipe_name = "Chicken Fired Rice"
 description = "Chicken Fired Rice"
 default_unlocked = false
+rarity = 2
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_w54vf")]([ExtResource("3_rrawp"), ExtResource("4_jepi5"), ExtResource("5_sk54f")])

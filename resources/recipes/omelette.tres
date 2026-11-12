@@ -11,6 +11,7 @@ recipe_id = "omelette"
 recipe_name = "Omelette"
 description = "Omelette"
 default_unlocked = true
+rarity = 2
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_jqfmc")]([ExtResource("3_jqfmc"), ExtResource("3_jqfmc")])

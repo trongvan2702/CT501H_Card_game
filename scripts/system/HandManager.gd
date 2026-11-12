@@ -11,6 +11,9 @@ var card_in_hand: Array[IngredientCard] = []
 func add_card_to_hand(instance: IngredientInstance) -> void:
 	var new_card = IngredientCard.create_from_instance(instance)
 	new_card.card_clicked.connect(_on_card_clicked)
+	
+	new_card.card_size = new_card.card_size * 0.9
+	
 	if hand_ui_container:
 		hand_ui_container.add_child(new_card)
 	card_in_hand.append(new_card)

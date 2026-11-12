@@ -12,6 +12,7 @@ recipe_id = "beef_steak"
 recipe_name = "Beef Steak"
 description = "Beef Steak"
 default_unlocked = true
+rarity = 1
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_ydmk6")]([ExtResource("3_q5axq"), ExtResource("4_ch6lq")])

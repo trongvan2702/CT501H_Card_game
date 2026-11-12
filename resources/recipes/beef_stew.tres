@@ -13,6 +13,7 @@ recipe_id = "beef_stew"
 recipe_name = "Beef Stew"
 description = "Beef Stew"
 default_unlocked = false
+rarity = 3
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_rgahi")]([ExtResource("3_xvk2m"), ExtResource("4_naab2"), ExtResource("5_wb8o3")])

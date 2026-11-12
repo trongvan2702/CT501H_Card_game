@@ -101,25 +101,21 @@ func _render_draft_choices(draft_type: String) -> void:
 	
 	for i in range(choices.size()):
 		var choice = choices[i]
-		# Ở đây bạn có thể dùng ItemCard, IngredientCard, hoặc một TextureRect tuỳ thuộc vào việc
-		# bạn bốc Công thức hay Nguyên liệu. Giả sử ta tạo 1 nút bấm đơn giản bằng code:
+		# Với "recipe": dùng RecipeCard (hiện rarity, NEW/LV, nguyên liệu, điểm/hệ số).
+		# Với "ingredient"/"removal": dùng chính IngredientCard để làm giao diện chọn.
 		if draft_type == "recipe":
-			# Nếu bạn có RecipeCard, hãy dùng nó. Tạm thời dùng Button nếu chưa thiết kế RecipeCard.
-			var btn = Button.new()
-			btn.custom_minimum_size = Vector2(150, 200)
-			btn.text = choice.recipe_name
-			btn.pressed.connect(_on_draft_choice_selected.bind(draft_type, i))
-			draft_choices_tray.add_child(btn)
+			var recipe_card = RecipeCard.create_from_data(choice)
+			recipe_card.card_clicked.connect(_on_recipe_card_draft_selected.bind(draft_type, i))
+			draft_choices_tray.add_child(recipe_card)
 		else:
-			# Với Nguyên liệu và Cắt thẻ, dùng chính IngredientCard để làm giao diện chọn
 			var card = IngredientCard.create_from_instance(choice)
-			
+
 			# Tắt hover effect không cần thiết nếu bạn không muốn thẻ nhảy cẫng lên khi bốc bài
 			card.mouse_filter = Control.MOUSE_FILTER_PASS
-			
+
 			# Kết nối tín hiệu card_clicked của IngredientCard vào hàm xử lý bốc bài
 			card.card_clicked.connect(_on_ingredient_card_draft_selected.bind(draft_type, i))
-			
+
 			draft_choices_tray.add_child(card)
 
 func _on_skip_button_pressed() -> void:
@@ -128,27 +124,31 @@ func _on_skip_button_pressed() -> void:
 
 func _on_change_button_pressed() -> void:
 	StageManager.advance_to_next_stage()
-	get_tree().change_scene_to_file("res://scences/MatchManager.tscn")
+	get_tree().change_scene_to_file("res://scenes/MatchManager.tscn")
 
 
 func _on_ingredientt_pack_pressed() -> void:
 	ShopManager.buy_ingredient_pack()
+	_update_display_labels()
 
 
 func _on_recipe_pack_pressed() -> void:
 	ShopManager.buy_recipe_pack()
+	_update_display_labels()
 
 
 func _on_remove_card_pressed() -> void:
 	ShopManager.buy_card_removal()
+	_update_display_labels()
 
 # Hàm xử lý khi bấm vào IngredientCard (dùng riêng cho tín hiệu của IngredientCard)
 func _on_ingredient_card_draft_selected(card_node: IngredientCard, draft_type: String, choice_index: int) -> void:
 	# Bỏ qua tham số card_node (do signal card_clicked phát ra) và gọi hàm xử lý chung
 	_process_draft_selection(draft_type, choice_index)
 
-# Hàm xử lý khi bấm vào Button (dành cho Recipe, nếu dùng Button)
-func _on_draft_choice_selected(draft_type: String, choice_index: int) -> void:
+# Hàm xử lý khi bấm vào RecipeCard (dùng riêng cho tín hiệu của RecipeCard)
+func _on_recipe_card_draft_selected(card_node: RecipeCard, draft_type: String, choice_index: int) -> void:
+	# Bỏ qua tham số card_node (do signal card_clicked phát ra) và gọi hàm xử lý chung
 	_process_draft_selection(draft_type, choice_index)
 
 # Hàm xử lý logic chung sau khi bốc bài

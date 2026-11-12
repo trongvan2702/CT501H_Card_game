@@ -28,11 +28,15 @@ offset_bottom = 57.0
 text = "Target score: 0"
 
 [node name="Hand" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 203.0
-offset_top = 565.0
-offset_right = 1037.0
-offset_bottom = 820.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.85
+anchor_right = 0.5
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
 
 [node name="DeckManager" type="Node" parent="."]
 script = ExtResource("2_fw2qv")
@@ -43,32 +47,6 @@ hand_ui_container = NodePath("../Hand")
 
 [node name="ScoringSystem" type="Node" parent="."]
 script = ExtResource("4_ugqtu")
-
-[node name="PlayButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.026
-anchor_top = 0.055
-anchor_right = 0.105
-anchor_bottom = 0.11
-offset_left = 0.652
-offset_top = 0.0599976
-offset_right = 0.709991
-offset_bottom = 0.119995
-text = "Play"
-
-[node name="DiscardButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.114
-anchor_top = 0.056
-anchor_right = 0.193
-anchor_bottom = 0.111
-offset_left = 0.145981
-offset_top = -0.0160027
-offset_right = -0.822998
-offset_bottom = -0.12101
-text = "Discard"
 
 [node name="Total_Score" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -105,6 +83,31 @@ offset_right = 97.0
 offset_bottom = 170.0
 text = "Print Item"
 
-[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="DiscardButton" to="." method="_on_discard_button_pressed"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.95
+anchor_right = 0.5
+anchor_bottom = 0.95
+offset_left = -162.5
+offset_top = -40.0
+offset_right = 162.5
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 25
+
+[node name="DiscardButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Discard"
+
+[node name="PlayButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Play"
+
 [connection signal="pressed" from="_debug_get_current_item" to="." method="_on__debug_get_current_item_pressed"]
+[connection signal="pressed" from="HBoxContainer/DiscardButton" to="." method="_on_discard_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

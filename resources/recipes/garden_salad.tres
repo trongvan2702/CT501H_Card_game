@@ -14,6 +14,7 @@ recipe_id = "garden_salad"
 recipe_name = "Garden Salad"
 description = "Garden Salad"
 default_unlocked = false
+rarity = 3
 min_ingredient = 2
 max_ingredient = 5
 required_ingredients = Array[ExtResource("2_7pw5c")]([ExtResource("3_wi0h2"), ExtResource("4_1rdur"), ExtResource("5_irri2"), ExtResource("6_0ooj8")])

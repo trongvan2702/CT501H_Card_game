@@ -6,6 +6,7 @@ class_name RecipeData
 @export var recipe_name: String = ""
 @export_multiline var description: String = ""
 @export var default_unlocked: bool = false
+@export var rarity: int = 1 # 1 = Common, 2 = Uncommon, 3 = Rare, 4 = Legendary
 
 @export_group("Requirements")
 @export var min_ingredient: int = 2
