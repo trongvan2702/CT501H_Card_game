@@ -6,7 +6,7 @@ signal card_hoverd(card: IngredientCard)
 signal card_unhovered(card: IngredientCard)
 signal card_selected(card: IngredientCard)
 
-const CARD_SCENE = preload("res://scences/IngredientCard.tscn")
+const CARD_SCENE = preload("res://scenes/IngredientCard.tscn")
 
 var ingredient_instance: IngredientInstance = null:
 	set(value):
@@ -58,6 +58,7 @@ func _update_display() -> void:
 	
 	$_name_label.text = ingredient_instance.ingredient_data.display_name
 	$_icon_sprite.texture = ingredient_instance.ingredient_data.icon_texture
+	$_seal/Label.text = str(ingredient_instance.get_score())
 	
 func _update_visual_state() -> void:
 	var target_scale = Vector2(1.0, 1.0)

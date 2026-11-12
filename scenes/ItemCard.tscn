@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://vfgreamoesxe"]
+
+[ext_resource type="Script" uid="uid://c8461b64b7ml7" path="res://scripts/resources/Item/ItemCard.gd" id="1_kij46"]
+[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="2_iwtqy"]
+
+[node name="ItemCard" type="Control"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kij46")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 0
+offset_left = -1.0
+offset_top = -6.0
+offset_right = 159.0
+offset_bottom = 154.0
+texture = ExtResource("2_iwtqy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 136.0
+offset_right = 161.0
+offset_bottom = 176.0
+mouse_filter = 1
+
+[node name="DetailLabel" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

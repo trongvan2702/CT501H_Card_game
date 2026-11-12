@@ -12,5 +12,6 @@ description = "Gold1"
 rarity = 1
 price = 5
 logic_script = ExtResource("2_wd6y3")
+is_boss = false
 item_texture = ExtResource("1_es1gv")
 metadata/_custom_type_script = "uid://b7ouduwjuey1b"

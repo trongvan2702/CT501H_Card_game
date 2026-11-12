@@ -1,0 +1,110 @@
+[gd_scene load_steps=5 format=3 uid="uid://cda0d2h04pus5"]
+
+[ext_resource type="Script" uid="uid://de57s1cpd5cqx" path="res://scripts/system/MatchManager.gd" id="1_cwqus"]
+[ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_fw2qv"]
+[ext_resource type="Script" uid="uid://bkftto0vdabx5" path="res://scripts/system/HandManager.gd" id="3_x166i"]
+[ext_resource type="Script" uid="uid://xtuumm8c3oq3" path="res://scripts/system/ScoringSystem.gd" id="4_ugqtu"]
+
+[node name="MatchManager" type="Control" node_paths=PackedStringArray("deck_manager", "hand_manager", "scoring_system")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 11.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cwqus")
+deck_manager = NodePath("DeckManager")
+hand_manager = NodePath("HandManager")
+scoring_system = NodePath("ScoringSystem")
+
+[node name="Taget Score" type="RichTextLabel" parent="."]
+layout_mode = 1
+offset_left = 1686.0
+offset_top = 34.0
+offset_right = 1882.0
+offset_bottom = 57.0
+text = "Target score: 0"
+
+[node name="Hand" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 203.0
+offset_top = 565.0
+offset_right = 1037.0
+offset_bottom = 820.0
+
+[node name="DeckManager" type="Node" parent="."]
+script = ExtResource("2_fw2qv")
+
+[node name="HandManager" type="Node" parent="." node_paths=PackedStringArray("hand_ui_container")]
+script = ExtResource("3_x166i")
+hand_ui_container = NodePath("../Hand")
+
+[node name="ScoringSystem" type="Node" parent="."]
+script = ExtResource("4_ugqtu")
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.026
+anchor_top = 0.055
+anchor_right = 0.105
+anchor_bottom = 0.11
+offset_left = 0.652
+offset_top = 0.0599976
+offset_right = 0.709991
+offset_bottom = 0.119995
+text = "Play"
+
+[node name="DiscardButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.114
+anchor_top = 0.056
+anchor_right = 0.193
+anchor_bottom = 0.111
+offset_left = 0.145981
+offset_top = -0.0160027
+offset_right = -0.822998
+offset_bottom = -0.12101
+text = "Discard"
+
+[node name="Total_Score" type="RichTextLabel" parent="."]
+layout_mode = 1
+offset_left = 1686.0
+offset_top = 60.0
+offset_right = 1899.0
+offset_bottom = 83.0
+text = "Curent score: 0"
+
+[node name="Current_Stage" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.01
+anchor_right = 0.9
+anchor_bottom = 0.1
+offset_left = -187.0
+offset_bottom = -53.0
+grow_horizontal = 0
+text = "Curent stage: 1"
+
+[node name="Item" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 414.0
+offset_top = 4.0
+offset_right = 1589.0
+offset_bottom = 154.0
+
+[node name="_debug_get_current_item" type="Button" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 145.0
+offset_right = 97.0
+offset_bottom = 170.0
+text = "Print Item"
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="DiscardButton" to="." method="_on_discard_button_pressed"]
+[connection signal="pressed" from="_debug_get_current_item" to="." method="_on__debug_get_current_item_pressed"]

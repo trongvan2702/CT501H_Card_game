@@ -1,0 +1,135 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhfxol5oyqmpw"]
+
+[ext_resource type="Script" uid="uid://ymvw48nkpjp2" path="res://scripts/system/ShopUI.gd" id="1_c1c8f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8al7"]
+bg_color = Color(1, 0.387955, 0.319725, 1)
+
+[node name="ShopScence" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_c1c8f")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 541.0
+offset_right = 1113.0
+offset_bottom = 40.0
+text = "Shop Manager"
+horizontal_alignment = 1
+
+[node name="ChangeButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1647.0
+offset_top = 814.0
+offset_right = 1844.0
+offset_bottom = 845.0
+text = "Change to Match Scence"
+
+[node name="OwnedItemsTray" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ShopShelf" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 600.0
+offset_right = 507.0
+offset_bottom = 685.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Gold" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1700.0
+offset_top = 1.0
+offset_right = 1902.0
+offset_bottom = 28.0
+text = "Gold: 0"
+scroll_active = false
+
+[node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1126.0
+offset_top = 408.0
+offset_right = 1476.0
+offset_bottom = 658.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="RecipePack" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+text = "Buy Recipe"
+
+[node name="IngredienttPack" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+text = "Buy Ingredient"
+
+[node name="RerollButton" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+text = "Reroll"
+
+[node name="RemoveCard" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+text = "Remove Card"
+
+[node name="DraftOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1900.0
+offset_bottom = 901.0
+color = Color(0, 0, 0, 0.588235)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DraftOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -210.5
+offset_right = 102.0
+offset_bottom = 39.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="DraftTitle" type="Label" parent="DraftOverlay/VBoxContainer"]
+layout_mode = 2
+text = "Select 1 card"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DraftChoices" type="HBoxContainer" parent="DraftOverlay/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="SkipButton" type="Button" parent="DraftOverlay/VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_g8al7")
+text = "Skip"
+
+[connection signal="pressed" from="ChangeButton" to="." method="_on_change_button_pressed"]
+[connection signal="pressed" from="GridContainer/RecipePack" to="." method="_on_recipe_pack_pressed"]
+[connection signal="pressed" from="GridContainer/IngredienttPack" to="." method="_on_ingredientt_pack_pressed"]
+[connection signal="pressed" from="GridContainer/RerollButton" to="." method="_on_reroll_button_pressed"]
+[connection signal="pressed" from="GridContainer/RemoveCard" to="." method="_on_remove_card_pressed"]
+[connection signal="pressed" from="DraftOverlay/VBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]

@@ -22,11 +22,13 @@ IngredientDB="*res://scripts/autoloads/IngredientDB.gd"
 RecipeDB="*res://scripts/autoloads/RecipeDB.gd"
 GameManager="*res://scripts/autoloads/GameManager.gd"
 StageManager="*res://scripts/autoloads/StageManager.gd"
+ShopManager="*res://scripts/autoloads/ShopManager.gd"
 
 [display]
 
 window/size/viewport_width=1900
 window/size/viewport_height=900
+window/stretch/mode="viewport"
 
 [rendering]
 

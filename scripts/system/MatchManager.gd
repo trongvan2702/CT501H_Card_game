@@ -1,4 +1,4 @@
-extends Node
+extends Control
 class_name MatchManager
 
 enum MatchState {
@@ -42,9 +42,9 @@ func _render_owned_items() -> void:
 		owned_items_tray.add_child(card)
 		
 	# 3. Vẽ thêm Boss (nếu có) để người chơi biết đang đánh với ai
-	if StageManager.current_boss != null:
-		var boss_card = ItemCard.create_from_instance(StageManager.current_boss)
-		owned_items_tray.add_child(boss_card)
+	#if StageManager.current_boss != null:
+		#var boss_card = ItemCard.create_from_instance(StageManager.current_boss)
+		#owned_items_tray.add_child(boss_card)
 
 func _on_state_changed(new_state: MatchState) -> void:
 	current_state = new_state
@@ -59,6 +59,13 @@ func _on_state_changed(new_state: MatchState) -> void:
 			print("MatchState: PROCESSING")
 		MatchState.GAME_OVER:
 			print("MatchState: GAME_OVER")
+
+# Đồng bộ dữ liệu item từ GameManager khi cần thiết
+func _sync_equipped_items() -> void:
+	scoring_system.equipped_items = GameManager.active_items.duplicate()
+	
+	if StageManager.current_boss != null:
+		scoring_system.equipped_items.append(StageManager.current_boss)
 
 func start_new_stage() -> void:
 	
@@ -78,10 +85,7 @@ func start_new_stage() -> void:
 	discards_left = 3
 	$DiscardButton.text = "Discard (%d)" % [discards_left]
 	
-	scoring_system.equipped_items = GameManager.active_items
-	
-	if StageManager.current_boss != null:
-		scoring_system.equipped_items.append(StageManager.current_boss)
+	_sync_equipped_items()
 	
 	_trigger_items_on_stage_start()
 	
@@ -155,7 +159,7 @@ func _trigger_items_after_match() -> Dictionary:
 	return final_effects
 
 func _on_play_button_pressed() -> void:
-	if current_state != MatchState.WAIT_FOR_INPUT or plays_left <= 0:
+	if current_state != MatchState.WAIT_FOR_INPUT or plays_left <= 0 or hand_manager.get_selected_cards().size() == 0:
 		return
 	
 	_on_state_changed(MatchState.PROCESSING)
@@ -164,6 +168,8 @@ func _on_play_button_pressed() -> void:
 	$PlayButton.text = "Play (%d)" % [plays_left]
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
+	
+	_sync_equipped_items()
 	
 	var result = scoring_system.calculate_dish_score(selected_cards)
 	
@@ -187,11 +193,9 @@ func _on_play_button_pressed() -> void:
 	_check_win_condition()
 
 func _on_discard_button_pressed() -> void:
-	print(current_state)
-	if current_state != MatchState.WAIT_FOR_INPUT or discards_left <= 0:
+	if current_state != MatchState.WAIT_FOR_INPUT or discards_left <= 0 or hand_manager.get_selected_cards().size() == 0:
 		return
 	
-	print(discards_left)
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
 	
@@ -214,6 +218,9 @@ func _check_win_condition() -> void:
 
 func _win_stage() -> void:
 	_on_state_changed(MatchState.GAME_OVER)
+	
+	_sync_equipped_items()
+	
 	var end_stage_effects = _trigger_items_after_match()
 	var item_gold: int = 0
 	
@@ -230,9 +237,19 @@ func _win_stage() -> void:
 	
 	print(total_earned)
 	GameManager.add_gold(total_earned)
-	get_tree().change_scene_to_file("res://scences/ShopScence.tscn")
+	get_tree().change_scene_to_file("res://scenes/ShopScence.tscn")
 
 func _lose_stage() -> void:
 	_on_state_changed(MatchState.GAME_OVER)
 	print("RUN OVER - DEFEAT!")
 	# Hiện màn hình Game Over
+
+# =======================================================
+# Debug
+# =======================================================
+
+func _on__debug_get_current_item_pressed() -> void:
+	var count = 0
+	for item in scoring_system.equipped_items:
+		count += 1
+		print("Item %d: %s" % [count, item.item_data.display_name]) 
