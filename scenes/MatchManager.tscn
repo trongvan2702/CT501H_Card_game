@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cda0d2h04pus5"]
+[gd_scene load_steps=6 format=3 uid="uid://cda0d2h04pus5"]
 
 [ext_resource type="Script" uid="uid://de57s1cpd5cqx" path="res://scripts/system/MatchManager.gd" id="1_cwqus"]
 [ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_fw2qv"]
 [ext_resource type="Script" uid="uid://bkftto0vdabx5" path="res://scripts/system/HandManager.gd" id="3_x166i"]
 [ext_resource type="Script" uid="uid://xtuumm8c3oq3" path="res://scripts/system/ScoringSystem.gd" id="4_ugqtu"]
+[ext_resource type="PackedScene" uid="uid://bfmu58pg8g5lw" path="res://scenes/ViewDeckButton.tscn" id="5_fw2qv"]
 
 [node name="MatchManager" type="Control" node_paths=PackedStringArray("deck_manager", "hand_manager", "scoring_system")]
 layout_mode = 3
@@ -107,6 +108,14 @@ text = "Discard"
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 text = "Play"
+
+[node name="ViewDeckButton" parent="." instance=ExtResource("5_fw2qv")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+grow_horizontal = 1
+grow_vertical = 0
 
 [connection signal="pressed" from="_debug_get_current_item" to="." method="_on__debug_get_current_item_pressed"]
 [connection signal="pressed" from="HBoxContainer/DiscardButton" to="." method="_on_discard_button_pressed"]

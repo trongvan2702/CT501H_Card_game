@@ -1,0 +1,142 @@
+[gd_scene load_steps=15 format=3 uid="uid://bfmu58pg8g5lw"]
+
+[ext_resource type="Script" uid="uid://1w0ls60gl5dv" path="res://scripts/UI/ViewDeckButton.gd" id="1_8jt4a"]
+[ext_resource type="Texture2D" uid="uid://d0tqf5sa73f66" path="res://assets/CardBackgroundBack.png" id="2_0a83x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vepu"]
+bg_color = Color(0.101736, 0.0452569, 0.00750047, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35657, 0.227444, 0.0798896, 1)
+corner_radius_top_left = 99
+corner_radius_top_right = 99
+corner_radius_bottom_right = 99
+corner_radius_bottom_left = 99
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qnjod"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pa266"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6wugf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5jx8e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mbpxp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqvsq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_460tn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64w1m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cd2nx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ayp18"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_blkyq"]
+
+[node name="ViewDeckButton" type="Control"]
+custom_minimum_size = Vector2(200, 280)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 280.0
+script = ExtResource("1_8jt4a")
+
+[node name="ViewDeckButton" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ViewDeckButton"]
+layout_mode = 2
+
+[node name="CardBack" type="TextureRect" parent="ViewDeckButton/VBoxContainer"]
+custom_minimum_size = Vector2(100, 140)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_0a83x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CountBadge" type="PanelContainer" parent="ViewDeckButton/VBoxContainer/CardBack"]
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1vepu")
+
+[node name="Margin" type="MarginContainer" parent="ViewDeckButton/VBoxContainer/CardBack/CountBadge"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ViewDeckButton/VBoxContainer/CardBack/CountBadge/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="RemainCardLabel" type="Label" parent="ViewDeckButton/VBoxContainer/CardBack/CountBadge/Margin/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "35/"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalCardLabel" type="Label" parent="ViewDeckButton/VBoxContainer/CardBack/CountBadge/Margin/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "35"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ViewDeckText" type="Label" parent="ViewDeckButton/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "VIEW DECK "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClickArea" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = -16.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qnjod")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_pa266")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6wugf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_5jx8e")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_mbpxp")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_xqvsq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_460tn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_64w1m")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_cd2nx")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ayp18")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_blkyq")

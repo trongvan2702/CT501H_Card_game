@@ -28,10 +28,12 @@ const MAX_EQUIPPED_ITEMS: int = 5
 @onready var owned_items_tray = $Item
 @onready var _play_button = $HBoxContainer/PlayButton
 @onready var _discard_button = $HBoxContainer/DiscardButton
+@onready var view_deck_btn = $ViewDeckButton
 
 func _ready() -> void:
 	start_new_stage()
 	_render_owned_items()
+	_update_deck_ui()
 
 func _render_owned_items() -> void:
 	# 1. Dọn sạch khay cũ
@@ -168,6 +170,7 @@ func _on_play_button_pressed() -> void:
 	
 	plays_left -= 1
 	_update_display()
+	_update_deck_ui()
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
 	
@@ -207,6 +210,7 @@ func _on_discard_button_pressed() -> void:
 	_on_state_changed(MatchState.PROCESSING)
 	discards_left -= 1
 	_update_display()
+	_update_deck_ui()
 	
 	_on_state_changed(MatchState.DRAWING)
 	draw_cards_to_full()
@@ -255,6 +259,12 @@ func _lose_stage() -> void:
 func _update_display() -> void:
 	_discard_button.text = "Discard (%d)" % [discards_left]
 	_play_button.text = "Play (%d)" % [plays_left]
+
+func _update_deck_ui() -> void:
+	var total_cards = GameManager.player_deck.size()
+	var remain_cards = deck_manager.draw_deck.size()
+	
+	view_deck_btn.update_counts(total_cards, remain_cards)
 
 # =======================================================
 # Debug
