@@ -177,7 +177,10 @@ func _on_play_button_pressed() -> void:
 	
 	for dish in result["dishes"]:
 		var pipeline: Array[TriggerResult] = dish["pipeline"]
-		
+
+		# Ghi nhận recipe đã nấu (dữ liệu cho UI thống kê recipe trong run)
+		RecipeDB.record_craft(dish["recipe"].recipe_id)
+
 		for trigger in pipeline:
 			if not trigger.triggered:
 				continue

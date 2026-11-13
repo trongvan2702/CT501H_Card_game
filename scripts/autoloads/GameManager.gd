@@ -36,6 +36,7 @@ func start_new_run() -> void:
 	_debug_create_item()
 	print("Từ GameManager: Bắt đầu run")
 	StageManager.start_new_run()
+	RecipeDB.reset_crafted_counts()
 
 
 func _debug_create_item() -> void:

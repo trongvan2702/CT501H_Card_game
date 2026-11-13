@@ -26,7 +26,8 @@ func _load_recipe() -> void:
 				recipes[recipe.recipe_id] = {
 					"data": recipe,
 					"level": 1,
-					"unlocked": recipe.default_unlocked
+					"unlocked": recipe.default_unlocked,
+					"crafted_count": 0 # Số lần nấu trong run hiện tại
 				}
 		file_name = dir.get_next()
 
@@ -44,6 +45,34 @@ func upgrade_recipe(recipe: RecipeData) -> void:
 
 func get_recipe_level(id: String) -> int:
 	return recipes.get(id, {"level": 1})["level"]
+
+# Ghi nhận 1 lần nấu thành công với recipe (dùng cho UI thống kê)
+func record_craft(recipe_id: String) -> void:
+	if not recipes.has(recipe_id):
+		return
+	recipes[recipe_id]["crafted_count"] = get_crafted_count(recipe_id) + 1
+
+func get_crafted_count(id: String) -> int:
+	return recipes.get(id, {"crafted_count": 0})["crafted_count"]
+
+# Reset số lần nấu khi bắt đầu run mới
+func reset_crafted_counts() -> void:
+	for recipe_id in recipes:
+		recipes[recipe_id]["crafted_count"] = 0
+
+# Danh sách recipe đã mở khóa, sắp xếp theo số lần nấu giảm dần
+# Trả về mảng các dict {"data": RecipeData, "crafted_count": int}
+func get_crafted_recipes_sorted() -> Array:
+	var result: Array = []
+	for recipe in get_unlock_recipe():
+		result.append({
+			"data": recipe["data"],
+			"crafted_count": get_crafted_count(recipe["data"].recipe_id)
+		})
+	result.sort_custom(func(a, b):
+		return a["crafted_count"] > b["crafted_count"]
+	)
+	return result
 
 func get_unlock_recipe() -> Array:
 	var result: Array = []
