@@ -31,6 +31,7 @@ const MAX_EQUIPPED_ITEMS: int = 5
 
 @onready var view_deck_btn = $ViewDeckButton
 @onready var deck_viewer_ui = $DeckViewerUI
+@onready var active_menu_ui = $ActiveMenuUI
 
 func _ready() -> void:
 	start_new_stage()
@@ -38,7 +39,9 @@ func _ready() -> void:
 	_update_deck_ui()
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
 	hand_manager.cards_selection_changed.connect(_on_hand_selection_changed)
+	hand_manager.cards_selection_changed.connect(active_menu_ui._on_cards_selection_changed)
 	_update_action_buttons(0)
+	active_menu_ui.refresh_menu()
 
 func _render_owned_items() -> void:
 	# 1. Dọn sạch khay cũ
@@ -49,11 +52,6 @@ func _render_owned_items() -> void:
 	for item_instance in GameManager.active_items:
 		var card = ItemCard.create_from_instance(item_instance)
 		owned_items_tray.add_child(card)
-		
-	# 3. Vẽ thêm Boss (nếu có) để người chơi biết đang đánh với ai
-	#if StageManager.current_boss != null:
-		#var boss_card = ItemCard.create_from_instance(StageManager.current_boss)
-		#owned_items_tray.add_child(boss_card)
 
 func _on_state_changed(new_state: MatchState) -> void:
 	current_state = new_state
@@ -262,6 +260,7 @@ func _lose_stage() -> void:
 # =======================================================
 # UI
 # =======================================================
+
 func _update_display() -> void:
 	# Gọi hàm cập nhật nút mới, lấy số lượng bài đang chọn từ hand_manager
 	var current_selected = hand_manager.get_selected_cards().size()
@@ -274,18 +273,13 @@ func _update_deck_ui() -> void:
 	view_deck_btn.update_counts(total_cards, remain_cards)
 
 func _on_view_deck_opened() -> void:
-	# Gọi hàm mở giao diện và báo cho nó biết đây là chế độ Bàn đấu
 	deck_viewer_ui.open_viewer(DeckViewerUI.ViewMode.MATCH, deck_manager.draw_deck)
-	pass
 
-# Hàm này chạy mỗi khi người chơi nhấp chọn bài trên tay
 func _on_hand_selection_changed(selected_cards: Array) -> void:
 	_update_action_buttons(selected_cards.size())
 
 func _update_action_buttons(selected_count: int) -> void:
-	# Báo cho nút Play biết số bài đang chọn và số lượt Play còn lại
 	play_action_btn.update_state(selected_count, plays_left)
-	# Báo cho nút Discard biết số bài đang chọn và số lượt Discard còn lại
 	discard_action_btn.update_state(selected_count, discards_left)
 
 # =======================================================

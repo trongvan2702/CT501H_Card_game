@@ -59,6 +59,8 @@ func _create_dishes_from_ingredients(ingredients: Array[IngredientInstance]) -> 
 	var visible_recipes = RecipeDB.get_unlock_recipe() #Array[Dictionary]
 
 	visible_recipes.sort_custom(func(a, b):
+		if a["crafted_count"] != b["crafted_count"]:
+			return a["crafted_count"] > b["crafted_count"]
 		return RecipeDB.calculate_mult(b["data"]) > RecipeDB.calculate_mult(a["data"])
 	)
 	

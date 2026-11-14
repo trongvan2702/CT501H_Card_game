@@ -27,7 +27,7 @@ func _load_recipe() -> void:
 					"data": recipe,
 					"level": 1,
 					"unlocked": recipe.default_unlocked,
-					"crafted_count": 0 # Số lần nấu trong run hiện tại
+					"crafted_count": 0 
 				}
 		file_name = dir.get_next()
 
@@ -46,7 +46,6 @@ func upgrade_recipe(recipe: RecipeData) -> void:
 func get_recipe_level(id: String) -> int:
 	return recipes.get(id, {"level": 1})["level"]
 
-# Ghi nhận 1 lần nấu thành công với recipe (dùng cho UI thống kê)
 func record_craft(recipe_id: String) -> void:
 	if not recipes.has(recipe_id):
 		return
@@ -71,6 +70,39 @@ func get_crafted_recipes_sorted() -> Array:
 		})
 	result.sort_custom(func(a, b):
 		return a["crafted_count"] > b["crafted_count"]
+	)
+	return result
+
+# "Giá trị món" = (điểm công thức + tổng điểm nguyên liệu) × (1 + mult)
+# Theo công thức trong BALANCE.md §4.1
+func get_recipe_score(recipe: RecipeData) -> float:
+	var score: float = calculate_score(recipe)
+	for ing in recipe.required_ingredients:
+		score += ing.base_score
+	return score
+
+func get_recipe_mult(recipe: RecipeData) -> float:
+	return 1.0 + calculate_mult(recipe)
+
+func get_recipe_value(recipe: RecipeData) -> float:
+	return get_recipe_score(recipe) * get_recipe_mult(recipe)
+
+# Danh sách dùng cho Active Menu:
+# sắp xếp theo số lần nấu trong run (giảm dần), rồi tới giá trị món (giảm dần)
+# Trả về mảng các dict {"data": RecipeData, "crafted_count": int, "value": float}
+func get_active_menu_recipes() -> Array:
+	var result: Array = []
+	for recipe in get_unlock_recipe():
+		var recipe_data: RecipeData = recipe["data"]
+		result.append({
+			"data": recipe_data,
+			"crafted_count": get_crafted_count(recipe_data.recipe_id),
+			"value": get_recipe_value(recipe_data)
+		})
+	result.sort_custom(func(a, b):
+		if a["crafted_count"] != b["crafted_count"]:
+			return a["crafted_count"] > b["crafted_count"]
+		return a["value"] > b["value"]
 	)
 	return result
 

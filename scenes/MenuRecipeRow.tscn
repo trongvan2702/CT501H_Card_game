@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpbmf2tshuh15"]
+
+[ext_resource type="Script" uid="uid://dq151jdau8dpn" path="res://scripts/UI/MenuRecipeRow.gd" id="1_1pi0v"]
+[ext_resource type="Texture2D" uid="uid://dgau251i7x4gk" path="res://assets/Apple Green.png" id="2_ogwdn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fupim"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="MenuRecipeRow" type="PanelContainer"]
+custom_minimum_size = Vector2(320, 0)
+anchors_preset = -1
+anchor_right = 0.168
+anchor_bottom = 0.082
+offset_right = 0.799988
+offset_bottom = 0.199997
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fupim")
+script = ExtResource("1_1pi0v")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="RowHBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="RecipeIcon" type="TextureRect" parent="Margin/RowHBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("2_ogwdn")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoVBox" type="VBoxContainer" parent="Margin/RowHBox"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RecipeName" type="Label" parent="Margin/RowHBox/InfoVBox"]
+layout_mode = 2
+text = "Recipe"
+
+[node name="IngredientsBox" type="HBoxContainer" parent="Margin/RowHBox/InfoVBox"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Margin/RowHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatsVBox" type="VBoxContainer" parent="Margin/RowHBox"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ScoreLabel" type="Label" parent="Margin/RowHBox/StatsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.321569, 0.580392, 0.929412, 1)
+text = "+113"
+horizontal_alignment = 2
+
+[node name="MultLabel" type="Label" parent="Margin/RowHBox/StatsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.913725, 0.384314, 0.34902, 1)
+theme_override_font_sizes/font_size = 13
+text = "x2"
+horizontal_alignment = 2

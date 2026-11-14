@@ -89,7 +89,6 @@ func _render_shop_items() -> void:
 		vbox.add_child(card)
 		vbox.add_child(price_label)
 		shop_shelf.add_child(vbox)
-		print(vbox)
 
 # Hàm hứng tín hiệu khi người chơi bấm vào thẻ trên kệ
 func _on_shop_card_buy_requested(card: ItemCard, item_data: ItemData, cost: int) -> void:

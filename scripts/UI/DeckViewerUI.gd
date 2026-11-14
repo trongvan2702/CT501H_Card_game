@@ -33,7 +33,6 @@ func open_viewer(mode: ViewMode, remaining_pile: Array = []) -> void:
 # XỬ LÝ LƯỚI BÀI VÀ LÀM XÁM
 # ========================================================
 func _render_deck(mode: ViewMode, remaining_pile: Array) -> void:
-	# 1. Dọn dẹp lưới cũ
 	for child in grid_container.get_children():
 		child.queue_free()
 		
