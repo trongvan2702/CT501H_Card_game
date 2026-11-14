@@ -56,7 +56,9 @@ theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="MainVBox" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+y_sort_enabled = true
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="HeaderBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/MainVBox"]
 layout_mode = 2
@@ -131,6 +133,7 @@ text = "X"
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/MainVBox"]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -138,6 +141,8 @@ vertical_scroll_mode = 0
 
 [node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/MainVBox/ScrollContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 15
 columns = 4
 
 [connection signal="gui_input" from="Overlay" to="." method="_on_overlay_gui_input"]

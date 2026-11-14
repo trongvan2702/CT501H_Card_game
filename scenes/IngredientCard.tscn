@@ -68,6 +68,7 @@ offset_right = 0.00598145
 offset_bottom = 0.117325
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 20
 text = "Text"
 horizontal_alignment = 1
 vertical_alignment = 1

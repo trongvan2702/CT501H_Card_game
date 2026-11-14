@@ -85,15 +85,18 @@ func _create_card_stack(sample_card: IngredientInstance, total_count: int, remai
 	var group_vbox = VBoxContainer.new()
 	group_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	
+	group_vbox.add_theme_constant_override("separation", 5)
+	
 	# Tạo một Control rỗng làm "Sân khấu" xếp bài
 	var stack_control = Control.new()
 	# Tính toán độ rộng thực tế của cả chồng bài để GridContainer có thể bọc vừa vặn
-	var total_width = CARD_WIDTH + (total_count - 1) * OFFSET_X
-	stack_control.custom_minimum_size = Vector2(total_width, CARD_HEIGHT)
+	var total_width = (CARD_WIDTH * 0.8) + (total_count - 1) * OFFSET_X
+	stack_control.custom_minimum_size = Vector2(total_width, CARD_HEIGHT * 0.8)
 	
 	# Sinh ra các lá bài xếp chồng lên nhau
 	for i in range(total_count):
 		var card_ui = IngredientCard.create_from_instance(sample_card)
+		card_ui.card_size = card_ui.card_size * 0.8
 		card_ui.mouse_filter = Control.MOUSE_FILTER_STOP # STOP giúp thẻ nhận hover nhưng không ném sự kiện chuột ra phía sau
 		card_ui.is_clickable = false # Tắt tương tác click
 		
