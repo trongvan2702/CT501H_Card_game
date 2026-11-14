@@ -1,0 +1,143 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8t6qqb2o0wri"]
+
+[ext_resource type="Script" uid="uid://birhregsrmoa2" path="res://scripts/UI/DeckViewerUI.gd" id="1_72ekt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bsxl"]
+bg_color = Color(0.337575, 0.238912, 0.166933, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.487029, 0.262393, 0.22444, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="DeckViewerUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_72ekt")
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.588235)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(1000, 600)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0bsxl")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="MainVBox" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HeaderBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/MainVBox"]
+layout_mode = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox"]
+layout_mode = 2
+
+[node name="MainTitle" type="Label" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "YOUR DECK"
+
+[node name="StatsHBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TotalCard" type="PanelContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox/TotalCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="TotalCardsLabel" type="Label" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox/TotalCard/MarginContainer"]
+layout_mode = 2
+text = "40 CARDS"
+
+[node name="IngredientsCount" type="PanelContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox/IngredientsCount"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="IngredientsCountLabel" type="Label" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox/IngredientsCount/MarginContainer"]
+layout_mode = 2
+text = "8 INGREDIENTS"
+
+[node name="RemainDraw" type="PanelContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox/RemainDraw"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="RemainDrawLabel" type="Label" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox/TitleVBox/StatsHBox/RemainDraw/MarginContainer"]
+layout_mode = 2
+text = "29 LEFT TO DRAW"
+
+[node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="PanelContainer/MarginContainer/MainVBox/HeaderBox"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/MainVBox"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/MainVBox/ScrollContainer"]
+layout_mode = 2
+columns = 4
+
+[connection signal="gui_input" from="Overlay" to="." method="_on_overlay_gui_input"]

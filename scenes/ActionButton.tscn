@@ -1,0 +1,84 @@
+[gd_scene load_steps=14 format=3 uid="uid://b8xrll0shlwvb"]
+
+[ext_resource type="Script" uid="uid://caikkuo1yuouc" path="res://scripts/UI/ActionButton.gd" id="1_cbrru"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqa4h"]
+bg_color = Color(0.215902, 0.215902, 0.215902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 5
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cbrru"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j75sg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1auvb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utbbj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_netxs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wchbs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5yua3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3hqqe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kmmqg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3r1b2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5d30t"]
+
+[node name="ActionButton" type="MarginContainer"]
+custom_minimum_size = Vector2(180, 70)
+offset_right = 180.0
+offset_bottom = 70.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("1_cbrru")
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lqa4h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ActionTitle" type="Label" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "PLAY ►"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubText" type="Label" parent="Background/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "ingredients"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cbrru")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_j75sg")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1auvb")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_utbbj")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_netxs")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_wchbs")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5yua3")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_3hqqe")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kmmqg")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_3r1b2")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5d30t")

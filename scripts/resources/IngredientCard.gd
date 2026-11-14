@@ -23,6 +23,7 @@ var ingredient_instance: IngredientInstance = null:
 var is_selected: bool = false
 var is_hovered: bool = false
 var is_dragging: bool = false
+var is_clickable: bool = true
 var drag_offset: Vector2 = Vector2.ZERO
 
 # Texture paths
@@ -59,7 +60,7 @@ func _update_display() -> void:
 	
 	$_name_label.text = ingredient_instance.ingredient_data.display_name
 	$_icon_sprite.texture = ingredient_instance.ingredient_data.icon_texture
-	$_seal/Label.text = str(ingredient_instance.get_score())
+	$_background/_seal/Label.text = str(ingredient_instance.get_score())
 	
 func _update_visual_state() -> void:
 	var target_scale = Vector2(1.0, 1.0)
@@ -104,6 +105,9 @@ func _on_card_clicked() -> void:
 
 
 func _gui_input(event: InputEvent) -> void:
+	if not is_clickable:
+		return
+	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:

@@ -31,38 +31,19 @@ texture = ExtResource("2_ite4s")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="_icon_sprite" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.144
-anchor_top = 0.201
-anchor_right = 0.841
-anchor_bottom = 0.694
-offset_left = 0.0559921
-offset_top = -0.0839996
-offset_right = -0.0409851
-offset_bottom = -0.0960083
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_o6dgh")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="_seal" type="TextureRect" parent="."]
-z_index = 1
+[node name="_seal" type="TextureRect" parent="_background"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.055
 anchor_top = 0.032
 anchor_right = 0.303
 anchor_bottom = 0.208
-offset_left = -0.0550003
-offset_top = -0.0879993
-offset_right = 0.0970039
-offset_bottom = -0.0720024
+offset_top = -0.959999
+offset_right = 0.152004
+offset_bottom = -0.944004
 texture = ExtResource("4_oa0ks")
 
-[node name="Label" type="Label" parent="_seal"]
+[node name="Label" type="Label" parent="_background/_seal"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.16
@@ -90,6 +71,23 @@ grow_vertical = 2
 text = "Text"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="_icon_sprite" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.144
+anchor_top = 0.201
+anchor_right = 0.841
+anchor_bottom = 0.694
+offset_left = 0.0559921
+offset_top = -0.0839996
+offset_right = -0.0409851
+offset_bottom = -0.0960083
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_o6dgh")
+expand_mode = 1
+stretch_mode = 5
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

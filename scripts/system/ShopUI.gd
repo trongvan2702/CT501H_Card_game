@@ -11,6 +11,10 @@ class_name ShopUI
 @onready var draft_title = $DraftOverlay/VBoxContainer/DraftTitle
 @onready var draft_choices_tray = $DraftOverlay/VBoxContainer/DraftChoices
 
+
+@onready var view_deck_btn = $ViewDeckButton
+@onready var deck_viewer_ui = $DeckViewerUI
+
 func _ready() -> void:
 	# Connect Signal
 	ShopManager.shop_updated.connect(_on_shop_manager_updated)
@@ -18,7 +22,11 @@ func _ready() -> void:
 	ShopManager.sig_buy_ingredient_pack.connect(_on_open_ingredient_pack)
 	ShopManager.sig_remove_card.connect(_on_open_card_removal)
 	
+	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
+	view_deck_btn.update_counts(GameManager.player_deck.size())
+	
 	ShopManager.reset_shop()
+	
 	
 
 # ==========================================
@@ -81,6 +89,7 @@ func _render_shop_items() -> void:
 		vbox.add_child(card)
 		vbox.add_child(price_label)
 		shop_shelf.add_child(vbox)
+		print(vbox)
 
 # Hàm hứng tín hiệu khi người chơi bấm vào thẻ trên kệ
 func _on_shop_card_buy_requested(card: ItemCard, item_data: ItemData, cost: int) -> void:
@@ -101,21 +110,14 @@ func _render_draft_choices(draft_type: String) -> void:
 	
 	for i in range(choices.size()):
 		var choice = choices[i]
-		# Với "recipe": dùng RecipeCard (hiện rarity, NEW/LV, nguyên liệu, điểm/hệ số).
-		# Với "ingredient"/"removal": dùng chính IngredientCard để làm giao diện chọn.
 		if draft_type == "recipe":
 			var recipe_card = RecipeCard.create_from_data(choice)
 			recipe_card.card_clicked.connect(_on_recipe_card_draft_selected.bind(draft_type, i))
 			draft_choices_tray.add_child(recipe_card)
 		else:
 			var card = IngredientCard.create_from_instance(choice)
-
-			# Tắt hover effect không cần thiết nếu bạn không muốn thẻ nhảy cẫng lên khi bốc bài
 			card.mouse_filter = Control.MOUSE_FILTER_PASS
-
-			# Kết nối tín hiệu card_clicked của IngredientCard vào hàm xử lý bốc bài
 			card.card_clicked.connect(_on_ingredient_card_draft_selected.bind(draft_type, i))
-
 			draft_choices_tray.add_child(card)
 
 func _on_skip_button_pressed() -> void:
@@ -160,3 +162,7 @@ func _process_draft_selection(draft_type: String, choice_index: int) -> void:
 		
 	draft_overlay.visible = false
 	_update_display_labels()
+
+func _on_view_deck_opened() -> void:
+	deck_viewer_ui.open_viewer(DeckViewerUI.ViewMode.SHOP)
+	pass

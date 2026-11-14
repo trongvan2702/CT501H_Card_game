@@ -1,13 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhfxol5oyqmpw"]
+[gd_scene load_steps=5 format=3 uid="uid://dhfxol5oyqmpw"]
 
 [ext_resource type="Script" uid="uid://ymvw48nkpjp2" path="res://scripts/system/ShopUI.gd" id="1_c1c8f"]
+[ext_resource type="PackedScene" uid="uid://bfmu58pg8g5lw" path="res://scenes/ViewDeckButton.tscn" id="2_fk3mg"]
+[ext_resource type="PackedScene" uid="uid://b8t6qqb2o0wri" path="res://scenes/DeckViewerUI.tscn" id="3_pxjd2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8al7"]
 bg_color = Color(1, 0.387955, 0.319725, 1)
 
 [node name="ShopScence" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_c1c8f")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
@@ -33,17 +39,12 @@ offset_bottom = 40.0
 
 [node name="ShopShelf" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = 600.0
-offset_right = 507.0
-offset_bottom = 685.0
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_right = 232.2
+grow_vertical = 2
+alignment = 1
 
 [node name="Gold" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -126,6 +127,20 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_g8al7")
 text = "Skip"
+
+[node name="ViewDeckButton" parent="." instance=ExtResource("2_fk3mg")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -280.0
+offset_bottom = 0.0
+grow_vertical = 0
+
+[node name="DeckViewerUI" parent="." instance=ExtResource("3_pxjd2")]
+visible = false
+z_index = 11
+layout_mode = 1
 
 [connection signal="pressed" from="ChangeButton" to="." method="_on_change_button_pressed"]
 [connection signal="pressed" from="GridContainer/RecipePack" to="." method="_on_recipe_pack_pressed"]

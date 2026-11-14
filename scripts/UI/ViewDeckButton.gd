@@ -18,6 +18,8 @@ func _ready() -> void:
 	_click_area.mouse_entered.connect(_on_mouse_entered)
 	_click_area.mouse_exited.connect(_on_mouse_exited)
 	_click_area.pressed.connect(_on_click_area_pressed)
+	
+	
 
 # ==========================================
 # CẬP NHẬT DỮ LIỆU HIỂN THỊ

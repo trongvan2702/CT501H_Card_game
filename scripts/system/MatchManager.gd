@@ -26,14 +26,19 @@ var equipped_items: Array = []
 const MAX_EQUIPPED_ITEMS: int = 5
 
 @onready var owned_items_tray = $Item
-@onready var _play_button = $HBoxContainer/PlayButton
-@onready var _discard_button = $HBoxContainer/DiscardButton
+@onready var play_action_btn = $VBoxContainer/HBoxContainer/PlayActionButton
+@onready var discard_action_btn = $VBoxContainer/HBoxContainer/DiscardActionButton
+
 @onready var view_deck_btn = $ViewDeckButton
+@onready var deck_viewer_ui = $DeckViewerUI
 
 func _ready() -> void:
 	start_new_stage()
 	_render_owned_items()
 	_update_deck_ui()
+	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
+	hand_manager.cards_selection_changed.connect(_on_hand_selection_changed)
+	_update_action_buttons(0)
 
 func _render_owned_items() -> void:
 	# 1. Dọn sạch khay cũ
@@ -85,9 +90,7 @@ func start_new_stage() -> void:
 	
 	current_score = 0.0
 	plays_left = 4
-	_play_button.text = "Play (%d)" % [plays_left]
 	discards_left = 3
-	_discard_button.text = "Discard (%d)" % [discards_left]
 	
 	_sync_equipped_items()
 	
@@ -162,7 +165,7 @@ func _trigger_items_after_match() -> Dictionary:
 					final_effects[key] += trigger.custom_effects[key]
 	return final_effects
 
-func _on_play_button_pressed() -> void:
+func _on_play_action_button_action_pressed() -> void:
 	if current_state != MatchState.WAIT_FOR_INPUT or plays_left <= 0 or hand_manager.get_selected_cards().size() == 0:
 		return
 	
@@ -170,7 +173,7 @@ func _on_play_button_pressed() -> void:
 	
 	plays_left -= 1
 	_update_display()
-	_update_deck_ui()
+	
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
 	
@@ -192,7 +195,8 @@ func _on_play_button_pressed() -> void:
 				apply_meta_effects(trigger.custom_effects)
 				
 				await get_tree().create_timer(0.1).timeout
-		
+	
+	_update_deck_ui()
 	print("Đã nấu xong! Điểm thu được: ", result["total_score"])
 	current_score += result["total_score"]
 	$Total_Score.text = str(current_score)
@@ -200,7 +204,8 @@ func _on_play_button_pressed() -> void:
 	
 	_check_win_condition()
 
-func _on_discard_button_pressed() -> void:
+
+func _on_discard_action_button_action_pressed() -> void:
 	if current_state != MatchState.WAIT_FOR_INPUT or discards_left <= 0 or hand_manager.get_selected_cards().size() == 0:
 		return
 	
@@ -210,10 +215,11 @@ func _on_discard_button_pressed() -> void:
 	_on_state_changed(MatchState.PROCESSING)
 	discards_left -= 1
 	_update_display()
-	_update_deck_ui()
 	
 	_on_state_changed(MatchState.DRAWING)
 	draw_cards_to_full()
+	_update_deck_ui()
+
 
 func _check_win_condition() -> void:
 	if current_score >= stage_target_score:
@@ -257,14 +263,30 @@ func _lose_stage() -> void:
 # UI
 # =======================================================
 func _update_display() -> void:
-	_discard_button.text = "Discard (%d)" % [discards_left]
-	_play_button.text = "Play (%d)" % [plays_left]
+	# Gọi hàm cập nhật nút mới, lấy số lượng bài đang chọn từ hand_manager
+	var current_selected = hand_manager.get_selected_cards().size()
+	_update_action_buttons(current_selected)
 
 func _update_deck_ui() -> void:
 	var total_cards = GameManager.player_deck.size()
 	var remain_cards = deck_manager.draw_deck.size()
 	
 	view_deck_btn.update_counts(total_cards, remain_cards)
+
+func _on_view_deck_opened() -> void:
+	# Gọi hàm mở giao diện và báo cho nó biết đây là chế độ Bàn đấu
+	deck_viewer_ui.open_viewer(DeckViewerUI.ViewMode.MATCH, deck_manager.draw_deck)
+	pass
+
+# Hàm này chạy mỗi khi người chơi nhấp chọn bài trên tay
+func _on_hand_selection_changed(selected_cards: Array) -> void:
+	_update_action_buttons(selected_cards.size())
+
+func _update_action_buttons(selected_count: int) -> void:
+	# Báo cho nút Play biết số bài đang chọn và số lượt Play còn lại
+	play_action_btn.update_state(selected_count, plays_left)
+	# Báo cho nút Discard biết số bài đang chọn và số lượt Discard còn lại
+	discard_action_btn.update_state(selected_count, discards_left)
 
 # =======================================================
 # Debug
