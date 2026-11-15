@@ -1,0 +1,406 @@
+[gd_scene load_steps=16 format=3 uid="uid://c110ocoall0qe"]
+
+[ext_resource type="Script" uid="uid://c1ms6d2t1h4qq" path="res://scripts/UI/GameHud.gd" id="1_kej77"]
+[ext_resource type="StyleBox" uid="uid://c6ld1bj1digc8" path="res://assets/Style/new_style_box_flat.tres" id="2_n4q7i"]
+[ext_resource type="Texture2D" uid="uid://oogmk35aa7qi" path="res://assets/Cabbage.png" id="3_tl1up"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01611"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l00so"]
+bg_color = Color(0.639216, 0.407843, 0.0156863, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kej77"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylu20"]
+bg_color = Color(0.0666667, 0.0980392, 0.105882, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d3lhp"]
+bg_color = Color(0.533333, 0.352941, 0.00784314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.427451, 0.227451, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_67sb3"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uu640"]
+bg_color = Color(0.450649, 0.450648, 0.450648, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqgk2"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1f2gp"]
+bg_color = Color(0.266667, 0.282353, 0.294118, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3e5p7"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5f6fc"]
+bg_color = Color(0.321569, 0.580392, 0.929412, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mi5yn"]
+bg_color = Color(0.905882, 0.380392, 0.341176, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="GameHud" type="Control"]
+custom_minimum_size = Vector2(223, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 15.0
+offset_top = 20.0
+offset_right = 238.0
+offset_bottom = 20.0
+scale = Vector2(1.2, 1.2)
+script = ExtResource("1_kej77")
+
+[node name="PanelGameHub" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.5
+offset_right = 110.5
+offset_bottom = 285.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("2_n4q7i")
+
+[node name="Margin" type="MarginContainer" parent="PanelGameHub"]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="MainVBox" type="VBoxContainer" parent="PanelGameHub/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="StageBlock" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_01611")
+
+[node name="VBox" type="VBoxContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock"]
+layout_mode = 2
+
+[node name="BossName" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Gutton"
+horizontal_alignment = 1
+
+[node name="TargetScoreBox" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l00so")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer"]
+layout_mode = 2
+
+[node name="EfecctLabel" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_kej77")
+
+[node name="BossEffect" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/EfecctLabel"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "None"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BossImage" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ylu20")
+
+[node name="TextureRect" type="TextureRect" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/BossImage"]
+custom_minimum_size = Vector2(78, 64)
+layout_mode = 2
+texture = ExtResource("3_tl1up")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Info" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_d3lhp")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/Info"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="VBox" type="VBoxContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/Info/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/Info/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Score at least"
+horizontal_alignment = 1
+
+[node name="TargetScore" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/Info/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/Info/MarginContainer/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="RewardLabel" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/Info/MarginContainer/VBox/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Reward:"
+horizontal_alignment = 1
+
+[node name="Reward2" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer/HBoxContainer/Info/MarginContainer/VBox/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "$$$$$"
+horizontal_alignment = 1
+
+[node name="Stage" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_67sb3")
+
+[node name="Margin" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/Stage"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Stage" type="VBoxContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/Stage/Margin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/Stage/Margin/Stage"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "Current Stage:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/Stage/Margin/Stage"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uu640")
+
+[node name="PlaysCount" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/Stage/Margin/Stage/PanelContainer"]
+layout_mode = 2
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreBlock" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bqgk2")
+
+[node name="Margin" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/ScoreBlock"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="HBox" type="HBoxContainer" parent="PanelGameHub/Margin/MainVBox/ScoreBlock/Margin"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/ScoreBlock/Margin/HBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="Label" type="Label" parent="PanelGameHub/Margin/MainVBox/ScoreBlock/Margin/HBox/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Round 
+Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/ScoreBlock/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_1f2gp")
+
+[node name="CurrentScore" type="Label" parent="PanelGameHub/Margin/MainVBox/ScoreBlock/Margin/HBox/PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "760"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoneyBox" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_67sb3")
+
+[node name="Margin" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/MoneyBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="PanelGameHub/Margin/MainVBox/MoneyBox/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "$4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResourceBlock" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e5p7")
+
+[node name="Margin" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ActionsHBox" type="HBoxContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin"]
+layout_mode = 2
+
+[node name="PlaysBox" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_5f6fc")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/PlaysBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/PlaysBox/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/PlaysBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Play:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/PlaysBox/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uu640")
+
+[node name="PlaysCount" type="Label" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/PlaysBox/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DiscardBox" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_mi5yn")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/DiscardBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/DiscardBox/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/DiscardBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Discards:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/DiscardBox/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uu640")
+
+[node name="PlaysCount" type="Label" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/DiscardBox/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1

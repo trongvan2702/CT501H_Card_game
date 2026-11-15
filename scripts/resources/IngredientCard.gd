@@ -71,7 +71,7 @@ func _update_visual_state_with_push(push_x: float = 0.0) -> void:
 	elif is_hovered:
 		target_scale = Vector2(1.05, 1.05)
 		target_y_offset = -15.0
-		z_index = 5
+		z_index = 11
 	else:
 		target_scale = Vector2(1.0, 1.0)
 		target_y_offset = 0.0
@@ -99,7 +99,7 @@ func _update_visual_state(push_x: float = 0.0) -> void:
 	elif is_hovered:
 		target_scale = Vector2(1.05, 1.05)
 		target_y_offset = -5.0
-		z_index = 5
+		z_index = 11
 	else:
 		target_scale = Vector2(1.0, 1.0)
 		target_y_offset = 0.0

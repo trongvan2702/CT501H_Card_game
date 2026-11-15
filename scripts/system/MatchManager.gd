@@ -32,6 +32,7 @@ const MAX_EQUIPPED_ITEMS: int = 5
 @onready var view_deck_btn = $ViewDeckButton
 @onready var deck_viewer_ui = $DeckViewerUI
 @onready var active_menu_ui = $ActiveMenuUI
+@onready var game_hud = $GameHud
 
 func _ready() -> void:
 	start_new_stage()
@@ -42,6 +43,7 @@ func _ready() -> void:
 	hand_manager.cards_selection_changed.connect(active_menu_ui._on_cards_selection_changed)
 	_update_action_buttons(0)
 	active_menu_ui.refresh_menu()
+	#game_hud.refresh_all()
 
 func _render_owned_items() -> void:
 	# 1. Dọn sạch khay cũ
@@ -81,11 +83,11 @@ func start_new_stage() -> void:
 	current_state = MatchState.INIT
 	
 	stage_target_score = StageManager.get_current_target_score()
-	$"Taget Score".text = "Target score: %s" % [stage_target_score]
+
 	
 	current_stage = StageManager.current_stage
-	$Current_Stage.text = "Current stage: %s" % [current_stage]
-	
+
+	game_hud.refresh_all(current_score, plays_left, discards_left)
 	current_score = 0.0
 	plays_left = 4
 	discards_left = 3
@@ -197,7 +199,8 @@ func _on_play_action_button_action_pressed() -> void:
 	_update_deck_ui()
 	print("Đã nấu xong! Điểm thu được: ", result["total_score"])
 	current_score += result["total_score"]
-	$Total_Score.text = str(current_score)
+	
+	game_hud.update_current_score(current_score)
 	#apply_meta_effects(result["meta_effects"])
 	
 	_check_win_condition()
@@ -250,6 +253,9 @@ func _win_stage() -> void:
 	
 	print(total_earned)
 	GameManager.add_gold(total_earned)
+	
+	StageManager.advance_to_next_stage()
+	
 	get_tree().change_scene_to_file("res://scenes/ShopScence.tscn")
 
 func _lose_stage() -> void:
@@ -265,6 +271,7 @@ func _update_display() -> void:
 	# Gọi hàm cập nhật nút mới, lấy số lượng bài đang chọn từ hand_manager
 	var current_selected = hand_manager.get_selected_cards().size()
 	_update_action_buttons(current_selected)
+	game_hud.update_resources(plays_left, discards_left)
 
 func _update_deck_ui() -> void:
 	var total_cards = GameManager.player_deck.size()

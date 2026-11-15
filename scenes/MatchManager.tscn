@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cda0d2h04pus5"]
+[gd_scene load_steps=10 format=3 uid="uid://cda0d2h04pus5"]
 
 [ext_resource type="Script" uid="uid://de57s1cpd5cqx" path="res://scripts/system/MatchManager.gd" id="1_cwqus"]
 [ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_fw2qv"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b8xrll0shlwvb" path="res://scenes/ActionButton.tscn" id="5_ugqtu"]
 [ext_resource type="PackedScene" uid="uid://b8t6qqb2o0wri" path="res://scenes/DeckViewerUI.tscn" id="6_x166i"]
 [ext_resource type="PackedScene" uid="uid://d1a7xj4ilwqis" path="res://scenes/ActiveMenuUI.tscn" id="8_6vmik"]
+[ext_resource type="PackedScene" uid="uid://c110ocoall0qe" path="res://scenes/GameHUD.tscn" id="8_as316"]
 
 [node name="MatchManager" type="Control" node_paths=PackedStringArray("deck_manager", "hand_manager", "scoring_system")]
 layout_mode = 3
@@ -21,14 +22,6 @@ deck_manager = NodePath("DeckManager")
 hand_manager = NodePath("HandManager")
 scoring_system = NodePath("ScoringSystem")
 
-[node name="Taget Score" type="RichTextLabel" parent="."]
-layout_mode = 1
-offset_left = 1686.0
-offset_top = 34.0
-offset_right = 1882.0
-offset_bottom = 57.0
-text = "Target score: 0"
-
 [node name="DeckManager" type="Node" parent="."]
 script = ExtResource("2_fw2qv")
 
@@ -38,26 +31,6 @@ hand_ui_container = NodePath("../VBoxContainer/Hand")
 
 [node name="ScoringSystem" type="Node" parent="."]
 script = ExtResource("4_ugqtu")
-
-[node name="Total_Score" type="RichTextLabel" parent="."]
-layout_mode = 1
-offset_left = 1686.0
-offset_top = 60.0
-offset_right = 1899.0
-offset_bottom = 83.0
-text = "Curent score: 0"
-
-[node name="Current_Stage" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.9
-anchor_top = 0.01
-anchor_right = 0.9
-anchor_bottom = 0.1
-offset_left = -187.0
-offset_bottom = -53.0
-grow_horizontal = 0
-text = "Curent stage: 1"
 
 [node name="Item" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -123,6 +96,9 @@ offset_right = -1.0
 offset_bottom = 36.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="GameHud" parent="." instance=ExtResource("8_as316")]
+layout_mode = 1
 
 [node name="DeckViewerUI" parent="." instance=ExtResource("6_x166i")]
 visible = false

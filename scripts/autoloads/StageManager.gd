@@ -8,9 +8,10 @@ var base_mult: Array[float] = [1.0, 1.5, 2.0]
 var current_boss: ItemInstance = null
 var boss_pool: Array = []
 
-func start_new_run() -> void:
-	current_stage = 0
+func start_new_run(custom_stage: int = 0) -> void:
+	current_stage = custom_stage
 	boss_pool = ["boss_fatigue", "boss_vegetarian", "boss_beefTax"]
+	boss_pool.shuffle()
 	_setup_stage_rules()
 
 func advance_to_next_stage() -> void:
@@ -26,14 +27,26 @@ func _setup_stage_rules() -> void:
 		print("Đây là vòng bình thường.")
 
 func _roll_new_boss() -> void:
-	var random_boss_id = boss_pool.pick_random()
-	print(random_boss_id)
-	current_boss = ItemDB.create_item_instance(random_boss_id)
-	boss_pool.erase(random_boss_id)
+	if boss_pool.is_empty():
+		print("Đã hết Boss trong pool!")
+		return
+	
+	var next_boss_id = boss_pool.pop_front() 
+	
+	print(next_boss_id)
+	current_boss = ItemDB.create_item_instance(next_boss_id)
 	
 	if current_boss != null:
 		current_boss.is_boss_modifier = true 
 		print("CẢNH BÁO BOSS MÀN ", current_stage, ": ", current_boss.item_data.display_name)
 
+func peek_next_boss() -> String:
+	if boss_pool.size() > 0:
+		return boss_pool[0]
+	return ""
+
 func get_current_target_score() -> float:
 	return base_target_score[current_stage/3] * base_mult[current_stage%3]
+
+func get_stage_reward(stage_index: int = current_stage) -> int:
+	return (stage_index % 3) + 3

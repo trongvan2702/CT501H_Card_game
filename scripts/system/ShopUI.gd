@@ -14,6 +14,8 @@ class_name ShopUI
 
 @onready var view_deck_btn = $ViewDeckButton
 @onready var deck_viewer_ui = $DeckViewerUI
+@onready var active_menu_ui = $ActiveMenuUI
+@onready var game_hud = $GameHud
 
 func _ready() -> void:
 	# Connect Signal
@@ -25,7 +27,11 @@ func _ready() -> void:
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
 	view_deck_btn.update_counts(GameManager.player_deck.size())
 	
+	game_hud.update_money()
+	game_hud.refresh_all()
+	
 	ShopManager.reset_shop()
+	active_menu_ui.refresh_menu()
 	
 	
 
@@ -34,8 +40,10 @@ func _ready() -> void:
 # ==========================================
 
 func _update_display_labels() -> void:
-	if gold_label:
-		gold_label.text = "Gold: %d" % [GameManager.currency]
+	game_hud.update_money()
+	active_menu_ui.refresh_menu()
+	view_deck_btn.update_counts(GameManager.player_deck.size())
+	
 	if reroll_button:
 		reroll_button.text = "Reroll(%d)" % [ShopManager.reroll_cost]
 
@@ -124,7 +132,7 @@ func _on_skip_button_pressed() -> void:
 	draft_overlay.visible = false
 
 func _on_change_button_pressed() -> void:
-	StageManager.advance_to_next_stage()
+	#StageManager.advance_to_next_stage()
 	get_tree().change_scene_to_file("res://scenes/MatchManager.tscn")
 
 
