@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://5dfrxtbtn2aw"]
 
-[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_2jqoj"]
+[ext_resource type="Texture2D" uid="uid://dgau251i7x4gk" path="res://assets/Apple Green.png" id="1_2jqoj"]
 [ext_resource type="Script" uid="uid://b7dnbag6c6ia8" path="res://scripts/items/Spoon.gd" id="2_njenh"]
 [ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_ooe1w"]
 
@@ -12,5 +12,6 @@ description = "Spoon"
 rarity = 1
 price = 5
 logic_script = ExtResource("2_njenh")
+is_boss = false
 item_texture = ExtResource("1_2jqoj")
 metadata/_custom_type_script = "uid://b7ouduwjuey1b"

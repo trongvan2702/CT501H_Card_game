@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhfxol5oyqmpw"]
+[gd_scene load_steps=8 format=3 uid="uid://dhfxol5oyqmpw"]
 
 [ext_resource type="Script" uid="uid://ymvw48nkpjp2" path="res://scripts/system/ShopUI.gd" id="1_c1c8f"]
 [ext_resource type="PackedScene" uid="uid://bfmu58pg8g5lw" path="res://scenes/ViewDeckButton.tscn" id="2_fk3mg"]
+[ext_resource type="PackedScene" uid="uid://c77lh3o2xdtr2" path="res://scenes/ItemTrayUI.tscn" id="2_thgkf"]
 [ext_resource type="PackedScene" uid="uid://b8t6qqb2o0wri" path="res://scenes/DeckViewerUI.tscn" id="3_pxjd2"]
 [ext_resource type="PackedScene" uid="uid://d1a7xj4ilwqis" path="res://scenes/ActiveMenuUI.tscn" id="4_pxjd2"]
 [ext_resource type="PackedScene" uid="uid://c110ocoall0qe" path="res://scenes/GameHUD.tscn" id="5_to600"]
@@ -18,14 +19,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_c1c8f")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 541.0
-offset_right = 1113.0
-offset_bottom = 40.0
-text = "Shop Manager"
-horizontal_alignment = 1
-
 [node name="ChangeButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 1647.0
@@ -34,10 +27,16 @@ offset_right = 1844.0
 offset_bottom = 845.0
 text = "Change to Match Scence"
 
-[node name="OwnedItemsTray" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ItemTrayWrapper" parent="." instance=ExtResource("2_thgkf")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 25.0
+offset_right = 250.0
+offset_bottom = 63.0
+grow_horizontal = 2
 
 [node name="ShopShelf" type="HBoxContainer" parent="."]
 layout_mode = 1

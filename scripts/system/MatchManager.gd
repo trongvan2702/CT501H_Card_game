@@ -33,27 +33,31 @@ const MAX_EQUIPPED_ITEMS: int = 5
 @onready var deck_viewer_ui = $DeckViewerUI
 @onready var active_menu_ui = $ActiveMenuUI
 @onready var game_hud = $GameHud
+@onready var item_tray = $ItemTrayWrapper
 
 func _ready() -> void:
 	start_new_stage()
-	_render_owned_items()
+	#_render_owned_items()
 	_update_deck_ui()
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
 	hand_manager.cards_selection_changed.connect(_on_hand_selection_changed)
 	hand_manager.cards_selection_changed.connect(active_menu_ui._on_cards_selection_changed)
 	_update_action_buttons(0)
 	active_menu_ui.refresh_menu()
+	item_tray.item_sold.connect(func(): game_hud.update_money())
+	item_tray.refresh_tray()
 	#game_hud.refresh_all()
 
-func _render_owned_items() -> void:
-	# 1. Dọn sạch khay cũ
-	for child in owned_items_tray.get_children():
-		child.queue_free()
-		
-	# 2. Lấy đồ từ GameManager đúc thành thẻ và nhét vào khay
-	for item_instance in GameManager.active_items:
-		var card = ItemCard.create_from_instance(item_instance)
-		owned_items_tray.add_child(card)
+#func _render_owned_items() -> void:
+	## 1. Dọn sạch khay cũ
+	#for child in owned_items_tray.get_children():
+		#child.queue_free()
+		#
+	## 2. Lấy đồ từ GameManager đúc thành thẻ và nhét vào khay
+	#for item_instance in GameManager.active_items:
+		#var card = ItemCard.create_from_instance(item_instance)
+		#card.sell_requested.connect(_on_item_sell_requested)
+		#owned_items_tray.add_child(card)
 
 func _on_state_changed(new_state: MatchState) -> void:
 	current_state = new_state
@@ -289,6 +293,28 @@ func _update_action_buttons(selected_count: int) -> void:
 	play_action_btn.update_state(selected_count, plays_left)
 	discard_action_btn.update_state(selected_count, discards_left)
 
+func _on_item_sell_requested(card: ItemCard) -> void:
+	var price = card._calculate_sell_price()
+	
+	card.pivot_offset = card.size / 2.0
+	
+	GameManager.add_gold(price)
+	
+	var idx = GameManager.active_items.find(card.display_instance)
+	if idx != -1:
+		GameManager.active_items.remove_at(idx)
+		
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(card, "scale", Vector2(0, 0), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.tween_property(card, "modulate:a", 0.0, 0.2)
+	
+	tween.chain().tween_callback(func():
+		card.queue_free()
+		#_render_owned_items()
+		game_hud.update_money() 
+	)
+	
 # =======================================================
 # Debug
 # =======================================================

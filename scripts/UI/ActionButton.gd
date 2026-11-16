@@ -29,7 +29,7 @@ func _ready() -> void:
 	pivot_offset = custom_minimum_size / 2.0
 	
 	if action_type == ActionType.PLAY:
-		title_label.text = "SERVE ►"
+		title_label.text = "SERVE"
 	else:
 		title_label.text = "DISCARD"
 	

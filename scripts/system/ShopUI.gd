@@ -1,7 +1,6 @@
 extends Control
 class_name ShopUI
 
-@onready var owned_items_tray = $OwnedItemsTray
 @onready var shop_shelf = $ShopShelf
 @onready var gold_label = $Gold
 @onready var reroll_button = $GridContainer/RerollButton
@@ -16,6 +15,7 @@ class_name ShopUI
 @onready var deck_viewer_ui = $DeckViewerUI
 @onready var active_menu_ui = $ActiveMenuUI
 @onready var game_hud = $GameHud
+@onready var item_tray = $ItemTrayWrapper
 
 func _ready() -> void:
 	# Connect Signal
@@ -23,8 +23,9 @@ func _ready() -> void:
 	ShopManager.sig_buy_recipe_pack.connect(_on_open_recipe_pack)
 	ShopManager.sig_buy_ingredient_pack.connect(_on_open_ingredient_pack)
 	ShopManager.sig_remove_card.connect(_on_open_card_removal)
-	
+	item_tray.item_sold.connect(func(): game_hud.update_money())
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
+	
 	view_deck_btn.update_counts(GameManager.player_deck.size())
 	
 	game_hud.update_money()
@@ -32,7 +33,7 @@ func _ready() -> void:
 	
 	ShopManager.reset_shop()
 	active_menu_ui.refresh_menu()
-	
+	item_tray.refresh_tray()
 	
 
 # ==========================================
@@ -48,7 +49,6 @@ func _update_display_labels() -> void:
 		reroll_button.text = "Reroll(%d)" % [ShopManager.reroll_cost]
 
 func _on_shop_manager_updated() -> void:
-	_render_owned_items()
 	_render_shop_items()
 	_update_display_labels()
 
@@ -63,15 +63,6 @@ func _on_open_ingredient_pack() -> void:
 func _on_open_card_removal() -> void:
 	draft_title.text = "Dịch Vụ Cắt Thẻ: Chọn 1 lá bài để XÓA vĩnh viễn"
 	_render_draft_choices("removal")
-
-# Taoj UI cho phần Item hiện coc của bản thân
-func _render_owned_items() -> void:
-	for child in owned_items_tray.get_children():
-		child.queue_free()
-		
-	for item_instance in GameManager.active_items:
-		var card = ItemCard.create_from_instance(item_instance)
-		owned_items_tray.add_child(card)
 
 # Tạo UI cho phần Item trong Shop
 func _render_shop_items() -> void:
@@ -100,7 +91,34 @@ func _render_shop_items() -> void:
 
 # Hàm hứng tín hiệu khi người chơi bấm vào thẻ trên kệ
 func _on_shop_card_buy_requested(card: ItemCard, item_data: ItemData, cost: int) -> void:
-	ShopManager.buy_item(item_data, cost)
+	if GameManager.currency < cost:
+		print("Không đủ tiền!")
+		return
+	
+	if GameManager.active_items.size() >= GameManager.max_active_items:
+		return
+	
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	
+	var wrapper_vbox = card.get_parent()
+	
+	
+	wrapper_vbox.pivot_offset = wrapper_vbox.size / 2.0 
+	
+	
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(wrapper_vbox, "scale", Vector2(0, 0), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.tween_property(wrapper_vbox, "modulate:a", 0.0, 0.2)
+	
+	
+	tween.chain().tween_callback(func():
+		ShopManager.buy_item(item_data, cost)
+		if GameManager.active_items.size() > 0:
+			var newly_bought_item = GameManager.active_items[-1]
+			item_tray.add_new_item(newly_bought_item)
+	)
 
 func _on_reroll_button_pressed() -> void:
 	ShopManager.reroll_items()

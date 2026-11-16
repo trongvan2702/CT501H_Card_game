@@ -8,7 +8,7 @@
 script = ExtResource("2_l1unw")
 item_id = "goldtest2"
 display_name = "Gold2"
-description = "Gold2"
+description = "It will bring you gold every time you play Beef"
 rarity = 1
 price = 5
 logic_script = ExtResource("2_3jsh1")

@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://c77lh3o2xdtr2"]
+
+[ext_resource type="Script" uid="uid://d4aqknmiblkle" path="res://scripts/UI/ItemTrayUI.gd" id="1_ct7cm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsm01"]
+bg_color = Color(0.286275, 0.286275, 0.286275, 0.607843)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.252028, 0.252028, 0.252027, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="ItemTrayWrapper" type="PanelContainer"]
+custom_minimum_size = Vector2(650, 0)
+offset_right = 25.0
+offset_bottom = 38.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_rsm01")
+script = ExtResource("1_ct7cm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="OwnedItemsTray" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "0/5"
