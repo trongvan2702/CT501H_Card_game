@@ -1,19 +1,67 @@
-[gd_scene load_steps=3 format=3 uid="uid://vfgreamoesxe"]
+[gd_scene load_steps=18 format=3 uid="uid://vfgreamoesxe"]
 
 [ext_resource type="Script" uid="uid://c8461b64b7ml7" path="res://scripts/resources/Item/ItemCard.gd" id="1_kij46"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wavvb"]
 load_path = "res://.godot/imported/Apple Green.png-7b60be4ffce52fa665bfc8b27ce85be2.ctex"
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wavvb"]
+bg_color = Color(0.152941, 0.207843, 0.219608, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.151276, 0.151276, 0.151276, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kij46"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kij46"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwtqy"]
+bg_color = Color(0.619608, 0.211765, 0, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iwtqy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8fjy6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sct5h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qlfr8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n7m1p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nddgy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cycuf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_78vjd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g3f8t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2v0i5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jxdwf"]
+
 [node name="ItemCard" type="Control"]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 3
-anchor_right = 0.084
-anchor_bottom = 0.178
-offset_right = 0.399994
-offset_bottom = -0.199997
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 120.0
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_kij46")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -28,22 +76,108 @@ texture = SubResource("CompressedTexture2D_wavvb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="DetailTooltip" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.773
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -0.0480042
+anchor_left = 0.5
+anchor_top = 0.833
+anchor_right = 0.5
+anchor_bottom = 0.833
+offset_left = -50.0
+offset_top = 0.0399933
+offset_right = 51.0
+offset_bottom = 76.04
 grow_horizontal = 2
-grow_vertical = 0
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_wavvb")
 
-[node name="DetailLabel" type="RichTextLabel" parent="PanelContainer"]
+[node name="Margin" type="MarginContainer" parent="DetailTooltip"]
 layout_mode = 2
-bbcode_enabled = true
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="DetailTooltip/Margin"]
+layout_mode = 2
+
+[node name="ItemName" type="PanelContainer" parent="DetailTooltip/Margin/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_kij46")
+
+[node name="Margin" type="MarginContainer" parent="DetailTooltip/Margin/VBox/ItemName"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DetailTooltip/Margin/VBox/ItemName/Margin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Item Name"
+horizontal_alignment = 1
+
+[node name="ItemDescription" type="PanelContainer" parent="DetailTooltip/Margin/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kij46")
+
+[node name="Margin" type="MarginContainer" parent="DetailTooltip/Margin/VBox/ItemDescription"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 2
+
+[node name="ItemDesc" type="RichTextLabel" parent="DetailTooltip/Margin/VBox/ItemDescription/Margin"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.20871, 0.20871, 0.20871, 1)
+text = "Description"
 fit_content = true
-scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemRarity" type="PanelContainer" parent="DetailTooltip/Margin/VBox"]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="DetailTooltip/Margin/VBox/ItemRarity"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="ItemDesc" type="Label" parent="DetailTooltip/Margin/VBox/ItemRarity/Margin"]
+layout_mode = 2
+text = "Common"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SellButton" type="PanelContainer" parent="DetailTooltip/Margin/VBox"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iwtqy")
+
+[node name="Margin" type="MarginContainer" parent="DetailTooltip/Margin/VBox/SellButton"]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 2
+
+[node name="Button" type="Button" parent="DetailTooltip/Margin/VBox/SellButton/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_iwtqy")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8fjy6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sct5h")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_qlfr8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n7m1p")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_nddgy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_cycuf")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_78vjd")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_g3f8t")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2v0i5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jxdwf")
+text = "Sell 5"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
