@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cda0d2h04pus5"]
+[gd_scene load_steps=12 format=3 uid="uid://cda0d2h04pus5"]
 
 [ext_resource type="Script" uid="uid://de57s1cpd5cqx" path="res://scripts/system/MatchManager.gd" id="1_cwqus"]
 [ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_fw2qv"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b8t6qqb2o0wri" path="res://scenes/DeckViewerUI.tscn" id="6_x166i"]
 [ext_resource type="PackedScene" uid="uid://d1a7xj4ilwqis" path="res://scenes/ActiveMenuUI.tscn" id="8_6vmik"]
 [ext_resource type="PackedScene" uid="uid://c110ocoall0qe" path="res://scenes/GameHUD.tscn" id="8_as316"]
+[ext_resource type="PackedScene" uid="uid://birplmwgy4eqr" path="res://scenes/StageClearUI.tscn" id="11_tau8w"]
 
 [node name="MatchManager" type="Control" node_paths=PackedStringArray("deck_manager", "hand_manager", "scoring_system")]
 layout_mode = 3
@@ -108,6 +109,10 @@ layout_mode = 1
 [node name="DeckViewerUI" parent="." instance=ExtResource("6_x166i")]
 visible = false
 z_index = 11
+layout_mode = 1
+
+[node name="StageClearUI" parent="." instance=ExtResource("11_tau8w")]
+z_index = 5
 layout_mode = 1
 
 [connection signal="pressed" from="_debug_get_current_item" to="." method="_on__debug_get_current_item_pressed"]

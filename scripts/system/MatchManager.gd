@@ -12,6 +12,7 @@ enum MatchState {
 var current_state: MatchState = MatchState.INIT
 var current_stage: int = 0
 var current_score: float = 0.0
+var total_dishes_in_stage : int = 0 
 var stage_target_score: float = 0.0
 var plays_left: int = 4
 var discards_left: int = 3
@@ -34,6 +35,7 @@ const MAX_EQUIPPED_ITEMS: int = 5
 @onready var active_menu_ui = $ActiveMenuUI
 @onready var game_hud = $GameHud
 @onready var item_tray = $ItemTrayWrapper
+@onready var stage_clear_ui = $StageClearUI
 
 func _ready() -> void:
 	start_new_stage()
@@ -93,6 +95,7 @@ func start_new_stage() -> void:
 
 	game_hud.refresh_all(current_score, plays_left, discards_left)
 	current_score = 0.0
+	total_dishes_in_stage = 0
 	plays_left = 4
 	discards_left = 3
 	
@@ -201,6 +204,7 @@ func _on_play_action_button_action_pressed() -> void:
 				await get_tree().create_timer(0.1).timeout
 	
 	_update_deck_ui()
+	total_dishes_in_stage += result["dishes"].size()
 	print("Đã nấu xong! Điểm thu được: ", result["total_score"])
 	current_score += result["total_score"]
 	
@@ -238,28 +242,39 @@ func _check_win_condition() -> void:
 
 func _win_stage() -> void:
 	_on_state_changed(MatchState.GAME_OVER)
-	
 	_sync_equipped_items()
 	
 	var end_stage_effects = _trigger_items_after_match()
-	var item_gold: int = 0
 	
+	# Tính toán tiền (Bạn có thể tách đoạn này ra như cũ)
+	var item_gold: int = 0
 	if end_stage_effects.has("add_money"):
 		item_gold = end_stage_effects["add_money"]
-		end_stage_effects.erase("add_money") 
-	
-	apply_meta_effects(end_stage_effects)
-	
-	var base_gold: int = 5
+		
+	var base_gold: int = StageManager.get_stage_reward() 
 	var interest_gold: int = floor(GameManager.currency / 5.0)
 	interest_gold = min(interest_gold, max_interest_gold)
+	
 	var total_earned = base_gold + interest_gold + item_gold
 	
-	print(total_earned)
+	var dishes_cooked = total_dishes_in_stage
+	
+	# HƯỚNG DẪN UI HIỂN THỊ
+	stage_clear_ui.display_summary(
+		current_stage,
+		current_score,
+		stage_target_score,
+		dishes_cooked,
+		base_gold,
+		interest_gold,
+		end_stage_effects
+	)
+	
+	# CHỜ NGƯỜI CHƠI BẤM NÚT CONTINUE
+	await stage_clear_ui.continue_pressed
+	
 	GameManager.add_gold(total_earned)
-	
 	StageManager.advance_to_next_stage()
-	
 	get_tree().change_scene_to_file("res://scenes/ShopScence.tscn")
 
 func _lose_stage() -> void:

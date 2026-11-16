@@ -98,7 +98,7 @@ theme_override_constants/separation = 0
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "35/"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -106,14 +106,14 @@ vertical_alignment = 1
 [node name="TotalCardLabel" type="Label" parent="ViewDeckButton/VBoxContainer/CardBack/CountBadge/Margin/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "35"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ViewDeckText" type="Label" parent="ViewDeckButton/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 16
 text = "VIEW DECK "
 horizontal_alignment = 1
 vertical_alignment = 1
