@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dhfxol5oyqmpw"]
+[gd_scene load_steps=9 format=3 uid="uid://dhfxol5oyqmpw"]
 
 [ext_resource type="Script" uid="uid://ymvw48nkpjp2" path="res://scripts/system/ShopUI.gd" id="1_c1c8f"]
 [ext_resource type="PackedScene" uid="uid://bfmu58pg8g5lw" path="res://scenes/ViewDeckButton.tscn" id="2_fk3mg"]
 [ext_resource type="PackedScene" uid="uid://c77lh3o2xdtr2" path="res://scenes/ItemTrayUI.tscn" id="2_thgkf"]
+[ext_resource type="Texture2D" uid="uid://e2kvh81c6g3u" path="res://assets/Background.png" id="2_xx4ha"]
 [ext_resource type="PackedScene" uid="uid://b8t6qqb2o0wri" path="res://scenes/DeckViewerUI.tscn" id="3_pxjd2"]
 [ext_resource type="PackedScene" uid="uid://d1a7xj4ilwqis" path="res://scenes/ActiveMenuUI.tscn" id="4_pxjd2"]
 [ext_resource type="PackedScene" uid="uid://c110ocoall0qe" path="res://scenes/GameHUD.tscn" id="5_to600"]
@@ -18,6 +19,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_c1c8f")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.351563, 0.351563, 0.351563, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xx4ha")
+expand_mode = 1
 
 [node name="ChangeButton" type="Button" parent="."]
 layout_mode = 0

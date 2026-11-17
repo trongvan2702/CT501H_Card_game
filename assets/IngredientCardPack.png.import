@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqcsyap422hm4"
-path="res://.godot/imported/seal1.png-eb33dc266666860adc83a011a5f90d7b.ctex"
+uid="uid://cit54kwyfhyif"
+path="res://.godot/imported/IngredientCardPack.png-da4ffe3c8b53c50112860956d817f0b2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/seal1.png"
-dest_files=["res://.godot/imported/seal1.png-eb33dc266666860adc83a011a5f90d7b.ctex"]
+source_file="res://assets/IngredientCardPack.png"
+dest_files=["res://.godot/imported/IngredientCardPack.png-da4ffe3c8b53c50112860956d817f0b2.ctex"]
 
 [params]
 
