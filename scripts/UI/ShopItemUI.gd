@@ -47,20 +47,29 @@ func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 
+# ==========================================
+# THIẾT LẬP DỮ LIỆU (Gọi từ ShopUI khi vẽ)
+# ==========================================
 
 func setup(product_data: Dictionary) -> void:
 	current_product = product_data
 	is_sold_out = product_data.get("is_sold_out", false)
 	
+	var p_type = current_product.get("type", "")
+	
+	if p_type == "remove" or p_type == "reroll":
+		visual_anchor.custom_minimum_size = Vector2(100, 140)
+	
+	#item_icon.custom_minimum_size = visual_anchor.custom_minimum_size
+	#item_icon.size = visual_anchor.custom_minimum_size
+	
 	if product_data.has("icon"):
 		item_icon.texture = product_data["icon"]
 	price_label.text = "%d$" % product_data.get("price", 0)
 	
-	# Cập nhật Tooltip
 	item_name_label.text = product_data.get("name", "Unknown Item")
 	item_desc_label.text = product_data.get("desc", "")
 	
-	# Xử lý hiển thị Rarity (chỉ hiện cho Item/Pack, ẩn cho Service như Reroll/Remove)
 	if product_data.has("rarity"):
 		item_rarity_label.get_parent().get_parent().visible = true
 		_update_rarity_style(product_data["rarity"])
@@ -83,22 +92,23 @@ func _update_rarity_style(rarity_lvl: int) -> void:
 	style.content_margin_right = 5
 	item_rarity_label.add_theme_stylebox_override("normal", style)
 
-
 func _update_availability_visuals() -> void:
 	if is_sold_out:
 		modulate = Color(1, 1, 1, 0)
+		# Rất quan trọng: Bỏ qua hoàn toàn chuột để không chặn click lân cận
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		return
+		
+	# Đảm bảo Node này có thể nhận chuột nếu không bị ẩn
+	mouse_filter = Control.MOUSE_FILTER_PASS
 		
 	var price = current_product.get("price", 0)
 	var can_afford = GameManager.currency >= price
 	
-	# Nếu là thẻ dịch vụ (Remove) và đã dùng rồi -> Làm mờ
 	var is_service_used = current_product.get("type") == "remove" and ShopManager.has_used_remove_service
 	
-	# Mờ đi nếu thiếu tiền HOẶC dịch vụ đã bị dùng
 	if not can_afford or is_service_used:
-		modulate = Color(0.4, 0.4, 0.4, 1.0) # Màu xám xịt
+		modulate = Color(0.4, 0.4, 0.4, 1.0)
 		mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
 	else:
 		modulate = Color(1, 1, 1, 1.0)
@@ -121,9 +131,8 @@ func _gui_input(event: InputEvent) -> void:
 			_play_shake_animation()
 			return
 			
-		
 		if p_type == "remove" and ShopManager.has_used_remove_service:
-			print("Đã gỡ bài ở shop này rồi!")
+			print("Đã hết lượt gỡ thẻ!")
 			_play_shake_animation()
 			return
 			
@@ -131,7 +140,7 @@ func _gui_input(event: InputEvent) -> void:
 			print("Kệ đồ cá nhân đã đầy!")
 			_play_shake_animation()
 			return
-		
+			
 		emit_signal("buy_requested", self)
 
 func _on_mouse_entered() -> void:
@@ -148,7 +157,8 @@ func _update_hover_state() -> void:
 	var target_scale = Vector2(1.0, 1.0)
 	
 	if is_hovered:
-		detail_tooltip.visible = true
+		if current_product["type"] != "remove" and current_product["type"] != "reroll": 
+			detail_tooltip.visible = true
 		z_index = 10
 		target_scale = Vector2(1.1, 1.1)
 	else:
@@ -163,6 +173,7 @@ func _update_hover_state() -> void:
 # HIỆU ỨNG
 # ==========================================
 func play_sold_animation() -> void:
+	# Khóa click lập tức để tránh spam click khi đang chạy animation
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	detail_tooltip.visible = false
 	price_panel.visible = false
@@ -175,7 +186,7 @@ func play_sold_animation() -> void:
 	tween.chain().tween_callback(func():
 		is_sold_out = true
 	)
-
+	
 func _play_shake_animation() -> void:
 	var tween = create_tween()
 	tween.tween_property(visual_anchor, "position:x", 5.0, 0.05)

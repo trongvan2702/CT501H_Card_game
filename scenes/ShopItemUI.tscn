@@ -63,15 +63,16 @@ border_color = Color(0.572549, 0.294118, 0.129412, 1)
 border_blend = true
 
 [node name="ShopItemUI" type="VBoxContainer"]
-offset_right = 1.0
-offset_bottom = 18.0
+offset_right = 120.0
+offset_bottom = 211.0
 theme_override_constants/separation = 0
 alignment = 1
 script = ExtResource("1_qwe0g")
 
 [node name="VisualAnchor" type="Control" parent="."]
-custom_minimum_size = Vector2(160, 224)
+custom_minimum_size = Vector2(120, 168)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ItemIcon" type="TextureRect" parent="VisualAnchor"]
 layout_mode = 1
@@ -80,6 +81,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("1_qeb8y")
 expand_mode = 1
 stretch_mode = 5

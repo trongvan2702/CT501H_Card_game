@@ -16,29 +16,33 @@ script = ExtResource("1_vhvs1")
 
 [node name="TopShelf" type="HBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 75
+theme_override_constants/separation = 100
 
 [node name="CharmsSection" type="VBoxContainer" parent="TopShelf"]
 layout_mode = 2
 
 [node name="Title" type="Label" parent="TopShelf/CharmsSection"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 36
 text = "ITEMS"
 horizontal_alignment = 1
 
 [node name="ItemsContainer" type="HBoxContainer" parent="TopShelf/CharmsSection"]
 layout_mode = 2
+theme_override_constants/separation = 30
 
 [node name="PacksSection" type="VBoxContainer" parent="TopShelf"]
 layout_mode = 2
 
 [node name="Title" type="Label" parent="TopShelf/PacksSection"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 36
 text = "PACK & COOKBOOKS"
 horizontal_alignment = 1
 
 [node name="PacksContainer" type="HBoxContainer" parent="TopShelf/PacksSection"]
 layout_mode = 2
+theme_override_constants/separation = 30
 
 [node name="BottomShelf" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -46,3 +50,4 @@ alignment = 1
 
 [node name="ServicesContainer" type="HBoxContainer" parent="BottomShelf"]
 layout_mode = 2
+theme_override_constants/separation = 50

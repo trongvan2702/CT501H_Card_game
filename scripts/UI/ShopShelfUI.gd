@@ -86,10 +86,10 @@ func _clear_container(container: Control) -> void:
 # Hàm phụ trợ tạo 1 món hàng
 func _create_product_ui(data: Dictionary, parent_container: Control) -> void:
 	var product_ui = SHOP_ITEM_SCENE.instantiate() as ShopItemUI
+	
 	parent_container.add_child(product_ui)
 	product_ui.setup(data)
 	
-	# Bắt tín hiệu từ ShopItemUI con và truyền ngược lên cho ShopUI tổng
 	product_ui.buy_requested.connect(_on_child_buy_requested)
 
 func _on_child_buy_requested(product_ui: ShopItemUI) -> void:
