@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://b344qu8jdtf1q"]
+
+[ext_resource type="Script" uid="uid://d0t52mlm16vag" path="res://scripts/UI/ShopShelfUI.gd" id="1_vhvs1"]
+
+[node name="ShopShelfUI" type="VBoxContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+script = ExtResource("1_vhvs1")
+
+[node name="TopShelf" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 75
+
+[node name="CharmsSection" type="VBoxContainer" parent="TopShelf"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="TopShelf/CharmsSection"]
+layout_mode = 2
+text = "ITEMS"
+horizontal_alignment = 1
+
+[node name="ItemsContainer" type="HBoxContainer" parent="TopShelf/CharmsSection"]
+layout_mode = 2
+
+[node name="PacksSection" type="VBoxContainer" parent="TopShelf"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="TopShelf/PacksSection"]
+layout_mode = 2
+text = "PACK & COOKBOOKS"
+horizontal_alignment = 1
+
+[node name="PacksContainer" type="HBoxContainer" parent="TopShelf/PacksSection"]
+layout_mode = 2
+
+[node name="BottomShelf" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="ServicesContainer" type="HBoxContainer" parent="BottomShelf"]
+layout_mode = 2

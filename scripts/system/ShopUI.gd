@@ -16,23 +16,22 @@ class_name ShopUI
 @onready var active_menu_ui = $ActiveMenuUI
 @onready var game_hud = $GameHud
 @onready var item_tray = $ItemTrayWrapper
+@onready var shop_shelf_ui = $ShopShelfUI
 
 func _ready() -> void:
-	# Connect Signal
 	ShopManager.shop_updated.connect(_on_shop_manager_updated)
 	ShopManager.sig_buy_recipe_pack.connect(_on_open_recipe_pack)
 	ShopManager.sig_buy_ingredient_pack.connect(_on_open_ingredient_pack)
 	ShopManager.sig_remove_card.connect(_on_open_card_removal)
+	
 	item_tray.item_sold.connect(func(): game_hud.update_money())
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
 	
-	view_deck_btn.update_counts(GameManager.player_deck.size())
-	
-	game_hud.update_money()
-	game_hud.refresh_all()
+	# Kết nối tín hiệu mua hàng từ Kệ Hàng
+	shop_shelf_ui.item_buy_requested.connect(_on_shop_item_clicked)
 	
 	ShopManager.reset_shop()
-	active_menu_ui.refresh_menu()
+	_update_display_labels()
 	item_tray.refresh_tray()
 	
 
@@ -44,12 +43,9 @@ func _update_display_labels() -> void:
 	game_hud.update_money()
 	active_menu_ui.refresh_menu()
 	view_deck_btn.update_counts(GameManager.player_deck.size())
-	
-	if reroll_button:
-		reroll_button.text = "Reroll(%d)" % [ShopManager.reroll_cost]
 
 func _on_shop_manager_updated() -> void:
-	_render_shop_items()
+	shop_shelf_ui.render_shelf()
 	_update_display_labels()
 
 func _on_open_recipe_pack() -> void:
@@ -191,3 +187,34 @@ func _process_draft_selection(draft_type: String, choice_index: int) -> void:
 func _on_view_deck_opened() -> void:
 	deck_viewer_ui.open_viewer(DeckViewerUI.ViewMode.SHOP)
 	pass
+
+func _on_shop_item_clicked(shop_ui_node: ShopItemUI) -> void:
+	var product = shop_ui_node.current_product
+	var p_type = product.get("type", "")
+	var price = product.get("price", 0)
+	
+	match p_type:
+		"item":
+			shop_ui_node.play_sold_animation()
+			ShopManager.buy_item(product.get("data"), price)
+			if GameManager.active_items.size() > 0:
+				item_tray.add_new_item(GameManager.active_items[-1])
+			_update_display_labels()
+			
+		"recipe_pack":
+			shop_ui_node.play_sold_animation()
+			ShopManager.buy_recipe_pack()
+			_update_display_labels()
+			
+		"ingredient_pack":
+			shop_ui_node.play_sold_animation()
+			ShopManager.buy_ingredient_pack()
+			_update_display_labels()
+			
+		"remove":
+			ShopManager.buy_card_removal()
+			shop_shelf_ui.render_shelf() # Vẽ lại để mờ nút
+			_update_display_labels()
+			
+		"reroll":
+			ShopManager.reroll_items() # Trong này đã gọi shop_updated nên kệ sẽ tự vẽ lại
