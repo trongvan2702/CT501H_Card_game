@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://cbxedia8u5br8"]
 
-[ext_resource type="FontFile" uid="uid://co2k4kusf8y5p" path="res://assets/font/m6x11.ttf" id="1_tmqs1"]
+[ext_resource type="FontVariation" uid="uid://cg5f6kcndv8lv" path="res://assets/font/m6x11_spaced.tres" id="1_tmqs1"]
 
 [resource]
 default_font = ExtResource("1_tmqs1")

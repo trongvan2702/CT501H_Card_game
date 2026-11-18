@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://cg5f6kcndv8lv"]
+
+[ext_resource type="FontFile" uid="uid://co2k4kusf8y5p" path="res://assets/font/m6x11.ttf" id="1_jtl0w"]
+
+[resource]
+base_font = ExtResource("1_jtl0w")
+spacing_glyph = 1

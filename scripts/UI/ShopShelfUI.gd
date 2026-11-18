@@ -19,7 +19,7 @@ var RECIPE_PACK_DATA = {
 	"price": 5,
 	"icon": preload("res://assets/RecipeCardPack_.png"),
 	"name": "Recipe Pack",
-	"desc": "Mở ra 3 công thức ngẫu nhiên. Chọn 1 để nâng cấp hoặc mở khóa.",
+	"desc": "Reveal 3 random recipes. Choose 1 to upgrade or unlock.",
 }
 
 var INGREDIENT_PACK_DATA = {
@@ -27,23 +27,23 @@ var INGREDIENT_PACK_DATA = {
 	"price": 5,
 	"icon": preload("res://assets/IngredientCardPack.png"),
 	"name": "Ingredient Pack",
-	"desc": "Mở ra 3 nguyên liệu ngẫu nhiên. Chọn 1 thêm vào bộ bài.",
+	"desc": "Reveal 3 random ingredients. Choose 1 to add to your deck.",
 }
 
 var REMOVE_SERVICE_DATA = {
 	"type": "remove",
 	"price": 5,
-	"icon": preload("res://assets/Cabbage.png"),
+	"icon": preload("res://assets/Remove.png"),
 	"name": "Remove Card",
-	"desc": "Xóa vĩnh viễn 1 thẻ nguyên liệu rác khỏi bộ bài.",
+	"desc": "",
 }
 
 var REROLL_SERVICE_DATA = {
 	"type": "reroll",
 	"price": 5,
-	"icon": preload("res://assets/Beaf.png"), # Đổi đường dẫn thật của bạn
+	"icon": preload("res://assets/Reroll.png"),
 	"name": "Reroll Shop",
-	"desc": "Đổi mới toàn bộ Charms và hồi lại các Pack trên kệ hàng.",
+	"desc": "",
 }
 
 # ==========================================

@@ -11,7 +11,7 @@ var boss_pool: Array = []
 func start_new_run(custom_stage: int = 0) -> void:
 	current_stage = custom_stage
 	boss_pool = ["boss_fatigue", "boss_vegetarian", "boss_beefTax"]
-	boss_pool.shuffle()
+	#boss_pool.shuffle()
 	_setup_stage_rules()
 
 func advance_to_next_stage() -> void:

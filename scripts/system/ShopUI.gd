@@ -25,6 +25,7 @@ func _ready() -> void:
 	ShopManager.sig_remove_card.connect(_on_open_card_removal)
 	
 	item_tray.item_sold.connect(func(): game_hud.update_money())
+	game_hud.update_stage_info()
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
 	
 	# Kết nối tín hiệu mua hàng từ Kệ Hàng
@@ -199,16 +200,19 @@ func _on_shop_item_clicked(shop_ui_node: ShopItemUI) -> void:
 			ShopManager.buy_item(product.get("data"), price)
 			if GameManager.active_items.size() > 0:
 				item_tray.add_new_item(GameManager.active_items[-1])
+			shop_shelf_ui.render_shelf()
 			_update_display_labels()
 			
 		"recipe_pack":
 			shop_ui_node.play_sold_animation()
 			ShopManager.buy_recipe_pack()
+			shop_shelf_ui.render_shelf()
 			_update_display_labels()
 			
 		"ingredient_pack":
 			shop_ui_node.play_sold_animation()
 			ShopManager.buy_ingredient_pack()
+			shop_shelf_ui.render_shelf()
 			_update_display_labels()
 			
 		"remove":
@@ -218,3 +222,4 @@ func _on_shop_item_clicked(shop_ui_node: ShopItemUI) -> void:
 			
 		"reroll":
 			ShopManager.reroll_items() # Trong này đã gọi shop_updated nên kệ sẽ tự vẽ lại
+			shop_shelf_ui.render_shelf()

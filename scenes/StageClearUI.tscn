@@ -17,10 +17,10 @@ border_color = Color(0, 0.181609, 0.175504, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrwms"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uoprw"]
-content_margin_left = 5.0
-content_margin_top = 10.0
-content_margin_right = 5.0
-content_margin_bottom = 10.0
+content_margin_left = 10.0
+content_margin_top = 15.0
+content_margin_right = 10.0
+content_margin_bottom = 15.0
 bg_color = Color(0.695967, 0.696718, 0.381725, 1)
 
 [node name="StageClearUI" type="Control"]
@@ -54,7 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainPanel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(350, 0)
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4dq85")
 
@@ -81,19 +81,19 @@ layout_mode = 2
 
 [node name="StageInfo" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Header/Margin/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "SERVICE 1 OF 16"
 horizontal_alignment = 1
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Header/Margin/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 45
 text = "SERVICE CLEARED"
 horizontal_alignment = 1
 
 [node name="BossName" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Header/Margin/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 30
 text = "NABERIUS"
 horizontal_alignment = 1
 
@@ -117,7 +117,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/TotalScoreRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 25
 text = "Total Score"
 
 [node name="Control" type="Control" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/TotalScoreRow"]
@@ -126,7 +126,7 @@ size_flags_horizontal = 3
 
 [node name="Value" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/TotalScoreRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 25
 text = "1.500"
 horizontal_alignment = 2
 
@@ -135,7 +135,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/TargetScoreRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Target Score"
 
 [node name="Control" type="Control" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/TargetScoreRow"]
@@ -144,7 +144,7 @@ size_flags_horizontal = 3
 
 [node name="Value" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/TargetScoreRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "900"
 horizontal_alignment = 2
 
@@ -153,7 +153,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/DishesRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 25
 text = "Dishes Cooked"
 
 [node name="Control" type="Control" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/DishesRow"]
@@ -162,7 +162,7 @@ size_flags_horizontal = 3
 
 [node name="Value" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Score/Margin/VBoxContainer/DishesRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 25
 text = "3"
 horizontal_alignment = 2
 
@@ -171,6 +171,7 @@ layout_mode = 2
 
 [node name="CoinTitle" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "COINS EARNED"
 
 [node name="Currency" type="PanelContainer" parent="CenterContainer/MainPanel/Margin/VBoxContainer"]
@@ -190,7 +191,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/TotalScoreRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Service Clear"
 
 [node name="Control" type="Control" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/TotalScoreRow"]
@@ -200,7 +201,7 @@ size_flags_horizontal = 3
 [node name="Value" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/TotalScoreRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "$$$"
 horizontal_alignment = 2
 
@@ -209,7 +210,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/InterestRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Interest Bonus"
 
 [node name="Control" type="Control" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/InterestRow"]
@@ -219,7 +220,7 @@ size_flags_horizontal = 3
 [node name="Value" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/InterestRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "$$"
 horizontal_alignment = 2
 
@@ -228,7 +229,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/ItemRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Item Bonus"
 
 [node name="Control" type="Control" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/ItemRow"]
@@ -238,7 +239,7 @@ size_flags_horizontal = 3
 [node name="Value" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/ItemRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "$$"
 horizontal_alignment = 2
 
@@ -250,7 +251,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/TotalScoreRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 35
 text = "Total"
 
 [node name="Control" type="Control" parent="CenterContainer/MainPanel/Margin/VBoxContainer/TotalScoreRow"]
@@ -260,7 +261,7 @@ size_flags_horizontal = 3
 [node name="Value" type="Label" parent="CenterContainer/MainPanel/Margin/VBoxContainer/TotalScoreRow"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 35
 text = "5$"
 horizontal_alignment = 2
 
@@ -272,6 +273,6 @@ layout_mode = 2
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_uoprw")
 text = "CONTINUE"
