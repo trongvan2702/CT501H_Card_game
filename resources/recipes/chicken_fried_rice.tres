@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="RecipeData" load_steps=7 format=3 uid="uid://ncafnww4jcjw"]
 
-[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_bdp1l"]
+[ext_resource type="Texture2D" uid="uid://ja7p3hi47xfi" path="res://assets/recipes/ChickenFriedRice.png" id="1_rrawp"]
 [ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_w54vf"]
 [ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_1r2mc"]
 [ext_resource type="Resource" uid="uid://d1l7p6jeqjo5l" path="res://resources/ingredients/chicken.tres" id="3_rrawp"]
@@ -21,5 +21,5 @@ base_score = 35.0
 base_mult = 0.6
 bonus_score_per_level = 20.0
 bonus_mult_per_level = 0.2
-icon_texture = ExtResource("1_bdp1l")
+icon_texture = ExtResource("1_rrawp")
 metadata/_custom_type_script = "uid://c46bs4c7sr6gd"

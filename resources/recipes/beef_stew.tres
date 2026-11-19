@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="RecipeData" load_steps=7 format=3 uid="uid://c0t70epigi827"]
 
-[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_t6sfq"]
+[ext_resource type="Texture2D" uid="uid://bmrr6ae3moqar" path="res://assets/recipes/BeafStew.png" id="1_xvk2m"]
 [ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_rgahi"]
 [ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_2b4pd"]
 [ext_resource type="Resource" uid="uid://b2fjhg2qtydg3" path="res://resources/ingredients/beef.tres" id="3_xvk2m"]
@@ -21,5 +21,5 @@ base_score = 40.0
 base_mult = 0.7
 bonus_score_per_level = 20.0
 bonus_mult_per_level = 0.1
-icon_texture = ExtResource("1_t6sfq")
+icon_texture = ExtResource("1_xvk2m")
 metadata/_custom_type_script = "uid://c46bs4c7sr6gd"

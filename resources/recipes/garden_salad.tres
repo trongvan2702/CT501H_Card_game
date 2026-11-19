@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="RecipeData" load_steps=8 format=3 uid="uid://c4gnm743d31f8"]
 
-[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_snbgy"]
+[ext_resource type="Texture2D" uid="uid://bdtw0wojon0p7" path="res://assets/recipes/GardenSalad.png" id="1_wi0h2"]
 [ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_7pw5c"]
 [ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_lye72"]
 [ext_resource type="Resource" uid="uid://bd6kslpcpugp2" path="res://resources/ingredients/tomato.tres" id="3_wi0h2"]
-[ext_resource type="Resource" uid="uid://b2fjhg2qtydg3" path="res://resources/ingredients/beef.tres" id="4_1rdur"]
 [ext_resource type="Resource" uid="uid://d1l7p6jeqjo5l" path="res://resources/ingredients/chicken.tres" id="5_irri2"]
 [ext_resource type="Resource" uid="uid://cdurolm1wvtm0" path="res://resources/ingredients/salt.tres" id="6_0ooj8"]
+[ext_resource type="Resource" uid="uid://d28la6ytwm8qc" path="res://resources/ingredients/cabbage.tres" id="6_1rdur"]
 
 [resource]
 script = ExtResource("3_lye72")
@@ -17,10 +17,10 @@ default_unlocked = false
 rarity = 3
 min_ingredient = 2
 max_ingredient = 5
-required_ingredients = Array[ExtResource("2_7pw5c")]([ExtResource("3_wi0h2"), ExtResource("4_1rdur"), ExtResource("5_irri2"), ExtResource("6_0ooj8")])
+required_ingredients = Array[ExtResource("2_7pw5c")]([ExtResource("3_wi0h2"), ExtResource("5_irri2"), ExtResource("6_0ooj8"), ExtResource("6_1rdur")])
 base_score = 55.0
 base_mult = 0.8
 bonus_score_per_level = 25.0
 bonus_mult_per_level = 0.3
-icon_texture = ExtResource("1_snbgy")
+icon_texture = ExtResource("1_wi0h2")
 metadata/_custom_type_script = "uid://c46bs4c7sr6gd"
