@@ -19,6 +19,7 @@ signal buy_requested(product_data: Dictionary)
 var current_product: Dictionary = {}
 var is_sold_out: bool = false
 var is_hovered: bool = false
+var is_animating_sold: bool = false
 
 const RARITY_NAMES := {
 	1: "COMMON", 2: "UNCOMMON", 3: "RARE", 4: "EPIC", 5: "LEGENDARY"
@@ -93,9 +94,10 @@ func _update_rarity_style(rarity_lvl: int) -> void:
 	item_rarity_label.add_theme_stylebox_override("normal", style)
 
 func _update_availability_visuals() -> void:
+	if is_animating_sold:
+		return
 	if is_sold_out:
 		modulate = Color(1, 1, 1, 0)
-		# Rất quan trọng: Bỏ qua hoàn toàn chuột để không chặn click lân cận
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		return
 		
@@ -173,10 +175,13 @@ func _update_hover_state() -> void:
 # HIỆU ỨNG
 # ==========================================
 func play_sold_animation() -> void:
-	# Khóa click lập tức để tránh spam click khi đang chạy animation
+	is_animating_sold = true
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	detail_tooltip.visible = false
-	price_panel.visible = false
+	price_panel.modulate.a = 0.0
+	
+	# Cập nhật lại tâm thu phóng cho chuẩn với kích thước hiện tại
+	visual_anchor.pivot_offset = visual_anchor.size / 2.0
 	
 	var tween = create_tween()
 	tween.set_parallel(true)
@@ -184,6 +189,7 @@ func play_sold_animation() -> void:
 	tween.tween_property(self, "modulate:a", 0.0, 0.3)
 	
 	tween.chain().tween_callback(func():
+		is_animating_sold = false
 		is_sold_out = true
 	)
 	
@@ -192,3 +198,18 @@ func _play_shake_animation() -> void:
 	tween.tween_property(visual_anchor, "position:x", 5.0, 0.05)
 	tween.tween_property(visual_anchor, "position:x", -5.0, 0.05)
 	tween.tween_property(visual_anchor, "position:x", 0.0, 0.05)
+
+func play_appear_animation() -> void:
+	if is_sold_out:
+		return
+		
+	visual_anchor.scale = Vector2.ZERO
+	modulate.a = 0.0
+	
+	await get_tree().process_frame
+	visual_anchor.pivot_offset = visual_anchor.size / 2.0
+	
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(visual_anchor, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "modulate:a", 1.0, 0.2)

@@ -1,6 +1,8 @@
 extends Control
 class_name ShopUI
 
+var _is_rerolling: bool = false
+
 @onready var shop_shelf = $ShopShelf
 @onready var gold_label = $Gold
 @onready var reroll_button = $GridContainer/RerollButton
@@ -28,7 +30,6 @@ func _ready() -> void:
 	game_hud.update_stage_info()
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
 	
-	# Kết nối tín hiệu mua hàng từ Kệ Hàng
 	shop_shelf_ui.item_buy_requested.connect(_on_shop_item_clicked)
 	
 	ShopManager.reset_shop()
@@ -46,7 +47,8 @@ func _update_display_labels() -> void:
 	view_deck_btn.update_counts(GameManager.player_deck.size())
 
 func _on_shop_manager_updated() -> void:
-	shop_shelf_ui.render_shelf()
+	shop_shelf_ui.render_shelf(_is_rerolling)
+	_is_rerolling = false
 	_update_display_labels()
 
 func _on_open_recipe_pack() -> void:
@@ -200,26 +202,31 @@ func _on_shop_item_clicked(shop_ui_node: ShopItemUI) -> void:
 			ShopManager.buy_item(product.get("data"), price)
 			if GameManager.active_items.size() > 0:
 				item_tray.add_new_item(GameManager.active_items[-1])
-			shop_shelf_ui.render_shelf()
+			shop_shelf_ui.refresh_availability()
 			_update_display_labels()
 			
 		"recipe_pack":
 			shop_ui_node.play_sold_animation()
 			ShopManager.buy_recipe_pack()
-			shop_shelf_ui.render_shelf()
+			shop_shelf_ui.refresh_availability()
 			_update_display_labels()
 			
 		"ingredient_pack":
 			shop_ui_node.play_sold_animation()
 			ShopManager.buy_ingredient_pack()
-			shop_shelf_ui.render_shelf()
+			shop_shelf_ui.refresh_availability()
 			_update_display_labels()
 			
 		"remove":
 			ShopManager.buy_card_removal()
-			shop_shelf_ui.render_shelf() # Vẽ lại để mờ nút
+			shop_shelf_ui.refresh_availability()
 			_update_display_labels()
 			
 		"reroll":
-			ShopManager.reroll_items() # Trong này đã gọi shop_updated nên kệ sẽ tự vẽ lại
-			shop_shelf_ui.render_shelf()
+			if _is_rerolling:
+				return
+			_is_rerolling = true
+			
+			await shop_shelf_ui.play_reroll_out_animation()
+			
+			ShopManager.reroll_items()
