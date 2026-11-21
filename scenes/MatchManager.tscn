@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cda0d2h04pus5"]
+[gd_scene load_steps=14 format=3 uid="uid://cda0d2h04pus5"]
 
 [ext_resource type="Script" uid="uid://de57s1cpd5cqx" path="res://scripts/system/MatchManager.gd" id="1_cwqus"]
 [ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_fw2qv"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b8t6qqb2o0wri" path="res://scenes/DeckViewerUI.tscn" id="6_x166i"]
 [ext_resource type="PackedScene" uid="uid://d1a7xj4ilwqis" path="res://scenes/ActiveMenuUI.tscn" id="8_6vmik"]
 [ext_resource type="PackedScene" uid="uid://c110ocoall0qe" path="res://scenes/GameHUD.tscn" id="8_as316"]
+[ext_resource type="PackedScene" uid="uid://x7esvyttql6v" path="res://scenes/ScoringStageUI.tscn" id="8_ewu3j"]
 [ext_resource type="PackedScene" uid="uid://birplmwgy4eqr" path="res://scenes/StageClearUI.tscn" id="11_tau8w"]
 
 [node name="MatchManager" type="Control" node_paths=PackedStringArray("deck_manager", "hand_manager", "scoring_system")]
@@ -73,6 +74,13 @@ anchor_bottom = 1.0
 offset_top = -280.0
 offset_bottom = 0.0
 grow_vertical = 0
+
+[node name="ScoringStageUI" parent="." instance=ExtResource("8_ewu3j")]
+layout_mode = 1
+offset_left = -400.0
+offset_top = -100.0
+offset_right = 400.0
+offset_bottom = 100.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

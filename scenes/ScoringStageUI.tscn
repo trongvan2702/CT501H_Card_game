@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://x7esvyttql6v"]
+
+[ext_resource type="Script" uid="uid://vrbii5tdmdw3" path="res://scripts/UI/ScoringStageUI.gd" id="1_nqh22"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xk35"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8r8o"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="ScoringStageUI" type="Control"]
+custom_minimum_size = Vector2(800, 200)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nqh22")
+
+[node name="StageTray" type="Control" parent="."]
+custom_minimum_size = Vector2(800, 200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreBox" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.464
+anchor_top = -0.165
+anchor_right = 0.536
+anchor_bottom = -0.005
+offset_left = -0.200012
+offset_right = 0.199982
+grow_horizontal = 2
+alignment = 1
+
+[node name="ScorePanel" type="PanelContainer" parent="ScoreBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3xk35")
+
+[node name="Label" type="Label" parent="ScoreBox/ScorePanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "0"
+
+[node name="Label" type="Label" parent="ScoreBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "x"
+
+[node name="MultPanel" type="PanelContainer" parent="ScoreBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g8r8o")
+
+[node name="Label" type="Label" parent="ScoreBox/MultPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "1"

@@ -71,6 +71,33 @@ func extract_and_remove_selected() -> Array[IngredientInstance]:
 	
 	return extracted_cards
 
+func extract_selected_card_nodes() -> Array[IngredientCard]:
+	var extracted_nodes: Array[IngredientCard] = []
+	var remained_cards: Array[IngredientCard] = []
+	
+	for card in card_in_hand:
+		if card.is_selected:
+			# Ngắt toàn bộ tương tác tay bài
+			if card.card_clicked.is_connected(_on_card_clicked):
+				card.card_clicked.disconnect(_on_card_clicked)
+			if card.card_hoverd.is_connected(_on_card_hovered):
+				card.card_hoverd.disconnect(_on_card_hovered)
+			if card.card_unhovered.is_connected(_on_card_unhovered):
+				card.card_unhovered.disconnect(_on_card_unhovered)
+				
+			card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			card.is_selected = false
+			extracted_nodes.append(card)
+		else:
+			remained_cards.append(card)
+			
+	card_in_hand = remained_cards
+	emit_signal("selection_changed", 0)
+	emit_signal("cards_selection_changed", [])
+	update_hand_layout()
+	
+	return extracted_nodes
+
 func clear_hand() -> void:
 	for card in card_in_hand:
 		card.queue_free()

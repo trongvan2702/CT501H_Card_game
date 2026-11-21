@@ -41,4 +41,4 @@ func start_new_run() -> void:
 
 func _debug_create_item() -> void:
 	active_items.append(ItemDB.create_item_instance("goldtest3"))
-	active_items.append(ItemDB.create_item_instance("goldtest2"))
+	active_items.append(ItemDB.create_item_instance("fork"))

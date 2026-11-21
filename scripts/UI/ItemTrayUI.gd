@@ -80,3 +80,19 @@ func add_new_item(item_instance: ItemInstance) -> void:
 	
 	var tween = create_tween()
 	tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func play_item_trigger_shake(target_item: ItemInstance) -> void:
+	# Thay "items_container" bằng đúng tên HBoxContainer chứa các ItemCard trong ItemTrayUI của bạn
+	for child in items_container.get_children():
+		if child is ItemCard and child.display_instance == target_item:
+			child.pivot_offset = child.size / 2.0
+			var tween = create_tween()
+			tween.set_parallel(true)
+			tween.tween_property(child, "scale", Vector2(1.15, 1.15), 0.08)
+			tween.tween_property(child, "rotation_degrees", 6.0, 0.06)
+			tween.chain().tween_property(child, "rotation_degrees", -6.0, 0.08)
+			tween.chain().set_parallel(true)
+			tween.tween_property(child, "scale", Vector2.ONE, 0.1)
+			tween.tween_property(child, "rotation_degrees", 0.0, 0.08)
+			await tween.finished
+			return

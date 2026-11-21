@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctxqepxs7v1c5"]
+
+[ext_resource type="Script" uid="uid://cvm3jd3jqp8x0" path="res://scripts/UI/DishVisualUI.gd" id="1_68egs"]
+[ext_resource type="Texture2D" uid="uid://nv6h27gyr5j8" path="res://assets/recipes/BeafSteak.png" id="1_b4huw"]
+
+[node name="DishVisualUI" type="VBoxContainer"]
+offset_right = 140.0
+offset_bottom = 140.0
+mouse_filter = 2
+alignment = 1
+script = ExtResource("1_68egs")
+
+[node name="VisualAnchor" type="Control" parent="."]
+custom_minimum_size = Vector2(140, 140)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DishIcon" type="TextureRect" parent="VisualAnchor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_b4huw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DishNameLabel" type="Label" parent="VisualAnchor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "aaaaaaa"
+horizontal_alignment = 1
+vertical_alignment = 2

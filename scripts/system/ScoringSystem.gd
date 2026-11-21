@@ -2,8 +2,7 @@ extends Node
 class_name ScoringSystem
 
 var _current_played_cards: Array[IngredientInstance] = []
-#var _current_pipeline: Array[TriggerResult] = []
-var _accumulated_results: Array = []
+var _current_pipeline: Array[TriggerResult] = []
 var _meta_effects: Dictionary = {}
 var equipped_items: Array[ItemInstance] = []
 
@@ -12,45 +11,48 @@ func _ready() -> void:
 
 func calculate_dish_score(ingredients: Array[IngredientInstance]) -> Dictionary:
 	_reset_buffers()
-	
 	_current_played_cards = ingredients.duplicate()
 	
 	_trigger_on_play(ingredients)
 	
 	var dishes = _create_dishes_from_ingredients(ingredients)
 	
-	var sum = _calculate_total(dishes)
+	# 3. Tính tổng 1 lần duy nhất trên _current_pipeline
+	var sum = _calculate_total()
 	
-	var total_score = sum["total_final_score"]
-	var meta_effects_result = sum["meta_effects"]
-	
-	var result = {
-		"total_score" = total_score,
-		"dishes" = dishes,
-		"meta_effects" = meta_effects_result
+	return {
+		"total_score": sum["total_final_score"],
+		"pipeline": _current_pipeline.duplicate(),
+		"dishes": dishes,
+		"meta_effects": sum["meta_effects"]
 	}
-	
-	return result
 
 func _trigger_on_play(cards: Array[IngredientInstance]) -> void:
 	for item in equipped_items:
 		if item.has_method("on_play"):
 			var result = item.on_play(cards)
-	pass
-
-func _trigger_on_ingredient_scored(ingredient: IngredientInstance, pipeline: Array[TriggerResult]) -> void:
+			if result != null and result.triggered:
+				result.source_type = TriggerResult.SourceType.ITEM
+				result.source_ref = item
+				_current_pipeline.append(result)
+				
+func _trigger_on_ingredient_scored(ingredient: IngredientInstance) -> void:
 	for item in equipped_items:
 		if item.has_method("on_ingredient_scored"):
 			var result = item.on_ingredient_scored(ingredient)
 			if result != null and result.triggered:
-				pipeline.append(result)
+				result.source_type = TriggerResult.SourceType.ITEM
+				result.source_ref = item
+				_current_pipeline.append(result)
 
-func _trigger_on_recipe_scored(recipe: RecipeData, pipeline: Array[TriggerResult]) -> void:
+func _trigger_on_recipe_scored(recipe: RecipeData) -> void:
 	for item in equipped_items:
 		if item.has_method("on_recipe_scored"):
 			var result = item.on_recipe_scored(recipe)
 			if result != null and result.triggered:
-				pipeline.append(result)
+				result.source_type = TriggerResult.SourceType.ITEM
+				result.source_ref = item
+				_current_pipeline.append(result)
 
 func _create_dishes_from_ingredients(ingredients: Array[IngredientInstance]) -> Array:
 	var result: Array = []
@@ -85,10 +87,6 @@ func _create_dishes_from_ingredients(ingredients: Array[IngredientInstance]) -> 
 
 		for ing in used_ingredients:
 			remaining.erase(ing)
-	
-	#if not remaining.is_empty():
-		#var leftover = _create_dish_from_ingredients(remaining)
-		#result.append(leftover)
 	
 	return result
 
@@ -150,67 +148,54 @@ func _extract_ingredients_by_id(required_ingredients: Array, available: Array[In
 func _create_dish_from_recipe(recipe: Dictionary, used_ingredients: Array[IngredientInstance]) -> Dictionary:
 	var recipe_data: RecipeData = recipe["data"]
 	
-	var dish_pipeline: Array[TriggerResult] = []
-	
 	var score = RecipeDB.calculate_score(recipe["data"])
 	var mult = RecipeDB.calculate_mult(recipe["data"])
 	
-	var recipe_trigger = TriggerResult.new(score, mult, recipe_data.recipe_name)
-	recipe_trigger.is_from_recipe = true
-	dish_pipeline.append(recipe_trigger)
-	
 	for ing in used_ingredients:
 		var ing_trigger = TriggerResult.new(ing.get_score(), 0.0, ing.ingredient_data.display_name)
-		dish_pipeline.append(ing_trigger)
-		_trigger_on_ingredient_scored(ing, dish_pipeline)
+		ing_trigger.source_type = TriggerResult.SourceType.INGREDIENT
+		ing_trigger.source_ref = ing
+		_current_pipeline.append(ing_trigger)
+		_trigger_on_ingredient_scored(ing)
 	
-	_trigger_on_recipe_scored(recipe_data, dish_pipeline)
+	var recipe_trigger = TriggerResult.new(score, mult, recipe_data.recipe_name)
+	recipe_trigger.is_from_recipe = true
+	recipe_trigger.source_type = TriggerResult.SourceType.RECIPE
+	recipe_trigger.source_ref = recipe_data
+	_current_pipeline.append(recipe_trigger)
 	
-	var result = {
-		"recipe": recipe_data,
-		"ingredients": used_ingredients,
-		"pipeline": dish_pipeline
-	}
-	return result
-
-func _calculate_total(dishes: Array) -> Dictionary:
-	var total_final_score: float = 0.0
+	_trigger_on_recipe_scored(recipe_data)
 	
-	for dish in dishes:
-		var current_score: float = 0.0
-		var current_mult: float = 1.0 
-		
-		var pipeline: Array[TriggerResult] = dish["pipeline"]
-		
-		for trigger in pipeline:
-			if not trigger.triggered: 
-				continue
-			
-			for effect_name in trigger.custom_effects:
-				if not _meta_effects.has(effect_name):
-					_meta_effects[effect_name] = 0
-				
-				_meta_effects[effect_name] += trigger.custom_effects[effect_name]
-			
-			current_score += trigger.score
-			
-			if trigger.x_mult:
-				current_mult *= trigger.mult 
-			else:
-				current_mult += trigger.mult 
-			
-		var final_dish_score = current_score * current_mult
-		dish["final_score"] = final_dish_score
-		
-		total_final_score += final_dish_score
-		
 	return {
-		"total_final_score": total_final_score,
+		"recipe": recipe_data,
+		"ingredients": used_ingredients
+	}
+
+func _calculate_total() -> Dictionary:
+	var current_score: float = 0.0
+	var current_mult: float = 1.0
+	
+	for trigger in _current_pipeline:
+		if not trigger.triggered:
+			continue
+			
+		for effect_name in trigger.custom_effects:
+			if not _meta_effects.has(effect_name):
+				_meta_effects[effect_name] = 0
+			_meta_effects[effect_name] += trigger.custom_effects[effect_name]
+			
+		current_score += trigger.score
+		if trigger.x_mult:
+			current_mult *= trigger.mult
+		else:
+			current_mult += trigger.mult
+			
+	return {
+		"total_final_score": current_score * current_mult,
 		"meta_effects": _meta_effects.duplicate()
 	}
 
 func _reset_buffers() -> void:
 	_current_played_cards.clear()
-	#_current_pipeline.clear()
-	_accumulated_results.clear()
-	_meta_effects = {}
+	_current_pipeline.clear()
+	_meta_effects.clear()

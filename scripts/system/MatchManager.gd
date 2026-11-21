@@ -36,10 +36,10 @@ const MAX_EQUIPPED_ITEMS: int = 5
 @onready var game_hud = $GameHud
 @onready var item_tray = $ItemTrayWrapper
 @onready var stage_clear_ui = $StageClearUI
+@onready var scoring_stage_ui: ScoringStageUI = $ScoringStageUI
 
 func _ready() -> void:
 	start_new_stage()
-	#_render_owned_items()
 	_update_deck_ui()
 	view_deck_btn.deck_opened.connect(_on_view_deck_opened)
 	hand_manager.cards_selection_changed.connect(_on_hand_selection_changed)
@@ -48,18 +48,6 @@ func _ready() -> void:
 	active_menu_ui.refresh_menu()
 	item_tray.item_sold.connect(func(): game_hud.update_money())
 	item_tray.refresh_tray()
-	#game_hud.refresh_all()
-
-#func _render_owned_items() -> void:
-	## 1. Dọn sạch khay cũ
-	#for child in owned_items_tray.get_children():
-		#child.queue_free()
-		#
-	## 2. Lấy đồ từ GameManager đúc thành thẻ và nhét vào khay
-	#for item_instance in GameManager.active_items:
-		#var card = ItemCard.create_from_instance(item_instance)
-		#card.sell_requested.connect(_on_item_sell_requested)
-		#owned_items_tray.add_child(card)
 
 func _on_state_changed(new_state: MatchState) -> void:
 	current_state = new_state
@@ -89,11 +77,10 @@ func start_new_stage() -> void:
 	current_state = MatchState.INIT
 	
 	stage_target_score = StageManager.get_current_target_score()
-
 	
 	current_stage = StageManager.current_stage
 
-	game_hud.refresh_all(current_score, plays_left, discards_left)
+	
 	current_score = 0.0
 	total_dishes_in_stage = 0
 	plays_left = 4
@@ -102,6 +89,8 @@ func start_new_stage() -> void:
 	_sync_equipped_items()
 	
 	_trigger_items_on_stage_start()
+	
+	game_hud.refresh_all(current_score, plays_left, discards_left)
 	
 	_on_state_changed(MatchState.DRAWING)
 	
@@ -159,7 +148,6 @@ func _trigger_items_on_stage_start() -> void:
 			if trigger != null and trigger.triggered:
 				apply_meta_effects(trigger.custom_effects)
 
-# ???????????????????????????
 func _trigger_items_after_match() -> Dictionary:
 	var final_effects: Dictionary = {}
 	for item in scoring_system.equipped_items:
@@ -181,36 +169,63 @@ func _on_play_action_button_action_pressed() -> void:
 	plays_left -= 1
 	_update_display()
 	
-	
-	var selected_cards = hand_manager.extract_and_remove_selected()
+	# 1. Lấy các node IngredientCard từ tay bài (không xóa ngay để làm hiệu ứng bay)
+	var played_card_nodes = hand_manager.extract_selected_card_nodes()
+	var selected_ingredients: Array[IngredientInstance] = []
+	for card in played_card_nodes:
+		selected_ingredients.append(card.ingredient_instance)
 	
 	_sync_equipped_items()
 	
-	var result = scoring_system.calculate_dish_score(selected_cards)
+	#2. Tính toán trước toàn bộ kịch bản điểm
+	var result = scoring_system.calculate_dish_score(selected_ingredients)
 	
+	# Dùng hàng đợi (Array) thay cho Dictionary để không bị ghi đè khi trùng RecipeData
+	var all_used_ingredients: Array[IngredientInstance] = []
+	var dishes_queue: Array = result["dishes"].duplicate()
 	for dish in result["dishes"]:
-		var pipeline: Array[TriggerResult] = dish["pipeline"]
-
-		# Ghi nhận recipe đã nấu (dữ liệu cho UI thống kê recipe trong run)
 		RecipeDB.record_craft(dish["recipe"].recipe_id)
-
-		for trigger in pipeline:
-			if not trigger.triggered:
-				continue
-				
-			if not trigger.custom_effects.is_empty():
-				apply_meta_effects(trigger.custom_effects)
-				
-				await get_tree().create_timer(0.1).timeout
+		for ing in dish["ingredients"]:
+			all_used_ingredients.append(ing)
 	
-	_update_deck_ui()
+	# 3. Bay các lá bài lên xếp hàng ngang ở giữa màn hình & hiện Score x Mult
+	await scoring_stage_ui.start_scoring_stage(played_card_nodes, all_used_ingredients)
+	
+	# 4. Diễn hoạt từng bước theo đúng thứ tự của pipeline duy nhất
+	for trigger in result["pipeline"]:
+		if not trigger.triggered:
+			continue
+			
+		match trigger.source_type:
+			TriggerResult.SourceType.INGREDIENT:
+				await scoring_stage_ui.play_ingredient_trigger(trigger.source_ref, trigger)
+				
+			TriggerResult.SourceType.RECIPE:
+				var current_dish_ui: DishVisualUI = null
+				if not dishes_queue.is_empty():
+					var dish = dishes_queue.pop_front()
+					current_dish_ui = await scoring_stage_ui.transform_ingredients_to_dish(dish["ingredients"], dish["recipe"])
+				await scoring_stage_ui.play_recipe_trigger(current_dish_ui, trigger)
+				
+			TriggerResult.SourceType.ITEM:
+				scoring_stage_ui.apply_item_trigger_numbers(trigger)
+				await item_tray.play_item_trigger_shake(trigger.source_ref)
+		
+		# Thực thi custom_effects (nếu có) ngay tại nhịp trigger đó
+		if not trigger.custom_effects.is_empty():
+			apply_meta_effects(trigger.custom_effects)
+			_update_display()
+			game_hud.update_money()
+			await get_tree().create_timer(0.15).timeout
+	
+	await get_tree().create_timer(0.4).timeout
+	
 	total_dishes_in_stage += result["dishes"].size()
-	print("Đã nấu xong! Điểm thu được: ", result["total_score"])
 	current_score += result["total_score"]
-	
 	game_hud.update_current_score(current_score)
-	#apply_meta_effects(result["meta_effects"])
+	_update_deck_ui()
 	
+	await scoring_stage_ui.finish_scoring_stage()
 	_check_win_condition()
 
 
@@ -246,7 +261,6 @@ func _win_stage() -> void:
 	
 	var end_stage_effects = _trigger_items_after_match()
 	
-	# Tính toán tiền (Bạn có thể tách đoạn này ra như cũ)
 	var item_gold: int = 0
 	if end_stage_effects.has("add_money"):
 		item_gold = end_stage_effects["add_money"]
