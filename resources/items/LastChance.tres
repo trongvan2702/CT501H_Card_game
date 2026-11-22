@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://bajiib7o8oay"]
+
+[ext_resource type="Texture2D" uid="uid://bhokkese7tj5l" path="res://assets/items/last_change.png" id="1_3qc2b"]
+[ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_data"]
+[ext_resource type="Script" uid="uid://bq6en88grgcf7" path="res://scripts/items/LastChance.gd" id="2_logic"]
+
+[resource]
+script = ExtResource("2_data")
+item_id = "last_chance"
+display_name = "Last Chance"
+description = "Gain +15 Mult when you play with no discards remaining."
+rarity = 1
+price = 5
+logic_script = ExtResource("2_logic")
+is_boss = false
+item_texture = ExtResource("1_3qc2b")
+metadata/_custom_type_script = "uid://b7ouduwjuey1b"
