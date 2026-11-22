@@ -3,7 +3,7 @@ extends VBoxContainer
 
 @onready var visual_anchor: Control = $VisualAnchor
 @onready var dish_icon: TextureRect = $VisualAnchor/DishIcon
-@onready var dish_name_label: Label = $DishNameLabel
+@onready var dish_name_label: Label = $VisualAnchor/DishNameLabel
 
 var recipe_data: RecipeData
 
