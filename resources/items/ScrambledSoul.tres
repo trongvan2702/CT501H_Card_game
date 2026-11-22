@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dsfs40a1jakko" path="res://assets/items/scrambled_soul.png" id="1_q6uwo"]
 [ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_data"]
-[ext_resource type="Script" path="res://scripts/items/ScrambledSoul.gd" id="2_logic"]
+[ext_resource type="Script" uid="uid://hfy73v7k5jhy" path="res://scripts/items/ScrambledSoul.gd" id="2_logic"]
 
 [resource]
 script = ExtResource("2_data")

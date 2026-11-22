@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bve6qfpx6bllq" path="res://assets/items/salt_of_earth.png" id="1_y1tcy"]
 [ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_data"]
-[ext_resource type="Script" path="res://scripts/items/SaltOfEarth.gd" id="2_logic"]
+[ext_resource type="Script" uid="uid://bmvp66rrjgip4" path="res://scripts/items/SaltOfEarth.gd" id="2_logic"]
 
 [resource]
 script = ExtResource("2_data")

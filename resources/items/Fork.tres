@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://d1dm4mh1i6fsb"]
 
-[ext_resource type="Texture2D" uid="uid://dgau251i7x4gk" path="res://assets/Apple Green.png" id="1_ia3bb"]
+[ext_resource type="Texture2D" uid="uid://da534snqpypmh" path="res://assets/items/fork.png" id="1_ywynw"]
 [ext_resource type="Script" uid="uid://bb5lmmhrl2osg" path="res://scripts/items/Fork.gd" id="2_w7jhe"]
 [ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_ywynw"]
 
@@ -8,10 +8,10 @@
 script = ExtResource("2_ywynw")
 item_id = "fork"
 display_name = "Fork"
-description = "Fork"
+description = "+1 discard each round"
 rarity = 1
 price = 10
 logic_script = ExtResource("2_w7jhe")
 is_boss = false
-item_texture = ExtResource("1_ia3bb")
+item_texture = ExtResource("1_ywynw")
 metadata/_custom_type_script = "uid://b7ouduwjuey1b"
