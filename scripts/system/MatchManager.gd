@@ -14,8 +14,6 @@ var current_stage: int = 0
 var current_score: float = 0.0
 var total_dishes_in_stage : int = 0 
 var stage_target_score: float = 0.0
-var plays_left: int = 4
-var discards_left: int = 3
 
 @export var deck_manager: DeckManager
 @export var hand_manager: HandManager
@@ -83,14 +81,14 @@ func start_new_stage() -> void:
 	
 	current_score = 0.0
 	total_dishes_in_stage = 0
-	plays_left = 4
-	discards_left = 3
+	GameManager.plays_left = 4
+	GameManager.discards_left = 3
 	
 	_sync_equipped_items()
 	
 	_trigger_items_on_stage_start()
 	
-	game_hud.refresh_all(current_score, plays_left, discards_left)
+	game_hud.refresh_all(current_score, GameManager.plays_left, GameManager.discards_left)
 	
 	_on_state_changed(MatchState.DRAWING)
 	
@@ -117,11 +115,11 @@ func draw_cards_to_full() -> void:
 
 func _effect_add_plays(amount: int) -> void:
 	print("Hiệu ứng: Tăng ", amount, " lượt Play")
-	plays_left += amount
+	GameManager.plays_left += amount
 
 func _effect_add_discards(amount: int) -> void:
 	print("Hiệu ứng: Tăng ", amount, " lượt Discard")
-	discards_left += amount
+	GameManager.discards_left += amount
 
 func _effect_add_money(amount: int) -> void:
 	print("Hiệu ứng: Nhận thêm ", amount, "$")
@@ -148,6 +146,13 @@ func _trigger_items_on_stage_start() -> void:
 			if trigger != null and trigger.triggered:
 				apply_meta_effects(trigger.custom_effects)
 
+func _trigger_items_on_discard() -> void:
+	for item in scoring_system.equipped_items:
+		if item.has_method("on_discard"):
+			var trigger = item.on_discard()
+			if trigger != null and trigger.triggered:
+				apply_meta_effects(trigger.custom_effects)
+
 func _trigger_items_after_match() -> Dictionary:
 	var final_effects: Dictionary = {}
 	for item in scoring_system.equipped_items:
@@ -161,12 +166,12 @@ func _trigger_items_after_match() -> Dictionary:
 	return final_effects
 
 func _on_play_action_button_action_pressed() -> void:
-	if current_state != MatchState.WAIT_FOR_INPUT or plays_left <= 0 or hand_manager.get_selected_cards().size() == 0:
+	if current_state != MatchState.WAIT_FOR_INPUT or GameManager.plays_left <= 0 or hand_manager.get_selected_cards().size() == 0:
 		return
 	
 	_on_state_changed(MatchState.PROCESSING)
 	
-	plays_left -= 1
+	GameManager.plays_left -= 1
 	_update_display()
 	
 	# 1. Lấy các node IngredientCard từ tay bài (không xóa ngay để làm hiệu ứng bay)
@@ -232,14 +237,16 @@ func _on_play_action_button_action_pressed() -> void:
 
 
 func _on_discard_action_button_action_pressed() -> void:
-	if current_state != MatchState.WAIT_FOR_INPUT or discards_left <= 0 or hand_manager.get_selected_cards().size() == 0:
+	if current_state != MatchState.WAIT_FOR_INPUT or GameManager.discards_left <= 0 or hand_manager.get_selected_cards().size() == 0:
 		return
 	
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
 	
 	_on_state_changed(MatchState.PROCESSING)
-	discards_left -= 1
+	GameManager.discards_left -= 1
+	_update_display()
+	_trigger_items_on_discard()
 	_update_display()
 	
 	_on_state_changed(MatchState.DRAWING)
@@ -250,7 +257,7 @@ func _on_discard_action_button_action_pressed() -> void:
 func _check_win_condition() -> void:
 	if current_score >= stage_target_score:
 		_win_stage()
-	elif plays_left <= 0:
+	elif GameManager.plays_left <= 0:
 		_lose_stage()
 	else:
 		# Vẫn còn lượt đánh, vòng lại rút bài cho đầy
@@ -306,7 +313,7 @@ func _update_display() -> void:
 	# Gọi hàm cập nhật nút mới, lấy số lượng bài đang chọn từ hand_manager
 	var current_selected = hand_manager.get_selected_cards().size()
 	_update_action_buttons(current_selected)
-	game_hud.update_resources(plays_left, discards_left)
+	game_hud.update_resources(GameManager.plays_left, GameManager.discards_left)
 
 func _update_deck_ui() -> void:
 	var total_cards = GameManager.player_deck.size()
@@ -321,8 +328,8 @@ func _on_hand_selection_changed(selected_cards: Array) -> void:
 	_update_action_buttons(selected_cards.size())
 
 func _update_action_buttons(selected_count: int) -> void:
-	play_action_btn.update_state(selected_count, plays_left)
-	discard_action_btn.update_state(selected_count, discards_left)
+	play_action_btn.update_state(selected_count, GameManager.plays_left)
+	discard_action_btn.update_state(selected_count, GameManager.discards_left)
 
 func _on_item_sell_requested(card: ItemCard) -> void:
 	var price = card._calculate_sell_price()
