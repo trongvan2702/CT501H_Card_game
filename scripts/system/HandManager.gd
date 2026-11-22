@@ -13,6 +13,10 @@ const ARC_HEIGHT = 35.0        # Độ vồng của cung (số càng lớn bài 
 const MAX_ROTATION_DEG = 12.0  # Góc nghiêng tối đa của 2 lá bài ngoài cùng
 const HOVER_PUSH_DISTANCE = 50.0
 
+var _is_minimized: bool = false
+var _default_container_y: float = NAN
+var _container_tween: Tween
+
 func add_card_to_hand(instance: IngredientInstance) -> void:
 	var new_card = IngredientCard.create_from_instance(instance)
 	new_card.card_clicked.connect(_on_card_clicked)
@@ -32,6 +36,8 @@ func add_cards_to_hand(cards: Array[IngredientInstance]) -> void:
 		add_card_to_hand(card)
 
 func _on_card_clicked(card: IngredientCard) -> void:
+	if _is_minimized:
+		return
 	if card.is_selected:
 		card.is_selected = false
 		card._update_visual_state()
@@ -145,8 +151,33 @@ func update_hand_layout() -> void:
 		
 		# Cập nhật z_index để lá bài bên phải đè lên lá bài bên trái giống ngoài đời
 		card.z_index = i
+		
+func set_hand_minimized(minimized: bool) -> void:
+	if hand_ui_container == null or _is_minimized == minimized:
+		return
+	
+	_is_minimized = minimized
+	
+	# Lưu lại tọa độ Y ban đầu ở lần chạy đầu tiên để không bao giờ bị trôi vị trí
+	if is_nan(_default_container_y):
+		_default_container_y = hand_ui_container.position.y
+	
+	if _container_tween != null:
+		_container_tween.kill()
+	
+	# Đặt tâm thu nhỏ ở cạnh dưới chính giữa để tay bài thu gọn xuống sát mép dưới màn hình
+	hand_ui_container.pivot_offset = Vector2(hand_ui_container.size.x / 2.0, hand_ui_container.size.y)
+	
+	var target_scale = Vector2(0.9, 0.9) if minimized else Vector2.ONE
+	var target_y = (_default_container_y + 25.0) if minimized else _default_container_y
+	
+	_container_tween = create_tween().set_parallel(true)
+	_container_tween.tween_property(hand_ui_container, "scale", target_scale, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_container_tween.tween_property(hand_ui_container, "position:y", target_y, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _on_card_hovered(hovered_card: IngredientCard) -> void:
+	if _is_minimized:
+		return
 	_update_all_cards_visuals(hovered_card)
 
 func _on_card_unhovered(unhovered_card: IngredientCard) -> void:

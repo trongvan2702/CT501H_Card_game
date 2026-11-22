@@ -189,6 +189,7 @@ func _on_play_action_button_action_pressed() -> void:
 			all_used_ingredients.append(ing)
 	
 	# 3. Bay các lá bài lên xếp hàng ngang ở giữa màn hình & hiện Score x Mult
+	hand_manager.set_hand_minimized(true)
 	await scoring_stage_ui.start_scoring_stage(played_card_nodes, all_used_ingredients)
 	
 	# 4. Diễn hoạt từng bước theo đúng thứ tự của pipeline duy nhất
@@ -226,6 +227,7 @@ func _on_play_action_button_action_pressed() -> void:
 	_update_deck_ui()
 	
 	await scoring_stage_ui.finish_scoring_stage()
+	hand_manager.set_hand_minimized(false)
 	_check_win_condition()
 
 

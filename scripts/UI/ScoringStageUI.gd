@@ -15,7 +15,9 @@ var _tray_nodes: Array[Control] = [] # Danh sách các node đang nằm trên kh
 var _display_score: float = 0.0
 var _display_mult: float = 1.0
 
-const ITEM_SPACING: float = 140.0
+const ITEM_SPACING: float = 155.0
+const CARD_STAGE_SCALE: Vector2 = Vector2(0.75, 0.75)
+var _label_tweens: Dictionary = {}
 
 func _ready() -> void:
 	score_box.visible = false
@@ -45,7 +47,7 @@ func start_scoring_stage(played_cards: Array[IngredientCard], used_ingredients: 
 			card.modulate = Color(0.4, 0.4, 0.4, 1.0)
 	
 	# Bay lên xếp thành hàng ngang thẳng hàng
-	await _arrange_tray_nodes(0.3)
+	await _arrange_tray_nodes(0.6)
 
 # Xếp toàn bộ node hiện có trên khay thành 1 hàng ngang căn giữa
 func _arrange_tray_nodes(duration: float = 0.25) -> void:
@@ -60,12 +62,17 @@ func _arrange_tray_nodes(duration: float = 0.25) -> void:
 	var tween = create_tween().set_parallel(true)
 	for i in range(count):
 		var node = _tray_nodes[i]
+		node.pivot_offset = node.size / 2.0
+		
 		var target_pos = Vector2(
 			start_x + (i * ITEM_SPACING) - (node.size.x / 2.0),
 			center_y - (node.size.y / 2.0)
 		)
+		var target_scale = CARD_STAGE_SCALE if node is IngredientCard else Vector2.ONE
+		
 		tween.tween_property(node, "position", target_pos, duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		tween.tween_property(node, "rotation", 0.0, duration).set_trans(Tween.TRANS_SINE)
+		tween.tween_property(node, "scale", target_scale, duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		node.z_index = i
 		
 	await tween.finished
@@ -88,16 +95,50 @@ func apply_item_trigger_numbers(trigger: TriggerResult) -> void:
 	_apply_trigger_numbers(trigger)
 
 func _apply_trigger_numbers(trigger: TriggerResult) -> void:
+	var old_score = _display_score
+	var old_mult = _display_mult
+	
 	_display_score += trigger.score
 	if trigger.x_mult:
 		_display_mult *= trigger.mult
 	else:
 		_display_mult += trigger.mult
+		
 	_update_score_labels()
+	
+	# Chỉ rung nhãn nào thực sự thay đổi giá trị
+	if not is_equal_approx(_display_score, old_score):
+		_shake_label(score_label)
+	if not is_equal_approx(_display_mult, old_mult):
+		_shake_label(mult_label)
 
 func _update_score_labels() -> void:
 	score_label.text = str(roundi(_display_score))
 	mult_label.text = str(snappedf(_display_mult, 0.1))
+
+func _shake_label(label: Label) -> void:
+	if label == null:
+		return
+		
+	# Nếu nhãn đang rung dở thì ngắt tween cũ để tránh bị lệch góc
+	if _label_tweens.has(label) and _label_tweens[label] != null:
+		_label_tweens[label].kill()
+		
+	# Cập nhật tâm xoay vào chính giữa chữ sau khi text vừa đổi độ dài
+	label.pivot_offset = label.size / 2.0
+	
+	var tween = create_tween()
+	_label_tweens[label] = tween
+	
+	tween.set_parallel(true)
+	tween.tween_property(label, "scale", Vector2(1.25, 1.25), 0.06).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(label, "rotation_degrees", 8.0, 0.05)
+	
+	tween.chain().tween_property(label, "rotation_degrees", -8.0, 0.06)
+	
+	tween.chain().set_parallel(true)
+	tween.tween_property(label, "scale", Vector2.ONE, 0.08).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(label, "rotation_degrees", 0.0, 0.06)
 
 # ==========================================
 # 3. BIẾN NGUYÊN LIỆU THÀNH MÓN ĂN TRÊN CÙNG 1 KHAY
@@ -133,7 +174,7 @@ func transform_ingredients_to_dish(ingredients: Array[IngredientInstance], recip
 	insert_index = clampi(insert_index, 0, _tray_nodes.size())
 	_tray_nodes.insert(insert_index, dish_ui)
 	
-	await _arrange_tray_nodes(0.15)
+	await _arrange_tray_nodes(0.3)
 	await dish_ui.play_appear_animation()
 	
 	return dish_ui
@@ -161,12 +202,14 @@ func _clear_stage() -> void:
 
 func _shake_node(node: Control) -> void:
 	node.pivot_offset = node.size / 2.0
+	var base_scale = CARD_STAGE_SCALE if node is IngredientCard else Vector2.ONE
+	
 	var tween = create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(node, "scale", Vector2(1.15, 1.15), 0.08)
+	tween.tween_property(node, "scale", base_scale * 1.15, 0.08)
 	tween.tween_property(node, "rotation_degrees", 6.0, 0.06)
 	tween.chain().tween_property(node, "rotation_degrees", -6.0, 0.08)
 	tween.chain().set_parallel(true)
-	tween.tween_property(node, "scale", Vector2.ONE, 0.1)
+	tween.tween_property(node, "scale", base_scale, 0.1)
 	tween.tween_property(node, "rotation_degrees", 0.0, 0.08)
 	await tween.finished
