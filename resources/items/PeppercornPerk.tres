@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://c2sqa8dn18fto"]
+
+[ext_resource type="Texture2D" uid="uid://cepn30mbfv45w" path="res://assets/items/peppercorn_perk.png" id="1_h6us6"]
+[ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_data"]
+[ext_resource type="Script" path="res://scripts/items/PeppercornPerk.gd" id="2_logic"]
+
+[resource]
+script = ExtResource("2_data")
+item_id = "peppercorn_perk"
+display_name = "Peppercorn Perk"
+description = "Whenever you cook a Pepper, gain +3 Mult."
+rarity = 1
+price = 5
+logic_script = ExtResource("2_logic")
+is_boss = false
+item_texture = ExtResource("1_h6us6")
+metadata/_custom_type_script = "uid://b7ouduwjuey1b"

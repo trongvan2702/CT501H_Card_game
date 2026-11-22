@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://bu0aibcbwf2lp"]
+
+[ext_resource type="Texture2D" uid="uid://bxfqrv5lr5a4i" path="res://assets/items/vine_ripened.png" id="1_rrqco"]
+[ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_data"]
+[ext_resource type="Script" path="res://scripts/items/VineRipened.gd" id="2_logic"]
+
+[resource]
+script = ExtResource("2_data")
+item_id = "vine_ripened"
+display_name = "Vine Ripened"
+description = "Whenever you cook a Tomato, gain +3 Mult."
+rarity = 1
+price = 5
+logic_script = ExtResource("2_logic")
+is_boss = false
+item_texture = ExtResource("1_rrqco")
+metadata/_custom_type_script = "uid://b7ouduwjuey1b"

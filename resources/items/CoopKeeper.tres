@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://dfgoum0uru5o6"]
+
+[ext_resource type="Texture2D" uid="uid://c1mw0008out63" path="res://assets/items/coop_keeper.png" id="1_rjisw"]
+[ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_data"]
+[ext_resource type="Script" path="res://scripts/items/CoopKeeper.gd" id="2_logic"]
+
+[resource]
+script = ExtResource("2_data")
+item_id = "coop_keeper"
+display_name = "Coop Keeper"
+description = "Whenever you cook a Chicken, gain +3 Mult."
+rarity = 1
+price = 5
+logic_script = ExtResource("2_logic")
+is_boss = false
+item_texture = ExtResource("1_rjisw")
+metadata/_custom_type_script = "uid://b7ouduwjuey1b"

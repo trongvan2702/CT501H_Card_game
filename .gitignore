@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+doc/ITEM_SPEC_TEMPLATE.md
