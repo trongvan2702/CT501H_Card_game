@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://ktw4edim05ty"]
 
-[ext_resource type="Texture2D" uid="uid://dibxbts60sbfw" path="res://assets/Apple Green.png" id="1_7p87x"]
+[ext_resource type="Texture2D" uid="uid://dgau251i7x4gk" path="res://assets/Apple Green.png" id="1_7p87x"]
 [ext_resource type="Script" uid="uid://bvw623enx5xa8" path="res://scripts/items/BeefSteakMaster.gd" id="2_ss060"]
 [ext_resource type="Script" uid="uid://b7ouduwjuey1b" path="res://scripts/resources/Item/ItemData.gd" id="2_uoj8q"]
 
@@ -10,7 +10,8 @@ item_id = "beef_steak_master"
 display_name = "Beaf Steak Master"
 description = "Beaf Steak Master"
 rarity = 1
-price = 5
+price = 10
 logic_script = ExtResource("2_ss060")
+is_boss = false
 item_texture = ExtResource("1_7p87x")
 metadata/_custom_type_script = "uid://b7ouduwjuey1b"
