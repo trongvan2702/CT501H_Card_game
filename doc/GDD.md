@@ -88,8 +88,8 @@ cấp công thức và chỉnh sửa bộ bài.
 | Bộ bài khởi đầu | 8 loại × 5 lá = 40 lá | `GameManager._build_starter_deck()` |
 | Tay bài tối đa | 7 lá | `MatchManager.max_hand_size` |
 | Số lá chọn được mỗi lượt | 5 | `HandManager.max_select` |
-| Lượt Play / stage | 4 | `MatchManager.start_new_stage()` |
-| Lượt Discard / stage | 3 | `MatchManager.start_new_stage()` |
+| Lượt Play / stage | 4 | khởi tạo `GameManager.plays_left`; reset + điều chỉnh qua `MatchManager` |
+| Lượt Discard / stage | 3 | khởi tạo `GameManager.discards_left`; reset + điều chỉnh qua `MatchManager` |
 | Rút bù mỗi lần | tối đa 5 lá | `MatchManager.draw_cards_to_full()` |
 | Vàng khởi điểm | 100 | `GameManager.start_new_run()` |
 | Item trang bị tối đa | 5 | `GameManager.max_active_items` |
@@ -129,24 +129,42 @@ Ví dụ: tay `[Beef, Chicken, Cabbage, Rice, Salt]` với toàn bộ món đã 
 
 ### 3.2. Điểm & hệ số
 
-Mỗi món nấu ra cho ra một **pipeline**: danh sách các "góp điểm" (trigger).
+Mỗi lượt Play tạo **một pipeline duy nhất** chứa các trigger từ toàn bộ món được nấu và
+các item. Sau khi pipeline hoàn tất, điểm của lượt được tính một lần:
 
 ```
-Điểm món = ( Σ score của mọi trigger ) × mult cuối
-mult cuối bắt đầu = 1.0
-   • Trigger thường (x_mult = false) → mult cộng dồn:  mult += trigger.mult
-   • Trigger nhân (x_mult = true)    →               mult *= trigger.mult
+Điểm lượt Play = (Σ score của tất cả trigger) × final_mult
+final_mult khởi đầu = 1.0
+   • Trigger thường (x_mult = false) → cộng dồn: final_mult += trigger.mult
+   • Trigger nhân (x_mult = true)    → nhân dồn:  final_mult *= trigger.mult
 ```
+
+**Quan trọng:** không tính `(score × mult)` riêng cho từng món rồi cộng các món lại.
+Mọi score và mult từ ingredients, recipes và items cùng đóng góp vào một tổng score
+và một `final_mult` chung cho lượt Play.
 
 | Thành phần | Góp vào pipeline |
 |---|---|
-| Món (recipe) | `base_score + (cấp - 1) × bonus_score_per_level` và `base_mult + (cấp - 1) × bonus_mult_per_level` |
-| Mỗi nguyên liệu trong món | `base_score` của lá (nhiễu + của item, ví dụ Beef Lover) |
-| Item (Joker) | Theo hook kích hoạt — xem 3.4 |
+| Mỗi nguyên liệu được dùng trong món | `IngredientInstance.get_score()` = `base_score + state["bonus_score"]`; nguyên liệu thừa không vào pipeline |
+| Mỗi món (recipe) | Score = `RecipeDB.calculate_score(recipe)`; mult = `RecipeDB.calculate_mult(recipe)`; đều cộng vào pipeline chung |
+| Item (Joker) | Trigger từ `on_play`, `on_ingredient_scored`, `on_recipe_scored`; score/mult theo kết quả hook |
+
+**Thứ tự pipeline trong lượt Play:**
+1. `on_play` của các item, trước ghép món.
+2. Với từng món theo thứ tự ghép: từng ingredient được dùng và hook `on_ingredient_scored` của item chạy ngay sau ingredient tương ứng.
+3. Trigger recipe, rồi hook `on_recipe_scored` của item.
+4. Sau khi pipeline xây xong, tính `(Σ score) × final_mult` một lần.
+
+Recipe matching dùng `crafted_count` để ưu tiên món đã nấu nhiều; khi bằng nhau, ưu tiên
+recipe mult cao hơn. Đây là quy tắc chọn món, độc lập với việc tính điểm cuối: recipe
+được chọn vẫn góp trigger vào pipeline toàn lượt.
 
 - **Cấp công thức**: mỗi lần mua gói Công thức mà ra đúng món đó (đã mở khóa) → +1 cấp.
-- **Meta effect** (tiền, lượt, lợi tức…) tách riêng khỏi điểm món; tích luỹ qua các
-  trigger rồi áp dụng một lần — xem 3.4 và 3.6.
+- **Meta effects** (`add_money`, `add_plays`, `add_discards`, `max_interest_gold`) không
+  phải điểm. ScoringSystem tổng hợp meta effects trong kết quả lượt; MatchManager áp dụng
+  effect theo nhịp trigger trong lúc trình diễn pipeline. Hook lifecycle riêng như
+  `on_stage_start` / `on_discard` cũng chuyển meta effects qua MatchManager, không đưa
+  chúng vào pipeline tính điểm.
 
 ### 3.3. Bộ bài, tay bài, lượt chơi
 
@@ -167,13 +185,20 @@ Item là thẻ trợ giúp, mua ở Shop, **tối đa 5 thẻ đang trang bị**
 được kích hoạt qua các **hook** (điểm cài vào pipeline) và trả về kết quả
 (triggered hay không, score/mult/meta effect nào):
 
-| Hook | Thời điểm kích hoạt |
-|---|---|
-| `on_stage_start` | Khi stage bắt đầu (1 lần) |
-| `on_play` | Mỗi lượt Play, trước khi ghép món *(hook này chưa được kết nối — xem mục 6)* |
-| `on_ingredient_scored` | Mỗi nguyên liệu được tính điểm |
-| `on_recipe_scored` | Mỗi món được tính điểm |
-| `after_match` | Kết thúc stage (thắng hoặc thua) |
+| Hook | Thời điểm kích hoạt | Vài vai trò |
+|---|---|---|
+| `on_stage_start` | Khi stage bắt đầu (1 lần) | meta effects qua `MatchManager`, không vào pipeline điểm |
+| `on_play` | Mỗi lượt Play, **trước khi ghép món** (trigger nằm đầu pipeline) | score/mult vào pipeline điểm |
+| `on_ingredient_scored` | Mỗi nguyên liệu được dùng vào món (lần lượt theo ingredient) | score/mult vào pipeline điểm |
+| `on_recipe_scored` | Mỗi món được nấu ra | score/mult vào pipeline điểm |
+| `after_match` | Kết thúc stage, **chỉ khi thắng** (`_win_stage`) | meta effects, không vào pipeline điểm |
+| `on_discard` | Mỗi lần bấm Discard, sau khi giảm `GameManager.discards_left` | meta effects qua `MatchManager`, không vào pipeline điểm |
+
+> `on_play`/`on_ingredient_scored`/`on_recipe_scored` là các hook **scoring** —
+> kết quả của chúng (score, mult, x_mult) được tính trong pipeline của lượt Play.
+> `on_stage_start`/`after_match`/`on_discard` là các hook **lifecycle** — chỉ chuyển
+> meta effect (tiền, lượt, interest) qua `MatchManager.apply_meta_effects()`, không
+> tác động trực tiếp đến điểm của lượt.
 
 Item đặc biệt: **Boss** (mục 3.5) cũng là item nhưng chỉ trang bị tạm trong stage
 boss, không mua ở Shop.
@@ -314,6 +339,13 @@ Tạo file `.tres` trong `resources/recipes/` (type `RecipeData`).
 
 #### 4.4.3. Item (9 thường + 3 boss)
 
+> *(10 item mới chưa cập nhật vào bảng: 8 item +3 Mult theo nguyên liệu
+> (Butcher's Charm–beef, Savoy's Secret–cabbage, Coop Keeper–chicken,
+> Scrambled Soul–egg, Peppercorn Perk–pepper, Grain of Fortune–rice,
+> Salt of the Earth–salt, Vine Ripened–tomato; hook `on_ingredient_scored`),
+> Deck Thinner (`on_play`, +30×số lượt discard còn lại) và Last Chance
+> (`on_play`, +15 Mult khi không còn lượt discard). Cả 10 đều rarity 1, giá 5.)*
+
 | id | Tên | Rarity | Giá | Hook | Hiệu ứng |
 |---|---|---|---|---|---|
 | beef_lover | Beef Lover | 1 | 5 | on_ingredient_scored | +8 score cho mỗi lá Beef trong món |
@@ -321,7 +353,7 @@ Tạo file `.tres` trong `resources/recipes/` (type `RecipeData`).
 | meatt | Meatt | 1 | 5 | on_recipe_scored | +2 mult (cộng) cho mỗi món Beef Steak |
 | fork | Fork | 1 | 5 | on_stage_start | +1 lượt Discard |
 | spoon | Spoon | 1 | 5 | on_stage_start | +1 lượt Play |
-| rice_accumulator | Rice Accumulator | 1 | 5 | (vào on_play — chưa kết nối) | +8.8 mult nếu lượt vừa rồi chơi ≥3 lá Rice |
+| rice_accumulator | Rice Accumulator | 1 | 5 | on_play (hook đã nối, nhưng script đang ghi `_on_play` nên chưa chạy — xem mục 6) | +8.8 mult nếu lượt vừa rồi chơi ≥3 lá Rice |
 | goldtest1 | Gold1 (test) | 1 | 5 | on_ingredient_scored | +1$ mỗi lá Beef *(nội dung thử)* |
 | goldtest2 | Gold2 (test) | 1 | 5 | on_recipe_scored | +3$ mỗi món Beef Steak *(nội dung thử)* |
 | goldtest3 | Gold3 (test) | 1 | 5 | after_match | +3$ khi hết stage *(nội dung thử)* |
@@ -398,9 +430,10 @@ Tạo file `.tres` trong `resources/recipes/` (type `RecipeData`).
 3. `ShopManager.buy_item()`: **không kiểm tra `max_active_items = 5`** → mua vô hạn
    (vi phạm D-04).
 4. `RiceAccumulator.gd`: định nghĩa `_on_play` (có gạch đầu dòng) → **không bao giờ
-   được gọi**; hook đúng phải là `on_play`.
-5. `ScoringSystem._trigger_on_play`: kết quả `TriggerResult` của hook `on_play`
-   bị bỏ sót (lấy ra rồi không dùng).
+   được gọi**; hook đúng phải là `on_play` (hook `on_play` hiện đã nối vào pipeline
+   của `ScoringSystem` — chỉ cần sửa tên hàm trong item).
+5. (Đã khắc phục — `ScoringSystem._trigger_on_play` hiện có push trigger
+   `on_play` vào pipeline; giữ lại ở đây để tránh nhầm khi đọc bản cũ)
 6. `RecipeDB.get_ingredient_by_id` không liên quan, nhưng
    `IngredientDB.get_ingredient_by_id(id)` trả về default `1` (int) thay vì `null`
    → nhánh "không tìm thấy" không bao giờ chạy đúng, và fallback trỏ tới
@@ -460,7 +493,7 @@ base_mult[(stage-1)%3]` (chỉ số mảng thực tế trong code là `stage/3` 
 | Pipeline | Danh sách trigger (góp điểm) của một dish |
 | Trigger | Một kết quả góp điểm: `score`, `mult`, `x_mult`, meta effect |
 | Item (Joker) | Thẻ trợ giúp; kích hoạt qua hook, tối đa 5 |
-| Hook | `on_stage_start / on_play / on_ingredient_scored / on_recipe_scored / after_match` |
+| Hook | Scoring: `on_play / on_ingredient_scored / on_recipe_scored`; lifecycle: `on_stage_start / after_match / on_discard` (xem 3.4) |
 | Meta effect | Effect không phải điểm món: `add_money`, `add_plays`, `add_discards`, `max_interest_gold` |
 | Boss | Item đặc biệt (is_boss) chỉ kích hoạt trong stage boss |
 | Stage / Màn | Một vòng "cooking" có mục tiêu điểm + 4 lượt play; giữa các stage là Shop |
@@ -485,8 +518,9 @@ base_mult[(stage-1)%3]` (chỉ số mảng thực tế trong code là `stage/3` 
 - [ ] Xử lý khi **boss pool cạn** (chỉ 3 con, run vô hạn): thêm nội dung boss mới
       (chốt: cần thêm) — trước khi có, fallback: random có trùng hay vòng lại?
 - [ ] Ba item `goldtest1/2/3`: xoá khỏi kệ shop, hay đổi tên/thuộc item thật?
-- [ ] Hook `on_play` (Rice Accumulator đang chờ nó): giữ và kết nối, hay bỏ hook
-      khỏi thiết kế?
+- [x] Hook `on_play` (Rice Accumulator đang chờ nó): **đã kết nối vào pipeline**
+      (ScoringSystem._trigger_on_play, trigger nằm đầu pipeline mỗi lượt Play).
+      Việc còn lại chỉ là sửa tên hàm `_on_play` → `on_play` trong RiceAccumulator.gd (mục 6.4).
 - [ ] Giá item: hiện "mọi item = 5" nhưng `ItemData.price` chưa ai đọc — chốt:
       giá theo rarity hay theo từng item?
 

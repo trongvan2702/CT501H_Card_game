@@ -69,19 +69,20 @@ Cần chốt: bảng target có nên tiếp tục tăng tuyến tính, hay nhân
 
 ### 1.3. Ước lượng điểm mỗi lượt chơi (để hiệu chỉnh)
 
-Điểm 1 lượt = tổng các dish, mỗi dish = `(Σ score) × (1 + mult)`.
+Điểm 1 lượt = `(Σ score pipeline) × final_mult` (một `final_mult` chung, xem §4.1) —
+không cộng dồn "giá trị món" riêng cho từng món như bảng 5.1.
 
-Tay 5 lá, dùng món đã unlock sẵn (giá trị lv1 ở GDD §4.4.2):
+Tay 5 lá, dùng món đã unlock sẵn, **không item**:
 
-| Tình huống | Điểm ước lượng |
-|---|---|
-| 5 lá → 1 món Super Disk (243) + 1 lá rác | ~243 |
-| 5 lá → 2 món nhỏ (ví dụ Salted Rice 80 + Salted Rice 80) | ~160 |
-| 5 lá → 1 món trung (Grilled Chicken 81) + 3 lá rác | ~81 |
+| Tình huống | Pipeline: Σ score / Σ mult (gồm base 1.0) | Điểm |
+|---|---|---|
+| 5 lá → 1 món Super Disk + 1 lá rác | (55+80)=135 × (1+0.8)=1.8 | 243 |
+| 5 lá → 2 món Salted Rice (rice+salt, rice+salt) | (16+16)+(12+12)=56 × (1+1.0+1.0)=3.0 | 432 |
+| 5 lá → 1 món Grilled Chicken + 3 lá rác | (22+20+12)=54 × (1+0.5)=1.5 | 81 |
 
-→ Nếu không có item, điểm/lượt ≈ **80–250**. Với 4 lượt/stage: **320–1000 / stage**.
-Như vậy target stage 1–3 (1–2 điểm) là "cho có" nhưng stage 4 (300) là bước nhảy
-hợp lý; từ stage 19 (20000) trở đi **không thể đạt được nếu không có item/nâng cấp**.
+→ Nếu không có item, điểm/lượt ≈ **80–430** (cao hơn ước tính cũ vì 2 món cộng mult
+cộng dồn). 4 lượt/stage: **320–1700 / stage** (trước item). Từ stage 19 (20000) trở đi
+**không thể đạt được nếu không có item/nâng cấp** — khoảng cách còn lớn hơn trước.
 
 ---
 
@@ -139,14 +140,24 @@ Cần thêm item rarity 2–4 để cơ chế này có ý nghĩa.
 
 ## 4. Công thức
 
-### 4.1. Điểm món
+### 4.1. Điểm lượt Play (pipeline chung)
+
+Một lượt Play tính **một lần duy nhất** trên toàn bộ pipeline, không nhân riêng từng món:
 
 ```
-Điểm dish = ( Σ score của pipeline ) × mult
-mult = 1.0
-  trigger x_mult = false → mult += trigger.mult
-  trigger x_mult = true  → mult *= trigger.mult
+Điểm lượt = ( Σ score mọi trigger ) × final_mult
+final_mult = 1.0
+  trigger x_mult = false → final_mult += trigger.mult
+  trigger x_mult = true  → final_mult *= trigger.mult
 ```
+
+Trigger trong pipeline gồm: `on_play` (đầu pipeline) → mỗi nguyên liệu được dùng
+(score của lá) + item `on_ingredient_scored` → mỗi món (recipe score/mult) +
+item `on_recipe_scored`.
+
+**Hệ quả quan trọng:** nấu **nhiều món trong 1 lượt** làm các `mult` additive
+cộng dồn lên cùng một `final_mult` → 2 món cùng lúc giá trị **cao hơn** tổng
+giá trị đơn lẻ của 2 món (xem §1.3).
 
 ### 4.2. Cấp công thức (upgrade)
 
