@@ -8,7 +8,7 @@ var currency: int = 0
 # Discard hoặc meta effect (add_plays / add_discards) thay đổi.
 var plays_left: int = 0
 var discards_left: int = 0
-
+var maximum_draw_card: int = 5
 
 func add_gold(amount: int) -> void:
 	currency += amount

@@ -100,7 +100,7 @@ func start_new_stage() -> void:
 	_on_state_changed(MatchState.WAIT_FOR_INPUT)
 
 func draw_cards_to_full() -> void:
-	var hand = deck_manager.draw_cards(min(5, max_hand_size - hand_manager.get_cards_in_hand()))
+	var hand = deck_manager.draw_cards(min(GameManager.max_active_items, max_hand_size - hand_manager.get_cards_in_hand()))
 	hand_manager.add_cards_to_hand(hand)
 	await get_tree().create_timer(1.0).timeout
 	_on_state_changed(MatchState.WAIT_FOR_INPUT)
