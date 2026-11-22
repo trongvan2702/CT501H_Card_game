@@ -7,8 +7,8 @@
 [resource]
 script = ExtResource("2_data")
 item_id = "peppercorn_perk"
-display_name = "Peppercorn Perk"
-description = "Whenever you cook a Pepper, gain +3 Mult."
+display_name = "Infernal Chili"
+description = "Whenever you cook a Chili, gain +3 Mult."
 rarity = 1
 price = 5
 logic_script = ExtResource("2_logic")
