@@ -23,6 +23,7 @@ RecipeDB="*res://scripts/autoloads/RecipeDB.gd"
 GameManager="*res://scripts/autoloads/GameManager.gd"
 StageManager="*res://scripts/autoloads/StageManager.gd"
 ShopManager="*res://scripts/autoloads/ShopManager.gd"
+AudioManager="*res://scenes/AudioManager.tscn"
 
 [display]
 

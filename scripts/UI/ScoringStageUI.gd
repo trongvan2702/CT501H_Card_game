@@ -19,6 +19,8 @@ const ITEM_SPACING: float = 155.0
 const CARD_STAGE_SCALE: Vector2 = Vector2(0.75, 0.75)
 var _label_tweens: Dictionary = {}
 
+var _trigger_combo_count: int = 0
+
 func _ready() -> void:
 	score_box.visible = false
 
@@ -27,6 +29,7 @@ func _ready() -> void:
 # ==========================================
 func start_scoring_stage(played_cards: Array[IngredientCard], used_ingredients: Array) -> void:
 	_clear_stage()
+	_trigger_combo_count = 0
 	
 	# Hiện bảng Score x Mult
 	_display_score = 0.0
@@ -81,17 +84,26 @@ func _arrange_tray_nodes(duration: float = 0.25) -> void:
 # 2. HIỆU ỨNG RUNG & CẬP NHẬT ĐIỂM
 # ==========================================
 func play_ingredient_trigger(ingredient: IngredientInstance, trigger: TriggerResult) -> void:
+	AudioManager.play_trigger(_trigger_combo_count)
+	_trigger_combo_count += 1
+	
 	_apply_trigger_numbers(trigger)
 	if _card_map.has(ingredient):
 		var card: IngredientCard = _card_map[ingredient]
 		await _shake_node(card)
 
 func play_recipe_trigger(dish_ui: DishVisualUI, trigger: TriggerResult) -> void:
+	AudioManager.play_trigger(_trigger_combo_count)
+	_trigger_combo_count += 1
+	
 	_apply_trigger_numbers(trigger)
 	if dish_ui != null:
 		await dish_ui.play_trigger_shake()
 
 func apply_item_trigger_numbers(trigger: TriggerResult) -> void:
+	AudioManager.play_trigger(_trigger_combo_count)
+	_trigger_combo_count += 1
+	
 	_apply_trigger_numbers(trigger)
 
 func _apply_trigger_numbers(trigger: TriggerResult) -> void:
@@ -175,6 +187,8 @@ func transform_ingredients_to_dish(ingredients: Array[IngredientInstance], recip
 	_tray_nodes.insert(insert_index, dish_ui)
 	
 	await _arrange_tray_nodes(0.3)
+	
+	AudioManager.play_dish_ready()
 	await dish_ui.play_appear_animation()
 	
 	return dish_ui

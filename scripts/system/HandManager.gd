@@ -41,11 +41,14 @@ func _on_card_clicked(card: IngredientCard) -> void:
 	if card.is_selected:
 		card.is_selected = false
 		card._update_visual_state()
+		AudioManager.play_card_deselect()
 	else: 
 		if get_selected_cards().size() < max_select:
 			card.is_selected = true
 			card._update_visual_state()
-		else: print("Cannot select more than 5 card")
+			AudioManager.play_card_select()
+		else:
+			print("Cannot select more than 5 card")
 	emit_signal("selection_changed", get_selected_cards().size())
 	emit_signal("cards_selection_changed", get_selected_cards())
 
