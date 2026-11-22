@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6p85vdjbr5oq"]
+[gd_scene load_steps=5 format=3 uid="uid://b6p85vdjbr5oq"]
 
 [ext_resource type="Script" uid="uid://muokjuqknf0i" path="res://scripts/autoloads/AudioManager.gd" id="1_4tesi"]
 [ext_resource type="AudioStream" uid="uid://bvjoj4qp8qmei" path="res://assets/audio/card_select.wav" id="2_3dgps"]
+[ext_resource type="AudioStream" uid="uid://dtptjuohetism" path="res://assets/audio/Loyalty_Freak_Music_-_03_-_Sensual_Melancholia(chosic.com).mp3" id="2_151wy"]
 [ext_resource type="AudioStream" uid="uid://wk2v326xvckr" path="res://assets/audio/trigger.wav" id="3_151wy"]
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_4tesi")
+bgm_main = ExtResource("2_151wy")
 sfx_card_select = ExtResource("2_3dgps")
 sfx_card_deselect = ExtResource("2_3dgps")
 sfx_trigger = ExtResource("3_151wy")
