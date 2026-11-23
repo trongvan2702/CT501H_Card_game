@@ -102,6 +102,7 @@ func _create_product_ui(data: Dictionary, parent_container: Control, animate_pop
 
 func _on_child_buy_requested(product_ui: ShopItemUI) -> void:
 	emit_signal("item_buy_requested", product_ui)
+	AudioManager.play_buy_item()
 
 func play_reroll_out_animation() -> void:
 	var has_animated := false

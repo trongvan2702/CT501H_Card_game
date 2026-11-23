@@ -7,6 +7,15 @@ extends Node
 @export var sfx_dish_ready: AudioStream
 @export var sfx_card_slide: AudioStream
 @export var sfx_card_discard: AudioStream
+@export var sfx_button_click: AudioStream
+@export var sfx_buy_item_click: AudioStream
+@export var sfx_sell_item_click: AudioStream
+#@export var sfx_buy_item_click: AudioStream
+#@export var sfx_sell_item_click: AudioStream
+#@export var sfx_buy_item_click: AudioStream
+#@export var sfx_sell_item_click: AudioStream
+#@export var sfx_buy_item_click: AudioStream
+#@export var sfx_sell_item_click: AudioStream
 
 var _bgm_player: AudioStreamPlayer
 var _players: Array[AudioStreamPlayer] = []
@@ -75,3 +84,12 @@ func play_card_slide() -> void:
 
 func play_card_discard() -> void:
 	_play_stream(sfx_card_discard, randf_range(0.95, 1.12))
+
+func play_button_click() -> void:
+	_play_stream(sfx_button_click, 1.0)
+
+func play_buy_item() -> void:
+	_play_stream(sfx_buy_item_click, 1.0)	
+
+func play_sell_item() -> void:
+	_play_stream(sfx_sell_item_click, 1.0)

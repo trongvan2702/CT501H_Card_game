@@ -111,6 +111,8 @@ func _on_mouse_exited() -> void:
 	_update_visual_state()
 
 func _on_pressed() -> void:
+	AudioManager.play_button_click()
+	
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(0.95, 0.95), 0.05)
 	tween.tween_property(self, "scale", (Vector2(1.05, 1.05) if is_hovered else Vector2(1.0, 1.0)), 0.05).set_delay(0.05)

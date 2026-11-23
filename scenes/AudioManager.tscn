@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6p85vdjbr5oq"]
+[gd_scene load_steps=10 format=3 uid="uid://b6p85vdjbr5oq"]
 
 [ext_resource type="Script" uid="uid://muokjuqknf0i" path="res://scripts/autoloads/AudioManager.gd" id="1_4tesi"]
 [ext_resource type="AudioStream" uid="uid://o10b3rhsmxdq" path="res://assets/audio/andriih-cooking-kitchen-music-571616.mp3" id="2_151wy"]
@@ -6,6 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://chfovorq70m7n" path="res://assets/audio/card-place-1.wav" id="3_qb6qo"]
 [ext_resource type="AudioStream" uid="uid://cx8c1xp3tbqni" path="res://assets/audio/card_slide.wav" id="5_151wy"]
 [ext_resource type="AudioStream" uid="uid://bn7275jfbr655" path="res://assets/audio/card_discard.wav" id="6_qb6qo"]
+[ext_resource type="AudioStream" uid="uid://lhtts3pw1yp7" path="res://assets/audio/button_click.mp3" id="7_v5v75"]
+[ext_resource type="AudioStream" uid="uid://gtck2eelpqct" path="res://assets/audio/buy_item.wav" id="8_muqnj"]
+[ext_resource type="AudioStream" uid="uid://cnwe80d5ptbwf" path="res://assets/audio/sell_item.wav" id="9_5jw7j"]
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_4tesi")
@@ -16,3 +19,6 @@ sfx_trigger = ExtResource("3_151wy")
 sfx_dish_ready = ExtResource("3_151wy")
 sfx_card_slide = ExtResource("5_151wy")
 sfx_card_discard = ExtResource("6_qb6qo")
+sfx_button_click = ExtResource("7_v5v75")
+sfx_buy_item_click = ExtResource("8_muqnj")
+sfx_sell_item_click = ExtResource("9_5jw7j")

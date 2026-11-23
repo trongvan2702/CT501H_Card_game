@@ -38,6 +38,8 @@ func _on_item_sell_requested(card: ItemCard) -> void:
 	var price = card._calculate_sell_price()
 	GameManager.add_gold(price)
 	
+	AudioManager.play_sell_item()
+	
 	var idx = GameManager.active_items.find(card.display_instance)
 	if idx != -1:
 		GameManager.active_items.remove_at(idx)
