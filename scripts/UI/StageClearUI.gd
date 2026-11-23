@@ -17,12 +17,12 @@ signal continue_pressed
 @onready var item_bonus_value = $CenterContainer/MainPanel/Margin/VBoxContainer/Currency/Margin/MoneyVBox/ItemRow/Value
 
 @onready var total_money_value = $CenterContainer/MainPanel/Margin/VBoxContainer/TotalScoreRow/Value
-@onready var continue_btn = $CenterContainer/MainPanel/Margin/VBoxContainer/ContinueButton
+@onready var continue_btn: ActionButton = $CenterContainer/MainPanel/Margin/VBoxContainer/ContinueButton
 
 func _ready() -> void:
 	visible = false
 	if continue_btn:
-		continue_btn.pressed.connect(_on_continue_pressed)
+		continue_btn.action_pressed.connect(_on_continue_pressed)
 
 func _on_continue_pressed() -> void:
 	emit_signal("continue_pressed")

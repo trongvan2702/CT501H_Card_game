@@ -1,6 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://birplmwgy4eqr"]
 
 [ext_resource type="Script" uid="uid://nj8tual7cj00" path="res://scripts/UI/StageClearUI.gd" id="1_4dq85"]
+[ext_resource type="PackedScene" uid="uid://b8xrll0shlwvb" path="res://scenes/ActionButton.tscn" id="2_uoprw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dq85"]
 bg_color = Color(0.152941, 0.207843, 0.219608, 1)
@@ -15,13 +16,6 @@ border_color = Color(0, 0.181609, 0.175504, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8wnxw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrwms"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uoprw"]
-content_margin_left = 10.0
-content_margin_top = 15.0
-content_margin_right = 10.0
-content_margin_bottom = 15.0
-bg_color = Color(0.695967, 0.696718, 0.381725, 1)
 
 [node name="StageClearUI" type="Control"]
 layout_mode = 3
@@ -269,10 +263,7 @@ horizontal_alignment = 2
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="ContinueButton" type="Button" parent="CenterContainer/MainPanel/Margin/VBoxContainer"]
-custom_minimum_size = Vector2(160, 0)
+[node name="ContinueButton" parent="CenterContainer/MainPanel/Margin/VBoxContainer" instance=ExtResource("2_uoprw")]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_uoprw")
-text = "CONTINUE"
+action_type = 2

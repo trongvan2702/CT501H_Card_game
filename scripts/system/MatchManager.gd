@@ -283,6 +283,7 @@ func _win_stage() -> void:
 	
 	var dishes_cooked = total_dishes_in_stage
 	
+	AudioManager.play_finish_stage()
 	# HƯỚNG DẪN UI HIỂN THỊ
 	stage_clear_ui.display_summary(
 		current_stage,

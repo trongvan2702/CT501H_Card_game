@@ -3,7 +3,7 @@ extends MarginContainer
 
 signal action_pressed()
 
-enum ActionType { PLAY, DISCARD }
+enum ActionType { PLAY, DISCARD, CONTINUE }
 
 # Cho phép bạn chọn loại nút ngay ngoài bảng Inspector của Godot
 @export var action_type: ActionType = ActionType.PLAY
@@ -16,7 +16,7 @@ enum ActionType { PLAY, DISCARD }
 
 # Định nghĩa màu sắc (Bạn có thể tùy chỉnh lại mã màu RGB cho ưng ý)
 const COLOR_DISABLED = Color(0.274, 0.274, 0.274) # Xám tối
-#const COLOR_DISABLED = Color(0.1, 0.1, 0.1)
+const COLOR_CONTINUE = Color(0.76, 0.72, 0.32)
 const COLOR_PLAY = Color(0.322, 0.580, 0.929)
 const COLOR_DISCARD = Color(0.914, 0.384, 0.349)  
 const TEXT_COLOR_ACTIVE = Color(1.0, 1.0, 1.0) 
@@ -28,10 +28,14 @@ var is_hovered: bool = false
 func _ready() -> void:
 	pivot_offset = custom_minimum_size / 2.0
 	
-	if action_type == ActionType.PLAY:
-		title_label.text = "SERVE"
-	else:
-		title_label.text = "DISCARD"
+	match action_type:
+		ActionType.PLAY:
+			title_label.text = "SERVE"
+		ActionType.DISCARD:
+			title_label.text = "DISCARD"
+		ActionType.CONTINUE:
+			title_label.text = "CONTINUE"
+			sub_label.visible = false
 	
 	click_area.mouse_entered.connect(_on_mouse_entered)
 	click_area.mouse_exited.connect(_on_mouse_exited)
@@ -66,11 +70,13 @@ func update_state(selected_count: int, actions_left: int) -> void:
 		
 	elif action_type == ActionType.DISCARD:
 		sub_label.visible = false
-		
-		#sub_label.text = "%d LEFT" % actions_left
-		# Sáng lên khi có chọn bài VÀ chưa vượt quá 5 bài VÀ còn lượt Discard
 		is_active = (selected_count > 0 and selected_count <= 5 and actions_left > 0)
 		style.bg_color = COLOR_DISCARD if is_active else COLOR_DISABLED
+		
+	elif action_type == ActionType.CONTINUE:
+		sub_label.visible = false
+		is_active = true
+		style.bg_color = COLOR_CONTINUE
 		
 	var current_text_color = TEXT_COLOR_ACTIVE if is_active else TEXT_COLOR_DISABLED
 	title_label.add_theme_color_override("font_color", current_text_color)

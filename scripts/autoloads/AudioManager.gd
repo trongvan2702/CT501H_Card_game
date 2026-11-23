@@ -10,7 +10,7 @@ extends Node
 @export var sfx_button_click: AudioStream
 @export var sfx_buy_item_click: AudioStream
 @export var sfx_sell_item_click: AudioStream
-#@export var sfx_buy_item_click: AudioStream
+@export var sfx_finish_stage: AudioStream
 #@export var sfx_sell_item_click: AudioStream
 #@export var sfx_buy_item_click: AudioStream
 #@export var sfx_sell_item_click: AudioStream
@@ -93,3 +93,6 @@ func play_buy_item() -> void:
 
 func play_sell_item() -> void:
 	_play_stream(sfx_sell_item_click, 1.0)
+
+func play_finish_stage() -> void:
+	_play_stream(sfx_finish_stage, 1.0)
