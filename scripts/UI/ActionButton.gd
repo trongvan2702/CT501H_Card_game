@@ -3,7 +3,7 @@ extends MarginContainer
 
 signal action_pressed()
 
-enum ActionType { PLAY, DISCARD, CONTINUE }
+enum ActionType { PLAY, DISCARD, CONTINUE, MAIN_PLAY, SETTINGS, EXIT }
 
 # Cho phép bạn chọn loại nút ngay ngoài bảng Inspector của Godot
 @export var action_type: ActionType = ActionType.PLAY
@@ -16,9 +16,13 @@ enum ActionType { PLAY, DISCARD, CONTINUE }
 
 # Định nghĩa màu sắc (Bạn có thể tùy chỉnh lại mã màu RGB cho ưng ý)
 const COLOR_DISABLED = Color(0.274, 0.274, 0.274) # Xám tối
-const COLOR_CONTINUE = Color(0.76, 0.72, 0.32)
-const COLOR_PLAY = Color(0.322, 0.580, 0.929)
-const COLOR_DISCARD = Color(0.914, 0.384, 0.349)  
+const COLOR_CONTINUE = Color(0.94, 0.63, 0.24)
+const COLOR_SETTINGS = Color(0.94, 0.63, 0.24)
+const COLOR_EXIT = Color(0.94, 0.63, 0.24)
+const COLOR_PLAY = Color(0.94, 0.63, 0.24)
+const COLOR_MAIN_PLAY = Color(0.94, 0.63, 0.24)
+const COLOR_DISCARD = Palette.SURFACE  
+
 const TEXT_COLOR_ACTIVE = Color(1.0, 1.0, 1.0) 
 const TEXT_COLOR_DISABLED = Color(0.5, 0.5, 0.5)
 
@@ -31,10 +35,20 @@ func _ready() -> void:
 	match action_type:
 		ActionType.PLAY:
 			title_label.text = "SERVE"
+			sub_label.visible = true
 		ActionType.DISCARD:
 			title_label.text = "DISCARD"
 		ActionType.CONTINUE:
 			title_label.text = "CONTINUE"
+			sub_label.visible = false
+		ActionType.MAIN_PLAY:
+			title_label.text = "PLAY"
+			sub_label.visible = false
+		ActionType.SETTINGS:
+			title_label.text = "SETTINGS"
+			sub_label.visible = false
+		ActionType.EXIT:
+			title_label.text = "EXIT"
 			sub_label.visible = false
 	
 	click_area.mouse_entered.connect(_on_mouse_entered)
@@ -46,12 +60,10 @@ func _ready() -> void:
 	style.corner_radius_top_right = 6
 	style.corner_radius_bottom_left = 6
 	style.corner_radius_bottom_right = 6
-	
 	style.border_width_bottom = 2
 	style.border_width_left = 2
 	style.border_width_right = 2
 	style.border_width_top = 2
-	
 	style.shadow_color = Color(0, 0, 0, 0.5)
 	style.shadow_size = 5
 	style.shadow_offset = Vector2(1.0, 2.0)
@@ -63,20 +75,36 @@ func _ready() -> void:
 func update_state(selected_count: int, actions_left: int) -> void:
 	var style = bg_panel.get_theme_stylebox("panel") as StyleBoxFlat
 	
-	if action_type == ActionType.PLAY:
-		sub_label.text = "%d / 5 Ingredients" % selected_count
-		is_active = (selected_count > 0 and actions_left > 0)
-		style.bg_color = COLOR_PLAY if is_active else COLOR_DISABLED
-		
-	elif action_type == ActionType.DISCARD:
-		sub_label.visible = false
-		is_active = (selected_count > 0 and selected_count <= 5 and actions_left > 0)
-		style.bg_color = COLOR_DISCARD if is_active else COLOR_DISABLED
-		
-	elif action_type == ActionType.CONTINUE:
-		sub_label.visible = false
-		is_active = true
-		style.bg_color = COLOR_CONTINUE
+	match action_type:
+		ActionType.PLAY:
+			sub_label.text = "%d / 5 Ingredients" % selected_count
+			is_active = (selected_count > 0 and actions_left > 0)
+			style.bg_color = COLOR_PLAY if is_active else COLOR_DISABLED
+			
+		ActionType.DISCARD:
+			sub_label.visible = false
+			is_active = (selected_count > 0 and selected_count <= 5 and actions_left > 0)
+			style.bg_color = COLOR_DISCARD if is_active else COLOR_DISABLED
+			
+		ActionType.CONTINUE:
+			sub_label.visible = false
+			is_active = true
+			style.bg_color = COLOR_CONTINUE
+			
+		ActionType.MAIN_PLAY:
+			sub_label.visible = false
+			is_active = true
+			style.bg_color = COLOR_MAIN_PLAY
+			
+		ActionType.SETTINGS:
+			sub_label.visible = false
+			is_active = true
+			style.bg_color = COLOR_SETTINGS
+			
+		ActionType.EXIT:
+			sub_label.visible = false
+			is_active = true
+			style.bg_color = COLOR_EXIT
 		
 	var current_text_color = TEXT_COLOR_ACTIVE if is_active else TEXT_COLOR_DISABLED
 	title_label.add_theme_color_override("font_color", current_text_color)

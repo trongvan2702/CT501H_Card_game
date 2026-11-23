@@ -197,6 +197,8 @@ func _on_play_action_button_action_pressed() -> void:
 	hand_manager.set_hand_minimized(true)
 	await scoring_stage_ui.start_scoring_stage(played_card_nodes, all_used_ingredients)
 	
+	await get_tree().create_timer(0.35).timeout
+	
 	# 4. Diễn hoạt từng bước theo đúng thứ tự của pipeline duy nhất
 	for trigger in result["pipeline"]:
 		if not trigger.triggered:

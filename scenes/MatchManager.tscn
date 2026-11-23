@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cda0d2h04pus5"]
+[gd_scene load_steps=16 format=3 uid="uid://cda0d2h04pus5"]
 
 [ext_resource type="Script" uid="uid://de57s1cpd5cqx" path="res://scripts/system/MatchManager.gd" id="1_cwqus"]
 [ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_fw2qv"]
@@ -14,6 +14,17 @@
 [ext_resource type="PackedScene" uid="uid://x7esvyttql6v" path="res://scenes/ScoringStageUI.tscn" id="8_ewu3j"]
 [ext_resource type="PackedScene" uid="uid://birplmwgy4eqr" path="res://scenes/StageClearUI.tscn" id="11_tau8w"]
 
+[sub_resource type="Gradient" id="Gradient_ewu3j"]
+offsets = PackedFloat32Array(0.00757576, 0.666667, 1)
+colors = PackedColorArray(0.768627, 0.603922, 0.447059, 0, 0, 0, 0, 0.473282, 0, 0, 0, 1)
+metadata/_snap_count = 2
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5gv0i"]
+gradient = SubResource("Gradient_ewu3j")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
 [node name="MatchManager" type="Control" node_paths=PackedStringArray("deck_manager", "hand_manager", "scoring_system")]
 layout_mode = 3
 anchors_preset = 15
@@ -27,7 +38,7 @@ hand_manager = NodePath("HandManager")
 scoring_system = NodePath("ScoringSystem")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(0.351563, 0.351563, 0.351563, 1)
+modulate = Color(0.768627, 0.603922, 0.447059, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,6 +47,16 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_teeih")
 expand_mode = 1
+
+[node name="VignetteOverlay" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_5gv0i")
 
 [node name="DeckManager" type="Node" parent="."]
 script = ExtResource("2_fw2qv")
