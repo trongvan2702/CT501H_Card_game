@@ -39,8 +39,7 @@ Mult cao trên lá giá trị thấp (Salt/Pepper) > điểm cao trên lá rẻ.
 → Bài test: nếu đổi toàn bộ base_score, game có đổi cách chơi không?
 
 ### P4. Mở rộng không được đụng code lõi
-Thêm 100 item / 50 recipe không được sửa `ScoringSystem` hay `MatchManager`.
-→ Bài test: item mới có cần viết `if/else` ở đâu đó không? Nếu có → hỏng.
+Thêm 100 item / 50 recipe không được sửa `ScoringSystem` hay `MatchManager`. (Nếu cần thay đổi cần hỏi ý tôi trước)
 
 ### P5. Mỗi lượt chơi phải có lý do
 Không có lượt chơi nào là "chơi cho xong". Có 1 món ngon → đáng chơi.

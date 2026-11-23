@@ -28,12 +28,15 @@ func add_card_to_hand(instance: IngredientInstance) -> void:
 		hand_ui_container.add_child(new_card)
 		
 	card_in_hand.append(new_card)
+	AudioManager.play_card_slide()
 	
 	update_hand_layout()
 
 func add_cards_to_hand(cards: Array[IngredientInstance]) -> void:
-	for card in cards:
-		add_card_to_hand(card)
+	for i in range(cards.size()):
+		add_card_to_hand(cards[i])
+		if i < cards.size() - 1:
+			await get_tree().create_timer(0.06).timeout
 
 func _on_card_clicked(card: IngredientCard) -> void:
 	if _is_minimized:
@@ -70,13 +73,16 @@ func extract_and_remove_selected() -> Array[IngredientInstance]:
 		if card.is_selected:
 			extracted_cards.append(card.ingredient_instance)
 			card.queue_free()
-		else: remained_cards.append(card)
+		else:
+			remained_cards.append(card)
 	
 	card_in_hand = remained_cards
 	emit_signal("selection_changed", 0)
 	emit_signal("cards_selection_changed", [])
 	
 	update_hand_layout()
+	
+	_play_discard_sounds(extracted_cards.size())
 	
 	return extracted_cards
 
@@ -208,6 +214,12 @@ func _update_all_cards_visuals(hovered_card: IngredientCard) -> void:
 				
 		# Gọi hàm update hình ảnh của thẻ và truyền thêm tham số đẩy ngang
 		card._update_visual_state_with_push(push_x)
+		
+func _play_discard_sounds(count: int) -> void:
+	for i in range(count):
+		AudioManager.play_card_discard()
+		if i < count - 1:
+			await get_tree().create_timer(0.06).timeout
 
 func deselect_all() -> void:
 	for card in card_in_hand:

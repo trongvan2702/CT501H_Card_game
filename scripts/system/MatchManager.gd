@@ -249,11 +249,12 @@ func _on_discard_action_button_action_pressed() -> void:
 	_trigger_items_on_discard()
 	_update_display()
 	
+	await get_tree().create_timer(0.25).timeout
+	
 	_on_state_changed(MatchState.DRAWING)
 	draw_cards_to_full()
 	_update_deck_ui()
-
-
+	
 func _check_win_condition() -> void:
 	if current_score >= stage_target_score:
 		_win_stage()

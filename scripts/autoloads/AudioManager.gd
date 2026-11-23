@@ -5,6 +5,8 @@ extends Node
 @export var sfx_card_deselect: AudioStream
 @export var sfx_trigger: AudioStream
 @export var sfx_dish_ready: AudioStream
+@export var sfx_card_slide: AudioStream
+@export var sfx_card_discard: AudioStream
 
 var _bgm_player: AudioStreamPlayer
 var _players: Array[AudioStreamPlayer] = []
@@ -61,10 +63,15 @@ func play_card_select() -> void:
 func play_card_deselect() -> void:
 	_play_stream(sfx_card_deselect, randf_range(0.92, 0.98))
 
-# combo_step giúp cao độ (pitch) tăng dần sau mỗi lần trigger giống Balatro
 func play_trigger(combo_step: int = 0) -> void:
 	var pitch = minf(1.0 + combo_step * 0.06, 1.8)
 	_play_stream(sfx_trigger, pitch)
 
 func play_dish_ready() -> void:
 	_play_stream(sfx_dish_ready, 1.0)
+	
+func play_card_slide() -> void:
+	_play_stream(sfx_card_slide, randf_range(0.95, 1.12))
+
+func play_card_discard() -> void:
+	_play_stream(sfx_card_discard, randf_range(0.95, 1.12))
