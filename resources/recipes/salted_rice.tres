@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="RecipeData" load_steps=6 format=3 uid="uid://dtm1soa2y2q2t"]
 
 [ext_resource type="Texture2D" uid="uid://mcgkm0c1hsx5" path="res://assets/recipes/SaltedRice.png" id="1_d6lrw"]
-[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_77q2j"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/Ingredient/IngredientData.gd" id="2_77q2j"]
 [ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_d6lrw"]
 [ext_resource type="Resource" uid="uid://laidu1ia781x" path="res://resources/ingredients/rice.tres" id="3_puvw5"]
 [ext_resource type="Resource" uid="uid://cdurolm1wvtm0" path="res://resources/ingredients/salt.tres" id="4_vfck6"]

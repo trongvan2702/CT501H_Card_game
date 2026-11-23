@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bpbmf2tshuh15"]
 
-[ext_resource type="Script" uid="uid://dq151jdau8dpn" path="res://scripts/UI/MenuRecipeRow.gd" id="1_1pi0v"]
+[ext_resource type="Script" uid="uid://dq151jdau8dpn" path="res://scripts/ui/MenuRecipeRow.gd" id="1_1pi0v"]
 [ext_resource type="Texture2D" uid="uid://dgau251i7x4gk" path="res://assets/Apple Green.png" id="2_ogwdn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fupim"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://birplmwgy4eqr"]
 
-[ext_resource type="Script" uid="uid://nj8tual7cj00" path="res://scripts/UI/StageClearUI.gd" id="1_4dq85"]
+[ext_resource type="Script" uid="uid://nj8tual7cj00" path="res://scripts/ui/StageClearUI.gd" id="1_4dq85"]
 [ext_resource type="PackedScene" uid="uid://b8xrll0shlwvb" path="res://scenes/ActionButton.tscn" id="2_uoprw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dq85"]

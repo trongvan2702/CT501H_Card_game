@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="RecipeData" load_steps=6 format=3 uid="uid://8hcwt8j3e7oi"]
 
 [ext_resource type="Texture2D" uid="uid://cjyslxkqt7bhm" path="res://assets/recipes/FreshSalad.png" id="1_ta837"]
-[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_hrkss"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/Ingredient/IngredientData.gd" id="2_hrkss"]
 [ext_resource type="Resource" uid="uid://bd6kslpcpugp2" path="res://resources/ingredients/tomato.tres" id="3_1s1xw"]
 [ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_ta837"]
 [ext_resource type="Resource" uid="uid://d28la6ytwm8qc" path="res://resources/ingredients/cabbage.tres" id="4_ji3b6"]

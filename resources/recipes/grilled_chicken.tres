@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="RecipeData" load_steps=6 format=3 uid="uid://cdg1tjre0gw1d"]
 
 [ext_resource type="Texture2D" uid="uid://cp1b5cgh86dw8" path="res://assets/recipes/GrilledChicken.png" id="1_4o8sm"]
-[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/IngredientData.gd" id="2_6s3dt"]
+[ext_resource type="Script" uid="uid://ddx85i03riwww" path="res://scripts/resources/Ingredient/IngredientData.gd" id="2_6s3dt"]
 [ext_resource type="Script" uid="uid://c46bs4c7sr6gd" path="res://scripts/resources/Recipe/RecipeData.gd" id="3_4o8sm"]
 [ext_resource type="Resource" uid="uid://d1l7p6jeqjo5l" path="res://resources/ingredients/chicken.tres" id="3_u7kbc"]
 [ext_resource type="Resource" uid="uid://cdurolm1wvtm0" path="res://resources/ingredients/salt.tres" id="4_wdy3y"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://x7esvyttql6v"]
 
-[ext_resource type="Script" uid="uid://vrbii5tdmdw3" path="res://scripts/UI/ScoringStageUI.gd" id="1_nqh22"]
+[ext_resource type="Script" uid="uid://vrbii5tdmdw3" path="res://scripts/ui/ScoringStageUI.gd" id="1_nqh22"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xk35"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

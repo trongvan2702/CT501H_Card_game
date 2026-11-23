@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b344qu8jdtf1q"]
 
-[ext_resource type="Script" uid="uid://d0t52mlm16vag" path="res://scripts/UI/ShopShelfUI.gd" id="1_vhvs1"]
+[ext_resource type="Script" uid="uid://d0t52mlm16vag" path="res://scripts/ui/ShopShelfUI.gd" id="1_vhvs1"]
 
 [node name="ShopShelfUI" type="VBoxContainer"]
 anchors_preset = 8

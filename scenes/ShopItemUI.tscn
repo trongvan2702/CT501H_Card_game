@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://bqawqxfg6e866"]
 
 [ext_resource type="Texture2D" uid="uid://cit54kwyfhyif" path="res://assets/IngredientCardPack.png" id="1_qeb8y"]
-[ext_resource type="Script" uid="uid://0ohb15gpxt8m" path="res://scripts/UI/ShopItemUI.gd" id="1_qwe0g"]
+[ext_resource type="Script" uid="uid://0ohb15gpxt8m" path="res://scripts/ui/ShopItemUI.gd" id="1_qwe0g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwe0g"]
 bg_color = Color(0.152941, 0.207843, 0.219608, 1)

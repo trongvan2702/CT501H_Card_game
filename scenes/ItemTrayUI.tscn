@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c77lh3o2xdtr2"]
 
-[ext_resource type="Script" uid="uid://d4aqknmiblkle" path="res://scripts/UI/ItemTrayUI.gd" id="1_ct7cm"]
+[ext_resource type="Script" uid="uid://d4aqknmiblkle" path="res://scripts/ui/ItemTrayUI.gd" id="1_ct7cm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsm01"]
 bg_color = Color(0.286275, 0.286275, 0.286275, 0.607843)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bfmu58pg8g5lw"]
 
-[ext_resource type="Script" uid="uid://1w0ls60gl5dv" path="res://scripts/UI/ViewDeckButton.gd" id="1_8jt4a"]
+[ext_resource type="Script" uid="uid://1w0ls60gl5dv" path="res://scripts/ui/ViewDeckButton.gd" id="1_8jt4a"]
 [ext_resource type="Texture2D" uid="uid://d0tqf5sa73f66" path="res://assets/CardBackgroundBack.png" id="2_0a83x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vepu"]
