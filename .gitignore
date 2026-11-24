@@ -2,3 +2,5 @@
 .godot/
 /android/
 doc/ITEM_SPEC_TEMPLATE.md
+*.md
+/.claude
