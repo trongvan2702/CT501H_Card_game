@@ -200,6 +200,7 @@ func _on_shop_item_clicked(shop_ui_node: ShopItemUI) -> void:
 		"item":
 			shop_ui_node.play_sold_animation()
 			ShopManager.buy_item(product.get("data"), price)
+			GameManager.record_purchase()
 			if GameManager.active_items.size() > 0:
 				item_tray.add_new_item(GameManager.active_items[-1])
 			shop_shelf_ui.refresh_availability()
@@ -208,12 +209,14 @@ func _on_shop_item_clicked(shop_ui_node: ShopItemUI) -> void:
 		"recipe_pack":
 			shop_ui_node.play_sold_animation()
 			ShopManager.buy_recipe_pack()
+			GameManager.record_purchase()
 			shop_shelf_ui.refresh_availability()
 			_update_display_labels()
 			
 		"ingredient_pack":
 			shop_ui_node.play_sold_animation()
 			ShopManager.buy_ingredient_pack()
+			GameManager.record_purchase()
 			shop_shelf_ui.refresh_availability()
 			_update_display_labels()
 			
@@ -230,3 +233,4 @@ func _on_shop_item_clicked(shop_ui_node: ShopItemUI) -> void:
 			await shop_shelf_ui.play_reroll_out_animation()
 			
 			ShopManager.reroll_items()
+			GameManager.record_reroll()

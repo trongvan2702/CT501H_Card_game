@@ -35,6 +35,7 @@ const MAX_EQUIPPED_ITEMS: int = 5
 @onready var item_tray = $ItemTrayWrapper
 @onready var stage_clear_ui = $StageClearUI
 @onready var scoring_stage_ui: ScoringStageUI = $ScoringStageUI
+@onready var game_over_ui: GameOverUI = $GameOverUI
 
 func _ready() -> void:
 	start_new_stage()
@@ -81,7 +82,7 @@ func start_new_stage() -> void:
 	
 	current_score = 0.0
 	total_dishes_in_stage = 0
-	GameManager.plays_left = 4
+	GameManager.plays_left = 1
 	GameManager.discards_left = 3
 	
 	_sync_equipped_items()
@@ -176,6 +177,8 @@ func _on_play_action_button_action_pressed() -> void:
 	
 	# 1. Lấy các node IngredientCard từ tay bài (không xóa ngay để làm hiệu ứng bay)
 	var played_card_nodes = hand_manager.extract_selected_card_nodes()
+	GameManager.record_ingredients_played(played_card_nodes.size())
+	
 	var selected_ingredients: Array[IngredientInstance] = []
 	for card in played_card_nodes:
 		selected_ingredients.append(card.ingredient_instance)
@@ -184,6 +187,7 @@ func _on_play_action_button_action_pressed() -> void:
 	
 	#2. Tính toán trước toàn bộ kịch bản điểm
 	var result = scoring_system.calculate_dish_score(selected_ingredients)
+	GameManager.record_serve(result["total_score"])
 	
 	# Dùng hàng đợi (Array) thay cho Dictionary để không bị ghi đè khi trùng RecipeData
 	var all_used_ingredients: Array[IngredientInstance] = []
@@ -244,6 +248,7 @@ func _on_discard_action_button_action_pressed() -> void:
 	
 	
 	var selected_cards = hand_manager.extract_and_remove_selected()
+	GameManager.record_ingredients_discarded(selected_cards.size())
 	
 	_on_state_changed(MatchState.PROCESSING)
 	GameManager.discards_left -= 1
@@ -306,8 +311,7 @@ func _win_stage() -> void:
 
 func _lose_stage() -> void:
 	_on_state_changed(MatchState.GAME_OVER)
-	print("RUN OVER - DEFEAT!")
-	# Hiện màn hình Game Over
+	game_over_ui.display_game_over()
 
 # =======================================================
 # UI

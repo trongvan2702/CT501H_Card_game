@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cda0d2h04pus5"]
+[gd_scene load_steps=18 format=3 uid="uid://cda0d2h04pus5"]
 
 [ext_resource type="Script" uid="uid://de57s1cpd5cqx" path="res://scripts/system/MatchManager.gd" id="1_cwqus"]
 [ext_resource type="Script" uid="uid://cedsglqj6avwa" path="res://scripts/system/DeckManager.gd" id="2_fw2qv"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://x7esvyttql6v" path="res://scenes/ScoringStageUI.tscn" id="8_ewu3j"]
 [ext_resource type="PackedScene" uid="uid://birplmwgy4eqr" path="res://scenes/StageClearUI.tscn" id="11_tau8w"]
 [ext_resource type="PackedScene" uid="uid://upi64xsbysse" path="res://scenes/HomeButton.tscn" id="14_5gv0i"]
+[ext_resource type="PackedScene" uid="uid://c0a13yl48glj4" path="res://scenes/GameOverUI.tscn" id="15_45n1x"]
 
 [sub_resource type="Gradient" id="Gradient_ewu3j"]
 offsets = PackedFloat32Array(0.00757576, 0.666667, 1)
@@ -159,6 +160,11 @@ layout_mode = 1
 [node name="StageClearUI" parent="." instance=ExtResource("11_tau8w")]
 visible = false
 z_index = 5
+layout_mode = 1
+
+[node name="GameOverUI" parent="." instance=ExtResource("15_45n1x")]
+visible = false
+z_index = 12
 layout_mode = 1
 
 [connection signal="pressed" from="_debug_get_current_item" to="." method="_on__debug_get_current_item_pressed"]

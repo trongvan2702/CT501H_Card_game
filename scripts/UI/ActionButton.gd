@@ -3,7 +3,7 @@ extends MarginContainer
 
 signal action_pressed()
 
-enum ActionType { PLAY, DISCARD, CONTINUE, MAIN_PLAY, SETTINGS, EXIT }
+enum ActionType { PLAY, DISCARD, CONTINUE, MAIN_PLAY, SETTINGS, EXIT, NEW_RUN, MAIN_MENU}
 
 # Cho phép bạn chọn loại nút ngay ngoài bảng Inspector của Godot
 @export var action_type: ActionType = ActionType.PLAY
@@ -49,6 +49,12 @@ func _ready() -> void:
 			sub_label.visible = false
 		ActionType.EXIT:
 			title_label.text = "EXIT"
+			sub_label.visible = false
+		ActionType.NEW_RUN:
+			title_label.text = "NEW RUN"
+			sub_label.visible = false
+		ActionType.MAIN_MENU:
+			title_label.text = "MAIN MENU"
 			sub_label.visible = false
 	
 	click_area.mouse_entered.connect(_on_mouse_entered)
@@ -105,6 +111,16 @@ func update_state(selected_count: int, actions_left: int) -> void:
 			sub_label.visible = false
 			is_active = true
 			style.bg_color = COLOR_EXIT
+		
+		ActionType.NEW_RUN:
+			sub_label.visible = false
+			is_active = true
+			style.bg_color = COLOR_MAIN_PLAY
+			
+		ActionType.MAIN_MENU:
+			sub_label.visible = false
+			is_active = true
+			style.bg_color = COLOR_MAIN_PLAY
 		
 	var current_text_color = TEXT_COLOR_ACTIVE if is_active else TEXT_COLOR_DISABLED
 	title_label.add_theme_color_override("font_color", current_text_color)

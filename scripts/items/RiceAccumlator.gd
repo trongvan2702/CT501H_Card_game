@@ -12,7 +12,7 @@ func on_play(ingredients: Array[IngredientInstance]) -> TriggerResult:
 	
 	return result
 
-func _on_ingredient_scored(ingredient: IngredientInstance) -> TriggerResult:
+func on_ingredient_scored(ingredient: IngredientInstance) -> TriggerResult:
 	var result = TriggerResult.new()
 	
 	if get_state("rice_count", 0) > 2:
