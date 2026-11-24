@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dhfxol5oyqmpw"]
+[gd_scene load_steps=13 format=3 uid="uid://dhfxol5oyqmpw"]
 
 [ext_resource type="Script" uid="uid://ymvw48nkpjp2" path="res://scripts/system/ShopUI.gd" id="1_c1c8f"]
 [ext_resource type="PackedScene" uid="uid://bfmu58pg8g5lw" path="res://scenes/ViewDeckButton.tscn" id="2_fk3mg"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b344qu8jdtf1q" path="res://scenes/ShopShelfUI.tscn" id="4_dm8c0"]
 [ext_resource type="PackedScene" uid="uid://d1a7xj4ilwqis" path="res://scenes/ActiveMenuUI.tscn" id="4_pxjd2"]
 [ext_resource type="PackedScene" uid="uid://c110ocoall0qe" path="res://scenes/GameHUD.tscn" id="5_to600"]
+[ext_resource type="PackedScene" uid="uid://upi64xsbysse" path="res://scenes/HomeButton.tscn" id="7_8dt7x"]
 
 [sub_resource type="Gradient" id="Gradient_ow34m"]
 offsets = PackedFloat32Array(0.00757576, 0.666667, 1)
@@ -97,6 +98,9 @@ anchor_top = 0.2
 anchor_bottom = 0.2
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="HomeButton" parent="." instance=ExtResource("7_8dt7x")]
+layout_mode = 1
 
 [node name="GameHud" parent="." instance=ExtResource("5_to600")]
 layout_mode = 1

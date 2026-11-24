@@ -12,12 +12,12 @@ base_font = ExtResource("3_n4q7i")
 spacing_glyph = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l00so"]
-bg_color = Color(0.639216, 0.407843, 0.0156863, 1)
+bg_color = Color(0.627451, 0.341176, 0.109804, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
+border_color = Color(0.145098, 0.0666667, 0.0392157, 1)
 border_blend = true
 corner_radius_top_left = 12
 corner_radius_top_right = 12
@@ -39,7 +39,7 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.427451, 0.227451, 0, 1)
+border_color = Color(0.537255, 0.286275, 0.0980392, 1)
 border_blend = true
 corner_radius_top_left = 12
 corner_radius_top_right = 12
@@ -49,7 +49,7 @@ corner_radius_bottom_left = 12
 [sub_resource type="FontVariation" id="FontVariation_01611"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_67sb3"]
-bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.588235)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -63,7 +63,7 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqgk2"]
-bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.588235)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -77,7 +77,7 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3e5p7"]
-bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.392157)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -165,10 +165,11 @@ layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="EfecctLabel" type="PanelContainer" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/TargetScoreBox/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -266,7 +267,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="PanelGameHub/Margin/MainVBox/StageBlock/VBox/Stage/Margin/Stage"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 20
 text = "Current Stage:"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -383,6 +384,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_uu640")
 
 [node name="PlaysCount" type="Label" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/PlaysBox/MarginContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "4"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -416,6 +418,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_uu640")
 
 [node name="PlaysCount" type="Label" parent="PanelGameHub/Margin/MainVBox/ResourceBlock/Margin/ActionsHBox/DiscardBox/MarginContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "4"
 horizontal_alignment = 1
 vertical_alignment = 1

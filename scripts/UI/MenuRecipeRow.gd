@@ -12,10 +12,10 @@ var ingredient_nodes: Array = [] # Mảng lưu các icon nguyên liệu để l�
 
 func _ready() -> void:
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0, 0, 0, 0) # Alpha = 0
-	style.border_width_bottom = 1
-	style.border_color = Color(47/255, 41/255, 26/255)
-	style.set_corner_radius_all(4)
+	style.bg_color = Color(0.55, 0.35, 0.19, 235) # Alpha = 0
+	style.set_border_width_all(1)
+	style.border_color = Color(0.71, 0.47, 0.29)
+	style.set_corner_radius_all(7)
 	add_theme_stylebox_override("panel", style)
 
 # ==========================================
@@ -76,8 +76,10 @@ func update_highlight(is_cooked: bool, selected_ids: Array) -> void:
 	
 	if is_cooked:
 		# SẼ ĐƯỢC NẤU: Highlight xanh lá
-		style.bg_color = Color(0.15, 0.4, 0.2, 0.8) 
+		style.bg_color = Color(0.302, 0.3725, 0.2, 245) 
+		style.border_color = Color(0.439, 0.525, 0.310)
 		modulate = Color(1.0, 1.0, 1.0, 1.0)
 	else:
 		# KHÔNG ĐƯỢC NẤU
-		style.bg_color = Color(0, 0, 0, 0)
+		style.bg_color = Color(0.55, 0.35, 0.19, 235)
+		style.border_color = Color(0.71, 0.47, 0.29)

@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://upi64xsbysse"]
+
+[ext_resource type="Script" uid="uid://dpal3de6yn38o" path="res://scripts/ui/HomeButton.gd" id="1_fan8d"]
+[ext_resource type="Texture2D" uid="uid://cqsf63qguw8iu" path="res://assets/home_icon.png" id="3_lxka3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwma8"]
+bg_color = Color(0.145098, 0.0666667, 0.0392157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65098, 0.384314, 0.192157, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="HomeButton" type="MarginContainer"]
+custom_minimum_size = Vector2(48, 48)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 58.0
+grow_horizontal = 0
+script = ExtResource("1_fan8d")
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kwma8")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HomeIcon" type="TextureRect" parent="Background/MarginContainer"]
+modulate = Color(0.932802, 0.860812, 0.729393, 1)
+layout_mode = 2
+texture = ExtResource("3_lxka3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+flat = true
